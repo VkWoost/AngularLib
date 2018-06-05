@@ -34,20 +34,36 @@ namespace Library.WebUI
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
-      app.UseMvc(routes =>
-      {
-        routes.MapRoute(
-            name: "default",
-            template: "{controller=Home}/{action=Index}/{id?}");
+      //app.UseStaticFiles();
+      ////app.UseDefaultFiles();
 
-        routes.MapSpaFallbackRoute(
-            name: "spa-fallback",
-            defaults: new { controller = "Author", action = "GetAll" });
-      });
+      //app.UseMvc(routes =>
+      //{
+      //  routes.MapRoute(
+      //      name: "default",
+      //      template: "{controller=Home}/{action=Index}/{id?}");
+
+      //  //routes.MapSpaFallbackRoute(
+      //  //    name: "spa-fallback",
+      //  //    defaults: new { controller = "Author", action = "GetAll" });
+      //});
 
       //app.UseMvcWithDefaultRoute();
+      app.UseMvcWithDefaultRoute();
+      //app.Use(async (context, next) => {
+      //  await next();
+      //  if (context.Response.StatusCode == 404 &&
+      //      !Path.HasExtension(context.Request.Path.Value) &&
+      //      !context.Request.Path.Value.StartsWith("/api/"))
+      //  {
+      //    context.Request.Path = "/index.html";
+      //    await next();
+      //  }
+      //});
+     
       app.UseDefaultFiles();
       app.UseStaticFiles();
+
     }
   }
 }
