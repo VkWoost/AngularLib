@@ -48,7 +48,7 @@ module.exports = ".k-button[disabled],[disabled] .k-button{outline:none;cursor:d
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\r\n"
 
 /***/ }),
 
@@ -580,8 +580,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Anuitex-66\source\repos\AngularLibrary\Library.WebUI\node_modules\@progress\kendo-theme-default\dist\all.css */"./node_modules/@progress/kendo-theme-default/dist/all.css");
-module.exports = __webpack_require__(/*! C:\Users\Anuitex-66\source\repos\AngularLibrary\Library.WebUI\src\styles.css */"./src/styles.css");
+__webpack_require__(/*! C:\Users\Anuitex-5\Source\Repos\AngularLibrary2\Library.WebUI\node_modules\@progress\kendo-theme-default\dist\all.css */"./node_modules/@progress/kendo-theme-default/dist/all.css");
+module.exports = __webpack_require__(/*! C:\Users\Anuitex-5\Source\Repos\AngularLibrary2\Library.WebUI\src\styles.css */"./src/styles.css");
 
 
 /***/ })
