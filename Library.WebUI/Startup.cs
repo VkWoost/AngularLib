@@ -29,7 +29,6 @@ namespace Library.WebUI
       });
 
       services.AddMvc();
-      
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -37,20 +36,21 @@ namespace Library.WebUI
       //app.UseStaticFiles();
       ////app.UseDefaultFiles();
 
-      //app.UseMvc(routes =>
-      //{
-      //  routes.MapRoute(
-      //      name: "default",
-      //      template: "{controller=Home}/{action=Index}/{id?}");
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+            name: "default",
+            template: "{controller=Home}/{action=Index}/{id?}");
 
-      //  //routes.MapSpaFallbackRoute(
-      //  //    name: "spa-fallback",
-      //  //    defaults: new { controller = "Author", action = "GetAll" });
-      //});
+        routes.MapSpaFallbackRoute(
+            name: "spa-fallback",
+            defaults: new { controller = "Magazine", action = "GetAll" });
+      });
 
       //app.UseMvcWithDefaultRoute();
-      app.UseMvcWithDefaultRoute();
-      //app.Use(async (context, next) => {
+
+      //app.Use(async (context, next) =>
+      //{
       //  await next();
       //  if (context.Response.StatusCode == 404 &&
       //      !Path.HasExtension(context.Request.Path.Value) &&
@@ -60,7 +60,7 @@ namespace Library.WebUI
       //    await next();
       //  }
       //});
-     
+
       app.UseDefaultFiles();
       app.UseStaticFiles();
 

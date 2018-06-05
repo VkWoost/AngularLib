@@ -15,30 +15,29 @@ import { BookComponent } from './components/book/book.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavMenuComponent,
-        AuthorComponent,
-        MagazineComponent,
-        BrochureComponent,
-        PublicationHouseComponent,
-        BookComponent
-    ],
-    imports: [
-        CommonModule,
-        HttpModule,
-        FormsModule,
-        RouterModule.forRoot([
-            { path: '', redirectTo: 'book', pathMatch: 'full' },
-            { path: 'author', component: AuthorComponent },
-            { path: 'magazine', component: MagazineComponent },
-            { path: 'brochure', component: BrochureComponent },
-            { path: 'publicationHouse', component: PublicationHouseComponent },
-            { path: 'book', component: BookComponent },
-            { path: '**', redirectTo: 'book' }
-        ]),
-        GridModule
-    ]
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    AuthorComponent,
+    MagazineComponent,
+    BrochureComponent,
+    PublicationHouseComponent,
+    BookComponent
+  ],
+  imports: [
+    CommonModule,
+    HttpModule,
+    FormsModule,
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'book', pathMatch: 'full' },
+      { path: 'author', component: AuthorComponent },
+      { path: 'magazine', component: MagazineComponent },
+      { path: 'brochure', component: BrochureComponent },
+      { path: 'publicationHouse', component: PublicationHouseComponent },
+      { path: 'book', component: BookComponent },
+      { path: '**', redirectTo: 'book' }
+    ]),
+    GridModule
+  ]
 })
-export class AppModuleShared {
-}
+export class AppModule { }

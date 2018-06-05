@@ -6,9 +6,10 @@
     <title>@ViewData["Title"] - Library.WebUI</title>
     <base href="~/" />
 
-    <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />*@
 </head>
 <body>
+    
     @RenderBody()
 
     @RenderSection("scripts", required: false)
