@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+//import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'; 
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { AuthorComponent } from './components/author/author.component';
 import { MagazineComponent } from './components/magazine/magazine.component';
@@ -13,7 +15,7 @@ import { PublicationHouseComponent } from './components/publicationHouse/publica
 import { BookComponent } from './components/book/book.component';
 
 import { GridModule } from '@progress/kendo-angular-grid';
-import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
@@ -28,13 +30,14 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     CommonModule,
-    HttpModule,
+    //HttpModule,
     FormsModule,
+    HttpClientModule,
     RouterModule
     .forRoot([
       { path: '', redirectTo: 'book', pathMatch: 'full' },
       { path: 'author', component: AuthorComponent },
-      { path: 'magazine', component: MagazineComponent },
+      { path: "magazine", component: MagazineComponent },
       { path: 'brochure', component: BrochureComponent },
       { path: 'publicationHouse', component: PublicationHouseComponent },
       { path: 'book', component: BookComponent },

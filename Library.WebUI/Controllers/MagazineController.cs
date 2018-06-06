@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.WebUI.Controllers
 {
-  [Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class MagazineController : Controller
     {
         private MagazineService _magazineService;
@@ -15,7 +15,13 @@ namespace Library.WebUI.Controllers
             _magazineService = new MagazineService(context);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
+        public MagazineGetAllView Get()
+        {
+            return _magazineService.GetAll();
+        }
+
+        [HttpGet/*("[action]")*/]
         public IActionResult GetAll()
         {
             return Ok(_magazineService.GetAll());

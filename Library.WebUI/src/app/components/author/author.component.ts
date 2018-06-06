@@ -12,17 +12,18 @@ import { State, process } from '@progress/kendo-data-query';
     providers: [DataService]
 })
 export class AuthorComponent implements OnInit {
-
     product: Author;
     products: AllAuthors;                
     tableMode: boolean = true;          
 
-    constructor(private dataService: DataService) {
+  constructor(private dataService: DataService) {
+    debugger;
         this.product = new Author();
         this.products = new AllAuthors();
     }
 
-    ngOnInit() {
+  ngOnInit() {
+    debugger;
         this.loadProducts();      
     }
     

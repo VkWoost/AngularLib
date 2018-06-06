@@ -41,7 +41,7 @@ module.exports = "@media (max-width: 767px) {\r\n  /* On small screens, the nav 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome to {{ title }}!\r\n  </h1>\r\n  <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\r\n</div>\r\n<h2>Here are some links to help you start: </h2>\r\n<ul>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://github.com/angular/angular-cli/wiki\">CLI Documentation</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\r\n  </li>\r\n</ul>-->\r\n<div class='container-fluid'>\r\n\r\n  <div class='row'>\r\n    <div class='col-sm-3'>\r\n      <nav-menu> </nav-menu>\r\n\r\n      <!--<router-outlet></router-outlet>-->\r\n    </div>\r\n    <div class='col-sm-9 body-content'>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class='container-fluid'>\r\n\r\n  <div class='row'>\r\n    <div class='col-sm-3'>\r\n      <nav-menu></nav-menu>\r\n    </div>\r\n    <div class='col-sm-9 body-content'>\r\n      <router-outlet></router-outlet>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -56,28 +56,12 @@ module.exports = "<!--<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-//import { Component, OnInit } from '@angular/core';
-//import { Http } from '@angular/http'
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-//@Component({
-//  selector: 'app-root',
-//  templateUrl: './app.component.html',
-//  styleUrls: ['./app.component.css']
-//})
-//export class AppComponent implements OnInit {
-//  constructor(private _httpService: Http) { }
-//  apiValues: string[] = [];
-//  ngOnInit() {
-//    this._httpService.get('/api/values').subscribe(values => {
-//      this.apiValues = values.json() as string[];
-//    });
-//  }
-//}
 
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
@@ -109,7 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _components_navmenu_navmenu_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/navmenu/navmenu.component */ "./src/app/components/navmenu/navmenu.component.ts");
@@ -129,6 +113,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+//import { HttpModule } from '@angular/http';
 
 
 
@@ -157,13 +142,14 @@ var AppModule = /** @class */ (function () {
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__["BrowserModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
+                //HttpModule,
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"]
                     .forRoot([
                     { path: '', redirectTo: 'book', pathMatch: 'full' },
                     { path: 'author', component: _components_author_author_component__WEBPACK_IMPORTED_MODULE_7__["AuthorComponent"] },
-                    { path: 'magazine', component: _components_magazine_magazine_component__WEBPACK_IMPORTED_MODULE_8__["MagazineComponent"] },
+                    { path: "magazine", component: _components_magazine_magazine_component__WEBPACK_IMPORTED_MODULE_8__["MagazineComponent"] },
                     { path: 'brochure', component: _components_brochure_brochure_component__WEBPACK_IMPORTED_MODULE_9__["BrochureComponent"] },
                     { path: 'publicationHouse', component: _components_publicationHouse_publicationHouse_component__WEBPACK_IMPORTED_MODULE_10__["PublicationHouseComponent"] },
                     { path: 'book', component: _components_book_book_component__WEBPACK_IMPORTED_MODULE_11__["BookComponent"] },
@@ -224,10 +210,12 @@ var AuthorComponent = /** @class */ (function () {
     function AuthorComponent(dataService) {
         this.dataService = dataService;
         this.tableMode = true;
+        debugger;
         this.product = new _models_author_author__WEBPACK_IMPORTED_MODULE_2__["Author"]();
         this.products = new _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_3__["AllAuthors"]();
     }
     AuthorComponent.prototype.ngOnInit = function () {
+        debugger;
         this.loadProducts();
     };
     AuthorComponent.prototype.loadProducts = function () {
@@ -511,20 +499,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var MagazineComponent = /** @class */ (function () {
     function MagazineComponent(dataService) {
         this.dataService = dataService;
-        this.tableMode = true; // табличный режим
+        this.tableMode = true;
         this.product = new _models_magazine_magazine__WEBPACK_IMPORTED_MODULE_2__["Magazine"]();
         this.products = new _models_magazine_allMagazines__WEBPACK_IMPORTED_MODULE_3__["AllMagazines"]();
     }
     MagazineComponent.prototype.ngOnInit = function () {
-        this.loadProducts(); // загрузка данных при старте компонента  
+        this.loadProducts();
     };
-    // получаем данные через сервис
     MagazineComponent.prototype.loadProducts = function () {
         var _this = this;
+        debugger;
         this.dataService.getProducts()
             .subscribe(function (data) { return _this.products = data; });
     };
-    // сохранение данных
     MagazineComponent.prototype.save = function () {
         var _this = this;
         if (this.product.id == null) {
@@ -955,8 +942,7 @@ var PublicationHouse = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -966,42 +952,31 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
 
 
 var DataService = /** @class */ (function () {
-    function DataService(http, baseUrl) {
+    function DataService(http) {
         this.http = http;
-        this.url = "";
-        this.url = baseUrl;
+        this.url = "/api/author";
     }
     DataService.prototype.getProducts = function () {
-        return this.http.get(this.url + 'api/Author/GetAll')
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url);
     };
     DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + 'api/Author/Get/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/Author/Get/' + id);
     };
     DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url + 'api/Author/Create', product)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.url + 'api/Author/Create', product);
     };
     DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url + 'api/Author/Update', product)
-            .map(function (response) { return response.json(); });
+        return this.http.put(this.url + 'api/Author/Update', product);
     };
     DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + 'api/Author/Delete/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.delete(this.url + 'api/Author/Delete/' + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])('BASE_URL')),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"], String])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], DataService);
     return DataService;
 }());
@@ -1021,8 +996,7 @@ var DataService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1032,42 +1006,32 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
 
 
 var DataService = /** @class */ (function () {
-    function DataService(http, baseUrl) {
+    function DataService(http) {
         this.http = http;
         this.url = "";
-        this.url = baseUrl;
+        this.url = "api/Book";
     }
     DataService.prototype.getProducts = function () {
-        return this.http.get(this.url + 'api/Book/GetAll')
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url);
     };
     DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + 'api/Book/Get/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/Book/Get/' + id);
     };
     DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url + 'api/Book/Create', product)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.url + 'api/Book/Create', product);
     };
     DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url + 'api/Book/Update', product)
-            .map(function (response) { return response.json(); });
+        return this.http.put(this.url + 'api/Book/Update', product);
     };
     DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + 'api/Book/Delete/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.delete(this.url + 'api/Book/Delete/' + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])('BASE_URL')),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"], String])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], DataService);
     return DataService;
 }());
@@ -1087,8 +1051,7 @@ var DataService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1098,42 +1061,31 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
 
 
 var DataService = /** @class */ (function () {
-    function DataService(http, baseUrl) {
+    function DataService(http) {
         this.http = http;
-        this.url = "";
-        this.url = baseUrl;
+        this.url = "/api/brochures";
     }
     DataService.prototype.getProducts = function () {
-        return this.http.get(this.url + 'api/Brochure/GetAll')
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/Brochure/GetAll');
     };
     DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + 'api/Brochure/Get/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/Brochure/Get/' + id);
     };
     DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url + 'api/Brochure/Create', product)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.url + 'api/Brochure/Create', product);
     };
     DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url + 'api/Brochure/Update', product)
-            .map(function (response) { return response.json(); });
+        return this.http.put(this.url + 'api/Brochure/Update', product);
     };
     DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + 'api/Brochure/Delete/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.delete(this.url + 'api/Brochure/Delete/' + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])('BASE_URL')),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"], String])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], DataService);
     return DataService;
 }());
@@ -1153,8 +1105,7 @@ var DataService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1164,42 +1115,31 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
 
 
 var DataService = /** @class */ (function () {
-    function DataService(http, baseUrl) {
+    function DataService(http) {
         this.http = http;
-        this.url = "";
-        this.url = baseUrl;
+        this.url = "/api/magazine";
     }
     DataService.prototype.getProducts = function () {
-        return this.http.get(this.url + 'api/Magazine/GetAll')
-            .map(function (response) { return response.json(); });
+        return this.http.get(/*this.url + */ '/api/magazine/GetAll');
     };
     DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + 'api/Magazine/Get/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/Magazine/Get/' + id);
     };
     DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url + 'api/Magazine/Create', product)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.url + 'api/Magazine/Create', product);
     };
     DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url + 'api/Magazine/Update', product)
-            .map(function (response) { return response.json(); });
+        return this.http.put(this.url + 'api/Magazine/Update', product);
     };
     DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + 'api/Magazine/Delete/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.delete(this.url + 'api/Magazine/Delete/' + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])('BASE_URL')),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"], String])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], DataService);
     return DataService;
 }());
@@ -1219,8 +1159,7 @@ var DataService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1230,42 +1169,31 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
 
 
 var DataService = /** @class */ (function () {
-    function DataService(http, baseUrl) {
+    function DataService(http) {
         this.http = http;
-        this.url = "";
-        this.url = baseUrl;
+        this.url = "/api/publicationHouse";
     }
     DataService.prototype.getProducts = function () {
-        return this.http.get(this.url + 'api/PublicationHouse/GetAll')
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/PublicationHouse/GetAll');
     };
     DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + 'api/PublicationHouse/Get/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.get(this.url + 'api/PublicationHouse/Get/' + id);
     };
     DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url + 'api/PublicationHouse/Create', product)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.url + 'api/PublicationHouse/Create', product);
     };
     DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url + 'api/PublicationHouse/Update', product)
-            .map(function (response) { return response.json(); });
+        return this.http.put(this.url + 'api/PublicationHouse/Update', product);
     };
     DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + 'api/PublicationHouse/Delete/' + id)
-            .map(function (response) { return response.json(); });
+        return this.http.delete(this.url + 'api/PublicationHouse/Delete/' + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])('BASE_URL')),
-        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"], String])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], DataService);
     return DataService;
 }());
@@ -1334,7 +1262,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Anuitex-5\Source\Repos\AngularLibrary2\Library.WebUI\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Anuitex-66\source\repos\AngularLibrary\Library.WebUI\src\main.ts */"./src/main.ts");
 
 
 /***/ })

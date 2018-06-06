@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/magazine.service';
 import { Magazine } from '../../models/magazine/magazine';
 import { AllMagazines } from '../../models/magazine/allMagazines'
@@ -10,24 +10,22 @@ import { AllMagazines } from '../../models/magazine/allMagazines'
 })
 export class MagazineComponent implements OnInit {
 
-    product: Magazine;   // изменяемый товар
-    products: AllMagazines;                // массив товаров
-    tableMode: boolean = true;          // табличный режим
-
+    product: Magazine;   
+    products: AllMagazines;                
+    tableMode: boolean = true;
+    
     constructor(private dataService: DataService) {
         this.product = new Magazine();
         this.products = new AllMagazines();
     }
-
     ngOnInit() {
-        this.loadProducts();    // загрузка данных при старте компонента  
+        this.loadProducts();    
     }
-    // получаем данные через сервис
     loadProducts() {
+        debugger;
         this.dataService.getProducts()
             .subscribe((data: AllMagazines) => this.products = data);
     }
-    // сохранение данных
     save() {
         if ((this.product as any).id == null) {
             this.dataService.createProduct(this.product)

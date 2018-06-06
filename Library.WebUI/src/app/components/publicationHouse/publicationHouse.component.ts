@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/publicationHouse.service';
 import { PublicationHouse } from '../../models/publicationHouse/publicationHouse';
 import { AllPublicationHouses } from '../../models/publicationHouse/allPublicationHouses';
@@ -9,7 +9,7 @@ import { AllPublicationHouses } from '../../models/publicationHouse/allPublicati
     providers: [DataService]
 })
 export class PublicationHouseComponent implements OnInit {
-
+    
     product: PublicationHouse;   
     products: AllPublicationHouses;                
     tableMode: boolean = true;          
@@ -24,7 +24,7 @@ export class PublicationHouseComponent implements OnInit {
     }
     loadProducts() {
         this.dataService.getProducts()
-            .subscribe(data => this.products = data);
+            .subscribe((data: AllPublicationHouses) => this.products = data);
     }
     save() {
         if ((this.product as any).id == null) {
