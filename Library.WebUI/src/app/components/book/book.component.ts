@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/book.service';
 import { Book } from '../../models/book/book';
 import { AllBooks } from '../../models/book/allBooks';
@@ -27,7 +27,7 @@ export class BookComponent implements OnInit {
             .subscribe((data: AllBooks) => this.products = data);
     }
     save() {
-        if ((this.product as any).id == null) {
+        if (this.product.id == null) {
             this.dataService.createProduct(this.product)
                 .subscribe((data: Book) => this.products.books.push(data));
         } else {
@@ -44,7 +44,7 @@ export class BookComponent implements OnInit {
         this.tableMode = true;
     }
     delete(p: Book) {
-        this.dataService.deleteProduct((p as any).id)
+        this.dataService.deleteProduct(p.id)
             .subscribe(data => this.loadProducts());
     }
     add() {

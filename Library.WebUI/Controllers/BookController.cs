@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.WebUI.Controllers
 {
-  [Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class BookController : Controller
     {
         private BookService _bookService;
@@ -15,33 +15,33 @@ namespace Library.WebUI.Controllers
             _bookService = new BookService(context);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_bookService.GetAll());
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Ok(_bookService.Get(id));
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public IActionResult Create([FromBody] BookCreateView book)
         {
             _bookService.Create(book);
             return Ok(book);
         }
 
-        [HttpPut("[action]")]
+        [HttpPut]
         public IActionResult Update([FromBody] BookUpdateView book)
         {
             _bookService.Update(book);
             return Ok(book);
         }
 
-        [HttpDelete("[action]/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var item = _bookService.Get(id);

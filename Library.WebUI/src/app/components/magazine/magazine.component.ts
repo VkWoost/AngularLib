@@ -22,12 +22,13 @@ export class MagazineComponent implements OnInit {
         this.loadProducts();    
     }
     loadProducts() {
-        debugger;
         this.dataService.getProducts()
-            .subscribe((data: AllMagazines) => this.products = data);
+            .subscribe(data => {
+                this.products = data;
+            });
     }
     save() {
-        if ((this.product as any).id == null) {
+        if (this.product.id == null) {
             this.dataService.createProduct(this.product)
                 .subscribe((data: Magazine) => this.products.magazines.push(data));
         } else {
@@ -44,7 +45,7 @@ export class MagazineComponent implements OnInit {
         this.tableMode = true;
     }
     delete(p: Magazine) {
-        this.dataService.deleteProduct((p as any).id)
+        this.dataService.deleteProduct(p.id)
             .subscribe(data => this.loadProducts());
     }
     add() {

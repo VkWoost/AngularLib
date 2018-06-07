@@ -27,7 +27,7 @@ export class PublicationHouseComponent implements OnInit {
             .subscribe((data: AllPublicationHouses) => this.products = data);
     }
     save() {
-        if ((this.product as any).id == null) {
+        if (this.product.id == null) {
             this.dataService.createProduct(this.product)
                 .subscribe((data: PublicationHouse) => this.products.publicationHouses.push(data));
         } else {
@@ -44,7 +44,7 @@ export class PublicationHouseComponent implements OnInit {
         this.tableMode = true;
     }
     delete(p: PublicationHouse) {
-        this.dataService.deleteProduct((p as any).id)
+        this.dataService.deleteProduct(p.id)
             .subscribe(data => this.loadProducts());
     }
     add() {

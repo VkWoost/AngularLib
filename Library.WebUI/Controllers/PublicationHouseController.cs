@@ -15,33 +15,33 @@ namespace Library.WebUI.Controllers
             _publicationHouseService = new PublicationHouseService(context);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_publicationHouseService.GetAll());
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Ok(_publicationHouseService.Get(id));
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public IActionResult Create([FromBody] PublicationHouseCreateView publicationHouse)
         {
             _publicationHouseService.Create(publicationHouse);
             return Ok(publicationHouse);
         }
 
-        [HttpPut("[action]")]
+        [HttpPut]
         public IActionResult Update([FromBody] PublicationHouseUpdateView publicationHouse)
         {
             _publicationHouseService.Update(publicationHouse);
             return Ok(publicationHouse);
         }
 
-        [HttpDelete("[action]/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var item = _publicationHouseService.Get(id);

@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
 import { Author } from '../models/author/author';
+import { AllAuthors } from '../models/author/allAuthors';
 
 @Injectable()
 export class DataService {
 
-    private url = "/api/author";
+    private url = "/api/Author";
 
     constructor(private http: HttpClient) { }
 
     getProducts() {
-        return this.http.get(this.url);
+        return this.http.get<AllAuthors>(this.url);
     }
 
     getProduct(id: number) {
-        return this.http.get(this.url + 'api/Author/Get/' + id);
+        return this.http.get(this.url + '/Get/' + id);
     }
 
     createProduct(product: Author) {
-        return this.http.post(this.url + 'api/Author/Create', product);
+        return this.http.post(this.url, product);
     }
     updateProduct(product: Author) {
-        return this.http.put(this.url + 'api/Author/Update', product);
+        return this.http.put(this.url, product);
     }
     deleteProduct(id: number) {
-        return this.http.delete(this.url + 'api/Author/Delete/' + id);
+        return this.http.delete(this.url + '/' + id);
     }
 }

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/brochure.service';
 import { Brochure } from '../../models/brochure/brochure';
 import { AllBrochures } from '../../models/brochure/allBrochures';
@@ -29,7 +29,7 @@ export class BrochureComponent implements OnInit {
     }
     
     save() {
-        if ((this.product as any).id == null) {
+        if (this.product.id == null) {
             this.dataService.createProduct(this.product)
                 .subscribe((data: Brochure) => this.products.brochures.push(data));
         } else {
@@ -46,7 +46,7 @@ export class BrochureComponent implements OnInit {
         this.tableMode = true;
     }
     delete(p: Brochure) {
-        this.dataService.deleteProduct((p as any).id)
+        this.dataService.deleteProduct(p.id)
             .subscribe(data => this.loadProducts());
     }
     add() {

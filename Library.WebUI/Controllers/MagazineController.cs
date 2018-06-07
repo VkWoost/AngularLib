@@ -16,38 +16,32 @@ namespace Library.WebUI.Controllers
         }
 
         [HttpGet]
-        public MagazineGetAllView Get()
-        {
-            return _magazineService.GetAll();
-        }
-
-        [HttpGet/*("[action]")*/]
         public IActionResult GetAll()
         {
             return Ok(_magazineService.GetAll());
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Ok(_magazineService.Get(id));
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public IActionResult Create([FromBody] MagazineCreateView magazine)
         {
             _magazineService.Create(magazine);
             return Ok(magazine);
         }
 
-        [HttpPut("[action]")]
+        [HttpPut]
         public IActionResult Update([FromBody] MagazineUpdateView magazine)
         {
             _magazineService.Update(magazine);
             return Ok(magazine);
         }
 
-        [HttpDelete("[action]/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var item = _magazineService.Get(id);

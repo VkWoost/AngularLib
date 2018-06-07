@@ -50,7 +50,7 @@ export class AuthorComponent implements OnInit {
         this.tableMode = true;
     }
     delete(p: Author) {
-        this.dataService.deleteProduct((p as any).id)
+        this.dataService.deleteProduct(p.id)
             .subscribe(data => this.loadProducts());
     }
     add() {

@@ -30,6 +30,16 @@ namespace Library.WebUI
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Home/Error");
+      }
+
       app.Use(async (context, next) =>
       {
         await next();
@@ -44,6 +54,7 @@ namespace Library.WebUI
 
       app.UseDefaultFiles();
       app.UseStaticFiles();
+      app.UseMvc();
     }
   }
 }

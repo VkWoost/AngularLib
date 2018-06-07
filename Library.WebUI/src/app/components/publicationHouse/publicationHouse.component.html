@@ -1,4 +1,4 @@
-﻿<h1>Publication Houses</h1>
+<h1>Publication Houses</h1>
 <input type="button" value="Add" class="btn btn-default" (click)="add()" />
 <table *ngIf="tableMode; else create" class="table table-striped">
     <thead>
@@ -26,6 +26,9 @@
 <ng-template #edit>
     <td>
         <input type="text" [(ngModel)]="product.name" class="form-control" />
+    </td>
+     <td>
+        <input type="text" [(ngModel)]="product.adress" class="form-control" />
     </td>
     <td>
         <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-success" />

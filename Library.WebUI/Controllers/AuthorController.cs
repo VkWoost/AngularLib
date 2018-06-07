@@ -15,33 +15,33 @@ namespace Library.WebUI.Controllers
             _authorService = new AuthorService(context);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_authorService.GetAll());
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Ok(_authorService.Get(id));
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public IActionResult Create([FromBody] AuthorCreateView author)
         {
             _authorService.Create(author);
             return Ok(author);
         }
 
-        [HttpPut("[action]")]
+        [HttpPut]
         public IActionResult Update([FromBody] AuthorUpdateView author)
         {
             _authorService.Update(author);
             return Ok(author);
         }
 
-        [HttpDelete("[action]/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var item = _authorService.Get(id);
