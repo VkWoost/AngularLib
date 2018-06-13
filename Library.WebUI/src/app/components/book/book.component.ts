@@ -1,54 +1,126 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/book.service';
-import { Book } from '../../models/book/book';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { BookService } from '../../services/book.service';
+import { AuthorService } from '../../services/author.service';
+import { PublicationHouseService } from '../../services/publicationHouse.service';
+
+import { AllPublicationHouses } from '../../models/publicationHouse/allPublicationHouses';
 import { AllBooks } from '../../models/book/allBooks';
+import { AllAuthors } from '../../models/author/allAuthors';
+import { BookUpdateView } from '../../models/book/bookUpdateView';
+import { BookCreateView } from '../../models/book/bookCreateView';
+
+import { GridDataResult } from '@progress/kendo-angular-grid';
+import { State, process } from '@progress/kendo-data-query';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 @Component({
-    selector: 'book',
-    templateUrl: './book.component.html',
-    providers: [DataService]
+  selector: 'book',
+  templateUrl: './book.component.html',
+  providers: [BookService, AuthorService, PublicationHouseService]
 })
 export class BookComponent implements OnInit {
 
-    product: Book;   
-    products: AllBooks;               
-    tableMode: boolean = true;          
+  public books: AllBooks;
+  public authors: AllAuthors;
+  public publicationHouses: AllPublicationHouses;
+  public gridState: State = {
+    sort: [],
+    skip: 0,
+    take: 10
+  };
+  public formGroup: FormGroup;
+  private editedRowIndex: number;
 
-    constructor(private dataService: DataService) {
-        this.product = new Book();
-        this.products = new AllBooks();
-    }
+  constructor(private dataService: BookService, private authorService: AuthorService, private publicationHouseSevice: PublicationHouseService) {
+    this.books = new AllBooks();
+    this.authors = new AllAuthors();
+    this.publicationHouses = new AllPublicationHouses();
+  }
 
-    ngOnInit() {
-        this.loadProducts();    
+  public ngOnInit(): void {
+    this.loadData();
+    this.authorService.get().subscribe(data => this.authors = data);
+    this.publicationHouseSevice.get().subscribe(data => this.publicationHouses = data);
+  }
+
+  private loadData() {
+    this.dataService.get().subscribe(data => this.books = data);
+  }
+
+  public addHandler({ sender }) {
+    this.closeEditor(sender);
+
+    this.formGroup = new FormGroup(
+      {
+        'id': new FormControl(0),
+        'name': new FormControl('', Validators.required),
+        'yearOfPublication': new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[0-9]{4}')])),
+        'authorId': new FormControl(''),
+        'publicationHouseIds': new FormControl('')
+      }
+    );
+
+    sender.addRow(this.formGroup);
+  }
+
+  public editHandler({ sender, rowIndex, dataItem }) {
+    this.closeEditor(sender);
+
+    this.formGroup = new FormGroup(
+      {
+        'id': new FormControl(dataItem.id),
+        'name': new FormControl(dataItem.name, Validators.required),
+        'yearOfPublication': new FormControl(dataItem.yearOfPublication, Validators.compose([Validators.required, Validators.pattern('^[0-9]{4}')])),
+        'authorId': new FormControl(dataItem.author),
+        'publicationHouseIds': new FormControl(dataItem.publicationHouses)
+      }
+    );
+
+    this.editedRowIndex = rowIndex;
+
+    sender.editRow(rowIndex, this.formGroup);
+  }
+
+  public cancelHandler({ sender, rowIndex }) {
+    this.closeEditor(sender, rowIndex);
+  }
+
+  public saveHandler({ sender, rowIndex, formGroup, isNew }) {
+    if (isNew) {
+      const product: BookCreateView = formGroup.value;
+      this.dataService.create(product)
+        .subscribe(() => this.loadData());
     }
-    loadProducts() {
-        this.dataService.getProducts()
-            .subscribe((data: AllBooks) => this.products = data);
+    if (!isNew) {
+      const product: BookUpdateView = formGroup.value;
+      this.dataService.update(product)
+        .subscribe(() => this.loadData());
     }
-    save() {
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe((data: Book) => this.products.books.push(data));
-        } else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(data => this.loadProducts());
-        }
-        this.cancel();
-    }
-    editProduct(p: Book) {
-        this.product = p;
-    }
-    cancel() {
-        this.product = new Book();
-        this.tableMode = true;
-    }
-    delete(p: Book) {
-        this.dataService.deleteProduct(p.id)
-            .subscribe(data => this.loadProducts());
-    }
-    add() {
-        this.cancel();
-        this.tableMode = false;
-    }
+    sender.closeRow(rowIndex);
+  }
+
+  public removeHandler({ dataItem }) {
+    this.dataService.delete(dataItem.id)
+      .subscribe(() => this.loadData());
+  }
+
+  private closeEditor(grid, rowIndex = this.editedRowIndex) {
+    grid.closeRow(rowIndex);
+    this.editedRowIndex = undefined;
+    this.formGroup = undefined;
+  }
+
+  private authorChange(value) {
+    this.formGroup.get('authorId').setValue(value.id);
+  }
+
+  private publicationHousesChange(value: Array<any>) {
+    let array = [];
+    value.forEach(function (i) {
+      array.push(i.id);
+    });
+    this.formGroup.get('publicationHouseIds').setValue(array);
+  }
 }

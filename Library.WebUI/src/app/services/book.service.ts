@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Book } from '../models/book/book';
+
 import { AllBooks } from '../models/book/allBooks';
+import { BookCreateView } from '../models/book/bookCreateView';
+import { BookUpdateView } from '../models/book/bookUpdateView';
 
 @Injectable()
-export class DataService {
+export class BookService {
 
-    private url = "";
+  private url: string = "/api/Book";
 
-    constructor(private http: HttpClient) {
-        this.url = "api/Book/";
-    }
+  constructor(private http: HttpClient) { }
 
-    getProducts() {
-        return this.http.get<AllBooks>(this.url);
-    }
-
-    getProduct(id: number) {
-        return this.http.get(this.url + '/Get/' + id);
-    }
-
-    createProduct(product: Book) {
-        return this.http.post(this.url, product);
-    }
-    updateProduct(product: Book) {
-        return this.http.put(this.url, product);
-    }
-    deleteProduct(id: number) {
-        return this.http.delete(this.url + '/' + id);
-    }
+  public get() {
+    return this.http.get<AllBooks>(this.url);
+  }
+  public create(item: BookCreateView) {
+    debugger;
+    return this.http.post(this.url, item)
+  }
+  public update(item: BookUpdateView) {
+    return this.http.put(this.url, item)
+  }
+  public delete(id?: number) {
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }

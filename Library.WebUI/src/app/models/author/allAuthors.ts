@@ -1,8 +1,8 @@
-﻿import { Author } from "../author/author";
+import { AuthorGetView } from "./authorGetView";
 
 export class AllAuthors {
     constructor() {
-        this.authors = new Array<Author>()
+        this.authors = new Array<AuthorGetView>()
     }
-    public authors: Author[];
+  public authors: AuthorGetView[];
 }

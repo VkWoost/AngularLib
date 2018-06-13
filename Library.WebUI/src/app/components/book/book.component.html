@@ -1,55 +1,41 @@
-﻿<h1>Books</h1>
-<input type="button" value="Add" class="btn btn-default" (click)="add()" />
-<table *ngIf="tableMode; else create" class="table table-striped">
-    <thead>
-        <tr>
-            <td>Name</td>
-            <td>Author</td>
-            <td>Year Of Publication</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let p of products.books">
-            <ng-template [ngIf]="product?.id != p.id" [ngIfElse]="edit">
-                <td>{{p?.name}}</td>
-                <td>{{p?.author.name}}</td>
-                <td>{{p?.yearOfPublication}}</td>
-
-                <td>
-                    <button class="btn btn-sm btn-primary" (click)="editProduct(p)">Edit</button>
-                    <button class="btn btn-sm btn-danger" (click)="delete(p)">Delete</button>
-                </td>
-            </ng-template>
-        </tr>
-    </tbody>
-</table>
-
-<!--шаблон для редактирования-->
-<ng-template #edit>
-    <td>
-        <input type="text" [(ngModel)]="product.name" class="form-control" />
-        <input type="number" [(ngModel)]="product.authorId" class="form-control" />
-        <input type="number" [(ngModel)]="product.yearOfPublication" class="form-control" />
-    </td>
-    <td>
-        <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-success" />
-        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-sm btn-warning" />
-    </td>
-</ng-template>
-
-<!--шаблон для добавления-->
-<ng-template #create>
-    <div class="form-group">
-        <label>Name</label>
-        <input type="text" [(ngModel)]="product.name" class="form-control" />
-        <label>Author</label>
-        <input type="number" [(ngModel)]="product.authorId" class="form-control" />
-        <label>Year Of Publication</label>
-        <input type="number" [(ngModel)]="product.yearOfPublication" class="form-control" />
-    </div>
-    <div>
-        <input type="button" value="Save" (click)="save()" class="btn btn-success" />
-        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
-    </div>
-</ng-template>
+<kendo-grid [data]="books.books"
+            [height]="533"
+            [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
+            [pageable]="true" [sortable]="true"
+            (dataStateChange)="onStateChange($event)"
+            (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+            (save)="saveHandler($event)" (remove)="removeHandler($event)"
+            (add)="addHandler($event)"
+            [navigable]="true">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
+  <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+  <kendo-grid-column field="author.name" title="Author">
+    <ng-template kendoGridEditTemplate >
+      <kendo-dropdownlist [data]="authors.authors"
+                          [textField]="'name'"
+                          [valueField]="'id'"
+                          (valueChange)="authorChange($event)">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="yearOfPublication" title="Year Of Publication"></kendo-grid-column>
+  <kendo-grid-column field="publicationHouses" title="Publication Houses">
+    <ng-template kendoGridEditTemplate>
+      <kendo-multiselect [data]="publicationHouses.publicationHouses"
+                         [textField]="'name'"
+                         [valueField]="'id'"
+                         (valueChange)="publicationHousesChange($event)">
+      </kendo-multiselect>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-command-column title="command" width="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>

@@ -1,8 +1,8 @@
-﻿import { Book } from "./book";
+import { BookGetView } from "./bookGetView";
 
 export class AllBooks {
     constructor() {
-        this.books = new Array<Book>();
+        this.books = new Array<BookGetView>();
     }
-    public books: Book[];
+  public books: BookGetView[];
 }

@@ -13,17 +13,22 @@ namespace Library.BLL.Services
     public class BookService
     {
         private IRepository<Book> _bookRepository;
+		private PublicationHouseBookRepository _pHouseBookRepository;
         private AuthorService _authorService;
+		private PublicationHouseService _publicationHouseService;
 
         public BookService(LibraryContext context)
         {
             _bookRepository = new EFGenericRepository<Book>(context);
+			_pHouseBookRepository = new PublicationHouseBookRepository(context);
             _authorService = new AuthorService(context);
+			_publicationHouseService = new PublicationHouseService(context);
         }
 
         public void Create(BookCreateView bookViewModel)
         {
             _bookRepository.Create(Mapper.Map<BookCreateView, Book>(bookViewModel));
+
         }
         
         public BookGetView Get(int id)
@@ -31,7 +36,7 @@ namespace Library.BLL.Services
             var book = _bookRepository.Get(id);
             if (book == null)
             {
-                throw new BLLException("Author not found");
+                throw new BLLException("Book not found");
             }
             var result = Mapper.Map<Book, BookGetView>(book);
             result.Author = _authorService.Get(result.AuthorId.Value);
@@ -43,9 +48,13 @@ namespace Library.BLL.Services
             BookGetAllView result = new BookGetAllView();
             result.Books = Mapper.Map<IEnumerable<Book>, List<BookGetView>>(_bookRepository.GetAll());
             var authors = _authorService.GetAll();
-            foreach(var i in result.Books)
+			var pHouses = _publicationHouseService.GetAll().PublicationHouses;
+			var publicHouseBook = _pHouseBookRepository.GetAll();
+			foreach (var book in result.Books)
             {
-                i.Author = authors.Authors.FirstOrDefault(x => x.Id == i.AuthorId);
+                book.Author = authors.Authors.FirstOrDefault(x => x.Id == book.AuthorId);
+				var currentPublicHouseBook = publicHouseBook.Where(x => x.BookId == book.Id).Select(x=>x.PublicationHouseId).ToList();
+				book.PublicationHouses = pHouses.Where(x => currentPublicHouseBook.Contains(x.Id)).ToList();
             }
             return result;
         }
@@ -63,7 +72,7 @@ namespace Library.BLL.Services
         {
             if (_bookRepository.Get(bookViewModel.Id) == null)
             {
-                throw new BLLException("Author not found");
+                throw new BLLException("Book not found");
             }
             _bookRepository.Update(Mapper.Map<BookUpdateView, Book>(bookViewModel));
         }

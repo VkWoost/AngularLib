@@ -142,7 +142,7 @@ All available Kendo UI commercial licenses may be obtained at http://www.telerik
 
 *Copyright © 2018 Telerik AD. All rights reserved.*
 
-@progress/kendo-angular-dropdowns@3.0.1
+@progress/kendo-angular-dropdowns@3.0.2
 SEE LICENSE in LICENSE.md
 # Kendo UI for Angular
 

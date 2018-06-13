@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
@@ -14,7 +14,8 @@ import { PublicationHouseComponent } from './components/publicationHouse/publica
 import { BookComponent } from './components/book/book.component';
 
 import { GridModule } from '@progress/kendo-angular-grid';
-
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { GridModule } from '@progress/kendo-angular-grid';
       { path: '**', redirectTo: 'book' }
       ])
     ,
-    GridModule
+    GridModule,
+    DropDownsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap:[AppComponent]

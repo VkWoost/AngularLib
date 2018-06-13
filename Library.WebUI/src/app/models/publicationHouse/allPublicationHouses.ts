@@ -1,8 +1,8 @@
-﻿import { PublicationHouse } from "./publicationHouse";
+import { PublicationHouseGetView } from "./publicationHouseGetView";
 
 export class AllPublicationHouses {
     constructor() {
-        this.publicationHouses = new Array<PublicationHouse>();
+        this.publicationHouses = new Array<PublicationHouseGetView>();
     }
-    public publicationHouses: PublicationHouse[];
+    public publicationHouses: PublicationHouseGetView[];
 }

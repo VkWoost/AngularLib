@@ -1,8 +1,8 @@
-﻿import { Magazine } from "../magazine/magazine";
+import { MagazineGetView } from "./magazineGetView";
 
 export class AllMagazines {
     constructor() {
-        this.magazines = new Array<Magazine>();
+        this.magazines = new Array<MagazineGetView>();
     }
-    public magazines: Magazine[];
+  public magazines: MagazineGetView[];
 }

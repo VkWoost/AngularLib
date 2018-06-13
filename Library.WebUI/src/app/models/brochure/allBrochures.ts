@@ -1,10 +1,10 @@
-﻿import { Brochure } from "../brochure/brochure";
+import { BrochureGetView } from "./brochureGetView";
 
 export class AllBrochures {
     constructor(
     ) {
-        this.brochures = new Array<Brochure>();
+        this.brochures = new Array<BrochureGetView>();
     }
-    public brochures: Brochure[]
+    public brochures: BrochureGetView[]
 
 }

@@ -104,12 +104,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_publicationHouse_publicationHouse_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/publicationHouse/publicationHouse.component */ "./src/app/components/publicationHouse/publicationHouse.component.ts");
 /* harmony import */ var _components_book_book_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/book/book.component */ "./src/app/components/book/book.component.ts");
 /* harmony import */ var _progress_kendo_angular_grid__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @progress/kendo-angular-grid */ "./node_modules/@progress/kendo-angular-grid/dist/es/index.js");
+/* harmony import */ var _progress_kendo_angular_dropdowns__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @progress/kendo-angular-dropdowns */ "./node_modules/@progress/kendo-angular-dropdowns/dist/es/index.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -153,7 +157,9 @@ var AppModule = /** @class */ (function () {
                     { path: 'book', component: _components_book_book_component__WEBPACK_IMPORTED_MODULE_12__["BookComponent"] },
                     { path: '**', redirectTo: 'book' }
                 ]),
-                _progress_kendo_angular_grid__WEBPACK_IMPORTED_MODULE_13__["GridModule"]
+                _progress_kendo_angular_grid__WEBPACK_IMPORTED_MODULE_13__["GridModule"],
+                _progress_kendo_angular_dropdowns__WEBPACK_IMPORTED_MODULE_14__["DropDownsModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_15__["BrowserAnimationsModule"]
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
@@ -173,7 +179,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"view | async\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n        <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n    <kendo-grid-column field=\"Name\" title=\"Product Name\"></kendo-grid-column>\r\n    <kendo-grid-column field=\"UnitPrice\" editor=\"numeric\" title=\"Price\"></kendo-grid-column>\r\n    <kendo-grid-column field=\"Discontinued\" editor=\"boolean\" title=\"Discontinued\"></kendo-grid-column>\r\n    <kendo-grid-column field=\"UnitsInStock\" editor=\"numeric\" title=\"Units In Stock\"></kendo-grid-column>\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n        <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n            <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n            <button kendoGridRemoveCommand>Remove</button>\r\n            <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n            <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n        </ng-template>\r\n    </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"authors.authors\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -188,8 +194,8 @@ module.exports = "<kendo-grid [data]=\"view | async\"\r\n            [height]=\"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthorComponent", function() { return AuthorComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_author_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/author.service */ "./src/app/services/author.service.ts");
-/* harmony import */ var _models_author_author__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/author/author */ "./src/app/models/author/author.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_author_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/author.service */ "./src/app/services/author.service.ts");
 /* harmony import */ var _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/author/allAuthors */ "./src/app/models/author/allAuthors.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -207,55 +213,77 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AuthorComponent = /** @class */ (function () {
     function AuthorComponent(dataService) {
         this.dataService = dataService;
-        this.tableMode = true;
-        debugger;
-        this.product = new _models_author_author__WEBPACK_IMPORTED_MODULE_2__["Author"]();
-        this.products = new _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_3__["AllAuthors"]();
+        this.gridState = {
+            sort: [],
+            skip: 0,
+            take: 10
+        };
+        this.authors = new _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_3__["AllAuthors"]();
     }
     AuthorComponent.prototype.ngOnInit = function () {
-        debugger;
-        this.loadProducts();
+        this.loadData();
     };
-    AuthorComponent.prototype.loadProducts = function () {
+    AuthorComponent.prototype.loadData = function () {
         var _this = this;
-        this.dataService.getProducts()
-            .subscribe(function (data) { return _this.products = data; });
+        this.dataService.get().subscribe(function (data) { return _this.authors = data; });
     };
-    AuthorComponent.prototype.save = function () {
+    AuthorComponent.prototype.addHandler = function (_a) {
+        var sender = _a.sender;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+        });
+        sender.addRow(this.formGroup);
+    };
+    AuthorComponent.prototype.editHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex, dataItem = _a.dataItem;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+        });
+        this.editedRowIndex = rowIndex;
+        sender.editRow(rowIndex, this.formGroup);
+    };
+    AuthorComponent.prototype.cancelHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex;
+        this.closeEditor(sender, rowIndex);
+    };
+    AuthorComponent.prototype.saveHandler = function (_a) {
         var _this = this;
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe(function (data) { return _this.products.authors.push(data); });
+        var sender = _a.sender, rowIndex = _a.rowIndex, formGroup = _a.formGroup, isNew = _a.isNew;
+        if (isNew) {
+            var product = formGroup.value;
+            this.dataService.create(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(function (data) { return _this.loadProducts(); });
+        if (!isNew) {
+            var product = formGroup.value;
+            this.dataService.update(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        this.cancel();
+        sender.closeRow(rowIndex);
     };
-    AuthorComponent.prototype.editProduct = function (p) {
-        this.product = p;
-    };
-    AuthorComponent.prototype.cancel = function () {
-        this.product = new _models_author_author__WEBPACK_IMPORTED_MODULE_2__["Author"]();
-        this.tableMode = true;
-    };
-    AuthorComponent.prototype.delete = function (p) {
+    AuthorComponent.prototype.removeHandler = function (_a) {
         var _this = this;
-        this.dataService.deleteProduct(p.id)
-            .subscribe(function (data) { return _this.loadProducts(); });
+        var dataItem = _a.dataItem;
+        this.dataService.delete(dataItem.id)
+            .subscribe(function () { return _this.loadData(); });
     };
-    AuthorComponent.prototype.add = function () {
-        this.cancel();
-        this.tableMode = false;
+    AuthorComponent.prototype.closeEditor = function (grid, rowIndex) {
+        if (rowIndex === void 0) { rowIndex = this.editedRowIndex; }
+        grid.closeRow(rowIndex);
+        this.editedRowIndex = undefined;
+        this.formGroup = undefined;
     };
     AuthorComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'author',
+            selector: 'auhtor',
             template: __webpack_require__(/*! ./author.component.html */ "./src/app/components/author/author.component.html"),
-            providers: [_services_author_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]]
+            providers: [_services_author_service__WEBPACK_IMPORTED_MODULE_2__["AuthorService"]]
         }),
-        __metadata("design:paramtypes", [_services_author_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [_services_author_service__WEBPACK_IMPORTED_MODULE_2__["AuthorService"]])
     ], AuthorComponent);
     return AuthorComponent;
 }());
@@ -271,7 +299,7 @@ var AuthorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Books</h1>\r\n<input type=\"button\" value=\"Add\" class=\"btn btn-default\" (click)=\"add()\" />\r\n<table *ngIf=\"tableMode; else create\" class=\"table table-striped\">\r\n    <thead>\r\n        <tr>\r\n            <td>Name</td>\r\n            <td>Author</td>\r\n            <td>Year Of Publication</td>\r\n            <td></td>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let p of products.books\">\r\n            <ng-template [ngIf]=\"product?.id != p.id\" [ngIfElse]=\"edit\">\r\n                <td>{{p?.name}}</td>\r\n                <td>{{p?.author.name}}</td>\r\n                <td>{{p?.yearOfPublication}}</td>\r\n\r\n                <td>\r\n                    <button class=\"btn btn-sm btn-primary\" (click)=\"editProduct(p)\">Edit</button>\r\n                    <button class=\"btn btn-sm btn-danger\" (click)=\"delete(p)\">Delete</button>\r\n                </td>\r\n            </ng-template>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n<!--шаблон для редактирования-->\r\n<ng-template #edit>\r\n    <td>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <input type=\"number\" [(ngModel)]=\"product.authorId\" class=\"form-control\" />\r\n        <input type=\"number\" [(ngModel)]=\"product.yearOfPublication\" class=\"form-control\" />\r\n    </td>\r\n    <td>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-sm btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-sm btn-warning\" />\r\n    </td>\r\n</ng-template>\r\n\r\n<!--шаблон для добавления-->\r\n<ng-template #create>\r\n    <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <label>Author</label>\r\n        <input type=\"number\" [(ngModel)]=\"product.authorId\" class=\"form-control\" />\r\n        <label>Year Of Publication</label>\r\n        <input type=\"number\" [(ngModel)]=\"product.yearOfPublication\" class=\"form-control\" />\r\n    </div>\r\n    <div>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-warning\" />\r\n    </div>\r\n</ng-template>"
+module.exports = "<kendo-grid [data]=\"books.books\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"author.name\" title=\"Author\">\r\n    <ng-template kendoGridEditTemplate >\r\n      <kendo-dropdownlist [data]=\"authors.authors\"\r\n                          [textField]=\"'name'\"\r\n                          [valueField]=\"'id'\"\r\n                          (valueChange)=\"authorChange($event)\">\r\n      </kendo-dropdownlist>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"publicationHouses\" title=\"Publication Houses\">\r\n    <ng-template kendoGridEditTemplate>\r\n      <kendo-multiselect [data]=\"publicationHouses.publicationHouses\"\r\n                         [textField]=\"'name'\"\r\n                         [valueField]=\"'id'\"\r\n                         (valueChange)=\"publicationHousesChange($event)\">\r\n      </kendo-multiselect>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -286,9 +314,13 @@ module.exports = "<h1>Books</h1>\r\n<input type=\"button\" value=\"Add\" class=\
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookComponent", function() { return BookComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_book_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/book.service */ "./src/app/services/book.service.ts");
-/* harmony import */ var _models_book_book__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/book/book */ "./src/app/models/book/book.ts");
-/* harmony import */ var _models_book_allBooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/book/allBooks */ "./src/app/models/book/allBooks.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_book_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/book.service */ "./src/app/services/book.service.ts");
+/* harmony import */ var _services_author_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/author.service */ "./src/app/services/author.service.ts");
+/* harmony import */ var _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/publicationHouse.service */ "./src/app/services/publicationHouse.service.ts");
+/* harmony import */ var _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/publicationHouse/allPublicationHouses */ "./src/app/models/publicationHouse/allPublicationHouses.ts");
+/* harmony import */ var _models_book_allBooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/book/allBooks */ "./src/app/models/book/allBooks.ts");
+/* harmony import */ var _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../models/author/allAuthors */ "./src/app/models/author/allAuthors.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -302,56 +334,107 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
+
+
 var BookComponent = /** @class */ (function () {
-    function BookComponent(dataService) {
+    function BookComponent(dataService, authorService, publicationHouseSevice) {
         this.dataService = dataService;
-        this.tableMode = true;
-        this.product = new _models_book_book__WEBPACK_IMPORTED_MODULE_2__["Book"]();
-        this.products = new _models_book_allBooks__WEBPACK_IMPORTED_MODULE_3__["AllBooks"]();
+        this.authorService = authorService;
+        this.publicationHouseSevice = publicationHouseSevice;
+        this.gridState = {
+            sort: [],
+            skip: 0,
+            take: 10
+        };
+        this.books = new _models_book_allBooks__WEBPACK_IMPORTED_MODULE_6__["AllBooks"]();
+        this.authors = new _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_7__["AllAuthors"]();
+        this.publicationHouses = new _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_5__["AllPublicationHouses"]();
     }
     BookComponent.prototype.ngOnInit = function () {
-        this.loadProducts();
-    };
-    BookComponent.prototype.loadProducts = function () {
         var _this = this;
-        this.dataService.getProducts()
-            .subscribe(function (data) { return _this.products = data; });
+        this.loadData();
+        this.authorService.get().subscribe(function (data) { return _this.authors = data; });
+        this.publicationHouseSevice.get().subscribe(function (data) { return _this.publicationHouses = data; });
     };
-    BookComponent.prototype.save = function () {
+    BookComponent.prototype.loadData = function () {
         var _this = this;
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe(function (data) { return _this.products.books.push(data); });
+        this.dataService.get().subscribe(function (data) { return _this.books = data; });
+    };
+    BookComponent.prototype.addHandler = function (_a) {
+        var sender = _a.sender;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
+            'authorId': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+            'publicationHouseIds': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('')
+        });
+        sender.addRow(this.formGroup);
+    };
+    BookComponent.prototype.editHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex, dataItem = _a.dataItem;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.yearOfPublication, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
+            'authorId': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.author),
+            'publicationHouseIds': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.publicationHouses)
+        });
+        this.editedRowIndex = rowIndex;
+        sender.editRow(rowIndex, this.formGroup);
+    };
+    BookComponent.prototype.cancelHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex;
+        this.closeEditor(sender, rowIndex);
+    };
+    BookComponent.prototype.saveHandler = function (_a) {
+        var _this = this;
+        var sender = _a.sender, rowIndex = _a.rowIndex, formGroup = _a.formGroup, isNew = _a.isNew;
+        if (isNew) {
+            var product = formGroup.value;
+            this.dataService.create(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(function (data) { return _this.loadProducts(); });
+        if (!isNew) {
+            var product = formGroup.value;
+            this.dataService.update(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        this.cancel();
+        sender.closeRow(rowIndex);
     };
-    BookComponent.prototype.editProduct = function (p) {
-        this.product = p;
-    };
-    BookComponent.prototype.cancel = function () {
-        this.product = new _models_book_book__WEBPACK_IMPORTED_MODULE_2__["Book"]();
-        this.tableMode = true;
-    };
-    BookComponent.prototype.delete = function (p) {
+    BookComponent.prototype.removeHandler = function (_a) {
         var _this = this;
-        this.dataService.deleteProduct(p.id)
-            .subscribe(function (data) { return _this.loadProducts(); });
+        var dataItem = _a.dataItem;
+        this.dataService.delete(dataItem.id)
+            .subscribe(function () { return _this.loadData(); });
     };
-    BookComponent.prototype.add = function () {
-        this.cancel();
-        this.tableMode = false;
+    BookComponent.prototype.closeEditor = function (grid, rowIndex) {
+        if (rowIndex === void 0) { rowIndex = this.editedRowIndex; }
+        grid.closeRow(rowIndex);
+        this.editedRowIndex = undefined;
+        this.formGroup = undefined;
+    };
+    BookComponent.prototype.authorChange = function (value) {
+        this.formGroup.get('authorId').setValue(value.id);
+    };
+    BookComponent.prototype.publicationHousesChange = function (value) {
+        var array = [];
+        value.forEach(function (i) {
+            array.push(i.id);
+        });
+        this.formGroup.get('publicationHouseIds').setValue(array);
     };
     BookComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'book',
             template: __webpack_require__(/*! ./book.component.html */ "./src/app/components/book/book.component.html"),
-            providers: [_services_book_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]]
+            providers: [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"]]
         }),
-        __metadata("design:paramtypes", [_services_book_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"]])
     ], BookComponent);
     return BookComponent;
 }());
@@ -367,7 +450,7 @@ var BookComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Brochures</h1>\r\n<input type=\"button\" value=\"Add\" class=\"btn btn-default\" (click)=\"add()\" />\r\n<table *ngIf=\"tableMode; else create\" class=\"table table-striped\">\r\n    <thead>\r\n        <tr>\r\n            <td>Name</td>\r\n            <td>Type Of Cover</td>\r\n            <td>Number Of Pages</td>\r\n            <td></td>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let p of products.brochures\">\r\n            <ng-template [ngIf]=\"product?.id != p.id\" [ngIfElse]=\"edit\">\r\n                <td>{{p?.name}}</td>\r\n                <td>{{p?.typeOfCover}}</td>\r\n                <td>{{p?.numberOfPages}}</td>\r\n                <td>\r\n                    <button class=\"btn btn-sm btn-primary\" (click)=\"editProduct(p)\">Edit</button>\r\n                    <button class=\"btn btn-sm btn-danger\" (click)=\"delete(p)\">Delete</button>\r\n                </td>\r\n            </ng-template>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n<!--шаблон для редактирования-->\r\n<ng-template #edit>\r\n    <td>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <input type=\"text\" [(ngModel)]=\"product.typeOfCover\" class=\"form-control\" />\r\n        <input type=\"number\" [(ngModel)]=\"product.numberOfPages\" class=\"form-control\" />\r\n    </td>\r\n    <td>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-sm btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-sm btn-warning\" />\r\n    </td>\r\n</ng-template>\r\n\r\n<!--шаблон для добавления-->\r\n<ng-template #create>\r\n    <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <label>Type Of Cover</label>\r\n        <input type=\"text\" [(ngModel)]=\"product.typeOfCover\" class=\"form-control\" />\r\n        <label>Number Of Pages</label>\r\n        <input type=\"number\" [(ngModel)]=\"product.numberOfPages\" class=\"form-control\" />\r\n    </div>\r\n    <div>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-warning\" />\r\n    </div>\r\n</ng-template>"
+module.exports = "<kendo-grid [data]=\"brochures.brochures\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"typeOfCover\" title=\"Type Of Cover\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"numberOfPages\" title=\"Number Of Pages\"></kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -382,8 +465,8 @@ module.exports = "<h1>Brochures</h1>\r\n<input type=\"button\" value=\"Add\" cla
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BrochureComponent", function() { return BrochureComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_brochure_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/brochure.service */ "./src/app/services/brochure.service.ts");
-/* harmony import */ var _models_brochure_brochure__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/brochure/brochure */ "./src/app/models/brochure/brochure.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_brochure_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/brochure.service */ "./src/app/services/brochure.service.ts");
 /* harmony import */ var _models_brochure_allBrochures__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/brochure/allBrochures */ "./src/app/models/brochure/allBrochures.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -401,53 +484,81 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var BrochureComponent = /** @class */ (function () {
     function BrochureComponent(dataService) {
         this.dataService = dataService;
-        this.tableMode = true;
-        this.product = new _models_brochure_brochure__WEBPACK_IMPORTED_MODULE_2__["Brochure"]();
-        this.products = new _models_brochure_allBrochures__WEBPACK_IMPORTED_MODULE_3__["AllBrochures"]();
+        this.gridState = {
+            sort: [],
+            skip: 0,
+            take: 10
+        };
+        this.brochures = new _models_brochure_allBrochures__WEBPACK_IMPORTED_MODULE_3__["AllBrochures"]();
     }
     BrochureComponent.prototype.ngOnInit = function () {
-        this.loadProducts();
+        this.loadData();
     };
-    BrochureComponent.prototype.loadProducts = function () {
+    BrochureComponent.prototype.loadData = function () {
         var _this = this;
-        this.dataService.getProducts()
-            .subscribe(function (data) { return _this.products = data; });
+        this.dataService.get().subscribe(function (data) { return _this.brochures = data; });
     };
-    BrochureComponent.prototype.save = function () {
+    BrochureComponent.prototype.addHandler = function (_a) {
+        var sender = _a.sender;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'typeOfCover': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'numberOfPages': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{1,3}')])),
+        });
+        sender.addRow(this.formGroup);
+    };
+    BrochureComponent.prototype.editHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex, dataItem = _a.dataItem;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'typeOfCover': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.typeOfCover, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'numberOfPages': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.numberOfPages, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{1,3}')])),
+        });
+        this.editedRowIndex = rowIndex;
+        sender.editRow(rowIndex, this.formGroup);
+    };
+    BrochureComponent.prototype.cancelHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex;
+        this.closeEditor(sender, rowIndex);
+    };
+    BrochureComponent.prototype.saveHandler = function (_a) {
         var _this = this;
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe(function (data) { return _this.products.brochures.push(data); });
+        var sender = _a.sender, rowIndex = _a.rowIndex, formGroup = _a.formGroup, isNew = _a.isNew;
+        if (isNew) {
+            var product = formGroup.value;
+            this.dataService.create(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(function (data) { return _this.loadProducts(); });
+        if (!isNew) {
+            var product = formGroup.value;
+            this.dataService.update(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        this.cancel();
+        sender.closeRow(rowIndex);
     };
-    BrochureComponent.prototype.editProduct = function (p) {
-        this.product = p;
-    };
-    BrochureComponent.prototype.cancel = function () {
-        this.product = new _models_brochure_brochure__WEBPACK_IMPORTED_MODULE_2__["Brochure"]();
-        this.tableMode = true;
-    };
-    BrochureComponent.prototype.delete = function (p) {
+    BrochureComponent.prototype.removeHandler = function (_a) {
         var _this = this;
-        this.dataService.deleteProduct(p.id)
-            .subscribe(function (data) { return _this.loadProducts(); });
+        var dataItem = _a.dataItem;
+        this.dataService.delete(dataItem.id)
+            .subscribe(function () { return _this.loadData(); });
     };
-    BrochureComponent.prototype.add = function () {
-        this.cancel();
-        this.tableMode = false;
+    BrochureComponent.prototype.closeEditor = function (grid, rowIndex) {
+        if (rowIndex === void 0) { rowIndex = this.editedRowIndex; }
+        grid.closeRow(rowIndex);
+        this.editedRowIndex = undefined;
+        this.formGroup = undefined;
     };
     BrochureComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'brochure',
             template: __webpack_require__(/*! ./brochure.component.html */ "./src/app/components/brochure/brochure.component.html"),
-            providers: [_services_brochure_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]]
+            providers: [_services_brochure_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]]
         }),
-        __metadata("design:paramtypes", [_services_brochure_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [_services_brochure_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]])
     ], BrochureComponent);
     return BrochureComponent;
 }());
@@ -463,7 +574,7 @@ var BrochureComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Magazines</h1>\r\n<input type=\"button\" value=\"Add\" class=\"btn btn-default\" (click)=\"add()\" />\r\n<table *ngIf=\"tableMode; else create\" class=\"table table-striped\">\r\n    <thead>\r\n        <tr>\r\n            <td>Name</td>\r\n            <td>Number</td>\r\n            <td>Year Of Publication</td>\r\n            <td></td>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let p of products.magazines\">\r\n            <ng-template [ngIf]=\"product?.id != p.id\" [ngIfElse]=\"edit\">\r\n                <td>{{p?.name}}</td>\r\n                <td>{{p?.number}}</td>\r\n                <td>{{p?.yearOfPublication}}</td>\r\n                <td>\r\n                    <button class=\"btn btn-sm btn-primary\" (click)=\"editProduct(p)\">Edit</button>\r\n                    <button class=\"btn btn-sm btn-danger\" (click)=\"delete(p)\">Delete</button>\r\n                </td>\r\n            </ng-template>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n<!--шаблон для редактирования-->\r\n<ng-template #edit>\r\n    <td>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <input type=\"number\" [(ngModel)]=\"product.number\" class=\"form-control\" />\r\n        <input type=\"number\" [(ngModel)]=\"product.yearOfPublication\" class=\"form-control\" />\r\n    </td>\r\n    <td>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-sm btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-sm btn-warning\" />\r\n    </td>\r\n</ng-template>\r\n\r\n<!--шаблон для добавления-->\r\n<ng-template #create>\r\n    <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <label>Number</label>\r\n        <input type=\"number\" [(ngModel)]=\"product.number\" class=\"form-control\" />\r\n        <label>Year Of Publication</label>\r\n        <input type=\"number\" [(ngModel)]=\"product.yearOfPublication\" class=\"form-control\" />\r\n    </div>\r\n    <div>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-warning\" />\r\n    </div>\r\n</ng-template>"
+module.exports = "<kendo-grid [data]=\"magazines.magazines\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"number\" title=\"Number\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -478,8 +589,8 @@ module.exports = "<h1>Magazines</h1>\r\n<input type=\"button\" value=\"Add\" cla
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MagazineComponent", function() { return MagazineComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_magazine_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/magazine.service */ "./src/app/services/magazine.service.ts");
-/* harmony import */ var _models_magazine_magazine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/magazine/magazine */ "./src/app/models/magazine/magazine.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_magazine_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/magazine.service */ "./src/app/services/magazine.service.ts");
 /* harmony import */ var _models_magazine_allMagazines__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/magazine/allMagazines */ "./src/app/models/magazine/allMagazines.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -497,55 +608,81 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var MagazineComponent = /** @class */ (function () {
     function MagazineComponent(dataService) {
         this.dataService = dataService;
-        this.tableMode = true;
-        this.product = new _models_magazine_magazine__WEBPACK_IMPORTED_MODULE_2__["Magazine"]();
-        this.products = new _models_magazine_allMagazines__WEBPACK_IMPORTED_MODULE_3__["AllMagazines"]();
+        this.gridState = {
+            sort: [],
+            skip: 0,
+            take: 10
+        };
+        this.magazines = new _models_magazine_allMagazines__WEBPACK_IMPORTED_MODULE_3__["AllMagazines"]();
     }
     MagazineComponent.prototype.ngOnInit = function () {
-        this.loadProducts();
+        this.loadData();
     };
-    MagazineComponent.prototype.loadProducts = function () {
+    MagazineComponent.prototype.loadData = function () {
         var _this = this;
-        this.dataService.getProducts()
-            .subscribe(function (data) {
-            _this.products = data;
+        this.dataService.get().subscribe(function (data) { return _this.magazines = data; });
+    };
+    MagazineComponent.prototype.addHandler = function (_a) {
+        var sender = _a.sender;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
+            'number': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{1,3}')])),
         });
+        sender.addRow(this.formGroup);
     };
-    MagazineComponent.prototype.save = function () {
+    MagazineComponent.prototype.editHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex, dataItem = _a.dataItem;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.yearOfPublication, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
+            'number': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.number, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{1,3}')])),
+        });
+        this.editedRowIndex = rowIndex;
+        sender.editRow(rowIndex, this.formGroup);
+    };
+    MagazineComponent.prototype.cancelHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex;
+        this.closeEditor(sender, rowIndex);
+    };
+    MagazineComponent.prototype.saveHandler = function (_a) {
         var _this = this;
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe(function (data) { return _this.products.magazines.push(data); });
+        var sender = _a.sender, rowIndex = _a.rowIndex, formGroup = _a.formGroup, isNew = _a.isNew;
+        if (isNew) {
+            var product = formGroup.value;
+            this.dataService.create(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(function (data) { return _this.loadProducts(); });
+        if (!isNew) {
+            var product = formGroup.value;
+            this.dataService.update(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        this.cancel();
+        sender.closeRow(rowIndex);
     };
-    MagazineComponent.prototype.editProduct = function (p) {
-        this.product = p;
-    };
-    MagazineComponent.prototype.cancel = function () {
-        this.product = new _models_magazine_magazine__WEBPACK_IMPORTED_MODULE_2__["Magazine"]();
-        this.tableMode = true;
-    };
-    MagazineComponent.prototype.delete = function (p) {
+    MagazineComponent.prototype.removeHandler = function (_a) {
         var _this = this;
-        this.dataService.deleteProduct(p.id)
-            .subscribe(function (data) { return _this.loadProducts(); });
+        var dataItem = _a.dataItem;
+        this.dataService.delete(dataItem.id)
+            .subscribe(function () { return _this.loadData(); });
     };
-    MagazineComponent.prototype.add = function () {
-        this.cancel();
-        this.tableMode = false;
+    MagazineComponent.prototype.closeEditor = function (grid, rowIndex) {
+        if (rowIndex === void 0) { rowIndex = this.editedRowIndex; }
+        grid.closeRow(rowIndex);
+        this.editedRowIndex = undefined;
+        this.formGroup = undefined;
     };
     MagazineComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'magazine',
             template: __webpack_require__(/*! ./magazine.component.html */ "./src/app/components/magazine/magazine.component.html"),
-            providers: [_services_magazine_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]]
+            providers: [_services_magazine_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]]
         }),
-        __metadata("design:paramtypes", [_services_magazine_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [_services_magazine_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]])
     ], MagazineComponent);
     return MagazineComponent;
 }());
@@ -618,7 +755,7 @@ var NavMenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Publication Houses</h1>\r\n<input type=\"button\" value=\"Add\" class=\"btn btn-default\" (click)=\"add()\" />\r\n<table *ngIf=\"tableMode; else create\" class=\"table table-striped\">\r\n    <thead>\r\n        <tr>\r\n            <td>Name</td>\r\n            <td>Adress</td>\r\n            <td></td>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let p of products.publicationHouses\">\r\n            <ng-template [ngIf]=\"product?.id != p.id\" [ngIfElse]=\"edit\">\r\n                <td>{{p?.name}}</td>\r\n                <td>{{p?.adress}}</td>\r\n                <td>\r\n                    <button class=\"btn btn-sm btn-primary\" (click)=\"editProduct(p)\">Edit</button>\r\n                    <button class=\"btn btn-sm btn-danger\" (click)=\"delete(p)\">Delete</button>\r\n                </td>\r\n            </ng-template>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n\r\n<!--шаблон для редактирования-->\r\n<ng-template #edit>\r\n    <td>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n    </td>\r\n     <td>\r\n        <input type=\"text\" [(ngModel)]=\"product.adress\" class=\"form-control\" />\r\n    </td>\r\n    <td>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-sm btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-sm btn-warning\" />\r\n    </td>\r\n</ng-template>\r\n\r\n<!--шаблон для добавления-->\r\n<ng-template #create>\r\n    <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"product.name\" class=\"form-control\" />\r\n        <label>Adress</label>\r\n        <input type=\"text\" [(ngModel)]=\"product.adress\" class=\"form-control\" />\r\n    </div>\r\n    <div>\r\n        <input type=\"button\" value=\"Save\" (click)=\"save()\" class=\"btn btn-success\" />\r\n        <input type=\"button\" value=\"Cancel\" (click)=\"cancel()\" class=\"btn btn-warning\" />\r\n    </div>\r\n</ng-template>\r\n"
+module.exports = "<kendo-grid [data]=\"publicationHouses.publicationHouses\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"adress\" title=\"Adress\"></kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -633,8 +770,8 @@ module.exports = "<h1>Publication Houses</h1>\r\n<input type=\"button\" value=\"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicationHouseComponent", function() { return PublicationHouseComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/publicationHouse.service */ "./src/app/services/publicationHouse.service.ts");
-/* harmony import */ var _models_publicationHouse_publicationHouse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/publicationHouse/publicationHouse */ "./src/app/models/publicationHouse/publicationHouse.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/publicationHouse.service */ "./src/app/services/publicationHouse.service.ts");
 /* harmony import */ var _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/publicationHouse/allPublicationHouses */ "./src/app/models/publicationHouse/allPublicationHouses.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -652,53 +789,79 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var PublicationHouseComponent = /** @class */ (function () {
     function PublicationHouseComponent(dataService) {
         this.dataService = dataService;
-        this.tableMode = true;
-        this.product = new _models_publicationHouse_publicationHouse__WEBPACK_IMPORTED_MODULE_2__["PublicationHouse"]();
-        this.products = new _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_3__["AllPublicationHouses"]();
+        this.gridState = {
+            sort: [],
+            skip: 0,
+            take: 10
+        };
+        this.publicationHouses = new _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_3__["AllPublicationHouses"]();
     }
     PublicationHouseComponent.prototype.ngOnInit = function () {
-        this.loadProducts();
+        this.loadData();
     };
-    PublicationHouseComponent.prototype.loadProducts = function () {
+    PublicationHouseComponent.prototype.loadData = function () {
         var _this = this;
-        this.dataService.getProducts()
-            .subscribe(function (data) { return _this.products = data; });
+        this.dataService.get().subscribe(function (data) { return _this.publicationHouses = data; });
     };
-    PublicationHouseComponent.prototype.save = function () {
+    PublicationHouseComponent.prototype.addHandler = function (_a) {
+        var sender = _a.sender;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'adress': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required)
+        });
+        sender.addRow(this.formGroup);
+    };
+    PublicationHouseComponent.prototype.editHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex, dataItem = _a.dataItem;
+        this.closeEditor(sender);
+        this.formGroup = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
+            'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            'adress': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.adress, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required)
+        });
+        this.editedRowIndex = rowIndex;
+        sender.editRow(rowIndex, this.formGroup);
+    };
+    PublicationHouseComponent.prototype.cancelHandler = function (_a) {
+        var sender = _a.sender, rowIndex = _a.rowIndex;
+        this.closeEditor(sender, rowIndex);
+    };
+    PublicationHouseComponent.prototype.saveHandler = function (_a) {
         var _this = this;
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe(function (data) { return _this.products.publicationHouses.push(data); });
+        var sender = _a.sender, rowIndex = _a.rowIndex, formGroup = _a.formGroup, isNew = _a.isNew;
+        if (isNew) {
+            var product = formGroup.value;
+            this.dataService.create(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(function (data) { return _this.loadProducts(); });
+        if (!isNew) {
+            var product = formGroup.value;
+            this.dataService.update(product)
+                .subscribe(function () { return _this.loadData(); });
         }
-        this.cancel();
+        sender.closeRow(rowIndex);
     };
-    PublicationHouseComponent.prototype.editProduct = function (p) {
-        this.product = p;
-    };
-    PublicationHouseComponent.prototype.cancel = function () {
-        this.product = new _models_publicationHouse_publicationHouse__WEBPACK_IMPORTED_MODULE_2__["PublicationHouse"]();
-        this.tableMode = true;
-    };
-    PublicationHouseComponent.prototype.delete = function (p) {
+    PublicationHouseComponent.prototype.removeHandler = function (_a) {
         var _this = this;
-        this.dataService.deleteProduct(p.id)
-            .subscribe(function (data) { return _this.loadProducts(); });
+        var dataItem = _a.dataItem;
+        this.dataService.delete(dataItem.id)
+            .subscribe(function () { return _this.loadData(); });
     };
-    PublicationHouseComponent.prototype.add = function () {
-        this.cancel();
-        this.tableMode = false;
+    PublicationHouseComponent.prototype.closeEditor = function (grid, rowIndex) {
+        if (rowIndex === void 0) { rowIndex = this.editedRowIndex; }
+        grid.closeRow(rowIndex);
+        this.editedRowIndex = undefined;
+        this.formGroup = undefined;
     };
     PublicationHouseComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'publicationHouse',
             template: __webpack_require__(/*! ./publicationHouse.component.html */ "./src/app/components/publicationHouse/publicationHouse.component.html"),
-            providers: [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]]
+            providers: [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__["PublicationHouseService"]]
         }),
-        __metadata("design:paramtypes", [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__["PublicationHouseService"]])
     ], PublicationHouseComponent);
     return PublicationHouseComponent;
 }());
@@ -728,28 +891,6 @@ var AllAuthors = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/author/author.ts":
-/*!*****************************************!*\
-  !*** ./src/app/models/author/author.ts ***!
-  \*****************************************/
-/*! exports provided: Author */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Author", function() { return Author; });
-var Author = /** @class */ (function () {
-    function Author(id, name) {
-        this.id = id;
-        this.name = name;
-    }
-    return Author;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/models/book/allBooks.ts":
 /*!*****************************************!*\
   !*** ./src/app/models/book/allBooks.ts ***!
@@ -765,31 +906,6 @@ var AllBooks = /** @class */ (function () {
         this.books = new Array();
     }
     return AllBooks;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/models/book/book.ts":
-/*!*************************************!*\
-  !*** ./src/app/models/book/book.ts ***!
-  \*************************************/
-/*! exports provided: Book */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Book", function() { return Book; });
-var Book = /** @class */ (function () {
-    function Book(id, name, yearOfPublication, authorId, author) {
-        this.id = id;
-        this.name = name;
-        this.yearOfPublication = yearOfPublication;
-        this.authorId = authorId;
-        this.author = author;
-    }
-    return Book;
 }());
 
 
@@ -817,30 +933,6 @@ var AllBrochures = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/brochure/brochure.ts":
-/*!*********************************************!*\
-  !*** ./src/app/models/brochure/brochure.ts ***!
-  \*********************************************/
-/*! exports provided: Brochure */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Brochure", function() { return Brochure; });
-var Brochure = /** @class */ (function () {
-    function Brochure(id, name, typeOfCover, numberOfPages) {
-        this.id = id;
-        this.name = name;
-        this.typeOfCover = typeOfCover;
-        this.numberOfPages = numberOfPages;
-    }
-    return Brochure;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/models/magazine/allMagazines.ts":
 /*!*************************************************!*\
   !*** ./src/app/models/magazine/allMagazines.ts ***!
@@ -856,30 +948,6 @@ var AllMagazines = /** @class */ (function () {
         this.magazines = new Array();
     }
     return AllMagazines;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/models/magazine/magazine.ts":
-/*!*********************************************!*\
-  !*** ./src/app/models/magazine/magazine.ts ***!
-  \*********************************************/
-/*! exports provided: Magazine */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Magazine", function() { return Magazine; });
-var Magazine = /** @class */ (function () {
-    function Magazine(id, name, number, yearOfPublication) {
-        this.id = id;
-        this.name = name;
-        this.number = number;
-        this.yearOfPublication = yearOfPublication;
-    }
-    return Magazine;
 }());
 
 
@@ -907,39 +975,16 @@ var AllPublicationHouses = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/publicationHouse/publicationHouse.ts":
-/*!*************************************************************!*\
-  !*** ./src/app/models/publicationHouse/publicationHouse.ts ***!
-  \*************************************************************/
-/*! exports provided: PublicationHouse */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicationHouse", function() { return PublicationHouse; });
-var PublicationHouse = /** @class */ (function () {
-    function PublicationHouse(id, name, adress) {
-        this.id = id;
-        this.name = name;
-        this.adress = adress;
-    }
-    return PublicationHouse;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/services/author.service.ts":
 /*!********************************************!*\
   !*** ./src/app/services/author.service.ts ***!
   \********************************************/
-/*! exports provided: DataService */
+/*! exports provided: AuthorService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthorService", function() { return AuthorService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -953,31 +998,28 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-var DataService = /** @class */ (function () {
-    function DataService(http) {
+var AuthorService = /** @class */ (function () {
+    function AuthorService(http) {
         this.http = http;
         this.url = "/api/Author";
     }
-    DataService.prototype.getProducts = function () {
+    AuthorService.prototype.get = function () {
         return this.http.get(this.url);
     };
-    DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + '/Get/' + id);
+    AuthorService.prototype.create = function (item) {
+        return this.http.post(this.url, item);
     };
-    DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url, product);
+    AuthorService.prototype.update = function (item) {
+        return this.http.put(this.url, item);
     };
-    DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url, product);
+    AuthorService.prototype.delete = function (id) {
+        return this.http.delete(this.url + "/" + id);
     };
-    DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + '/' + id);
-    };
-    DataService = __decorate([
+    AuthorService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], DataService);
-    return DataService;
+    ], AuthorService);
+    return AuthorService;
 }());
 
 
@@ -988,12 +1030,12 @@ var DataService = /** @class */ (function () {
 /*!******************************************!*\
   !*** ./src/app/services/book.service.ts ***!
   \******************************************/
-/*! exports provided: DataService */
+/*! exports provided: BookService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookService", function() { return BookService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -1007,32 +1049,29 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-var DataService = /** @class */ (function () {
-    function DataService(http) {
+var BookService = /** @class */ (function () {
+    function BookService(http) {
         this.http = http;
-        this.url = "";
-        this.url = "api/Book/";
+        this.url = "/api/Book";
     }
-    DataService.prototype.getProducts = function () {
+    BookService.prototype.get = function () {
         return this.http.get(this.url);
     };
-    DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + '/Get/' + id);
+    BookService.prototype.create = function (item) {
+        debugger;
+        return this.http.post(this.url, item);
     };
-    DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url, product);
+    BookService.prototype.update = function (item) {
+        return this.http.put(this.url, item);
     };
-    DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url, product);
+    BookService.prototype.delete = function (id) {
+        return this.http.delete(this.url + "/" + id);
     };
-    DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + '/' + id);
-    };
-    DataService = __decorate([
+    BookService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], DataService);
-    return DataService;
+    ], BookService);
+    return BookService;
 }());
 
 
@@ -1067,20 +1106,17 @@ var DataService = /** @class */ (function () {
         this.http = http;
         this.url = "/api/Brochure";
     }
-    DataService.prototype.getProducts = function () {
+    DataService.prototype.get = function () {
         return this.http.get(this.url);
     };
-    DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + '/Get/' + id);
+    DataService.prototype.create = function (item) {
+        return this.http.post(this.url, item);
     };
-    DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url, product);
+    DataService.prototype.update = function (item) {
+        return this.http.put(this.url, item);
     };
-    DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url, product);
-    };
-    DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + '/' + id);
+    DataService.prototype.delete = function (id) {
+        return this.http.delete(this.url + "/" + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -1121,20 +1157,17 @@ var DataService = /** @class */ (function () {
         this.http = http;
         this.url = "/api/Magazine";
     }
-    DataService.prototype.getProducts = function () {
+    DataService.prototype.get = function () {
         return this.http.get(this.url);
     };
-    DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + '/Get/' + id);
+    DataService.prototype.create = function (item) {
+        return this.http.post(this.url, item);
     };
-    DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url, product);
+    DataService.prototype.update = function (item) {
+        return this.http.put(this.url, item);
     };
-    DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url, product);
-    };
-    DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + '/' + id);
+    DataService.prototype.delete = function (id) {
+        return this.http.delete(this.url + "/" + id);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -1151,12 +1184,12 @@ var DataService = /** @class */ (function () {
 /*!******************************************************!*\
   !*** ./src/app/services/publicationHouse.service.ts ***!
   \******************************************************/
-/*! exports provided: DataService */
+/*! exports provided: PublicationHouseService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicationHouseService", function() { return PublicationHouseService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -1170,31 +1203,28 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-var DataService = /** @class */ (function () {
-    function DataService(http) {
+var PublicationHouseService = /** @class */ (function () {
+    function PublicationHouseService(http) {
         this.http = http;
         this.url = "/api/PublicationHouse";
     }
-    DataService.prototype.getProducts = function () {
+    PublicationHouseService.prototype.get = function () {
         return this.http.get(this.url);
     };
-    DataService.prototype.getProduct = function (id) {
-        return this.http.get(this.url + '/Get/' + id);
+    PublicationHouseService.prototype.create = function (item) {
+        return this.http.post(this.url, item);
     };
-    DataService.prototype.createProduct = function (product) {
-        return this.http.post(this.url, product);
+    PublicationHouseService.prototype.update = function (item) {
+        return this.http.put(this.url, item);
     };
-    DataService.prototype.updateProduct = function (product) {
-        return this.http.put(this.url, product);
+    PublicationHouseService.prototype.delete = function (id) {
+        return this.http.delete(this.url + "/" + id);
     };
-    DataService.prototype.deleteProduct = function (id) {
-        return this.http.delete(this.url + '/' + id);
-    };
-    DataService = __decorate([
+    PublicationHouseService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], DataService);
-    return DataService;
+    ], PublicationHouseService);
+    return PublicationHouseService;
 }());
 
 

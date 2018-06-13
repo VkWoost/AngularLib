@@ -1,54 +1,98 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/publicationHouse.service';
-import { PublicationHouse } from '../../models/publicationHouse/publicationHouse';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { PublicationHouseService } from '../../services/publicationHouse.service';
 import { AllPublicationHouses } from '../../models/publicationHouse/allPublicationHouses';
+import { PublicationHouseCreateView } from '../../models/publicationHouse/publicationHouseCreateView';
+import { PublicationHouseUpdateView } from '../../models/publicationHouse/publicationHouseUpdateView';
+
+import { GridDataResult } from '@progress/kendo-angular-grid';
+import { State, process } from '@progress/kendo-data-query';
 
 @Component({
     selector: 'publicationHouse',
     templateUrl: './publicationHouse.component.html',
-    providers: [DataService]
+  providers: [PublicationHouseService]
 })
 export class PublicationHouseComponent implements OnInit {
     
-    product: PublicationHouse;   
-    products: AllPublicationHouses;                
-    tableMode: boolean = true;          
+  public publicationHouses: AllPublicationHouses;
+  public gridState: State = {
+    sort: [],
+    skip: 0,
+    take: 10
+  };
+  public formGroup: FormGroup;
+  private editedRowIndex: number;
 
-    constructor(private dataService: DataService) {
-        this.product = new PublicationHouse();
-        this.products = new AllPublicationHouses();
-    }
+  constructor(private dataService: PublicationHouseService) {
+    this.publicationHouses = new AllPublicationHouses();
+  }
 
-    ngOnInit() {
-        this.loadProducts();     
+  public ngOnInit(): void {
+    this.loadData();
+  }
+
+  private loadData() {
+    this.dataService.get().subscribe(data => this.publicationHouses = data);
+  }
+
+  public addHandler({ sender }) {
+    this.closeEditor(sender);
+
+    this.formGroup = new FormGroup(
+      {
+        'id': new FormControl(0),
+        'name': new FormControl('', Validators.required),
+        'adress': new FormControl('', Validators.required)
+      }
+    );
+
+    sender.addRow(this.formGroup);
+  }
+
+  public editHandler({ sender, rowIndex, dataItem }) {
+    this.closeEditor(sender);
+
+    this.formGroup = new FormGroup(
+      {
+        'id': new FormControl(dataItem.id),
+        'name': new FormControl(dataItem.name, Validators.required),
+        'adress': new FormControl(dataItem.adress, Validators.required)
+      }
+    );
+
+    this.editedRowIndex = rowIndex;
+
+    sender.editRow(rowIndex, this.formGroup);
+  }
+
+  public cancelHandler({ sender, rowIndex }) {
+    this.closeEditor(sender, rowIndex);
+  }
+
+  public saveHandler({ sender, rowIndex, formGroup, isNew }) {
+    if (isNew) {
+      const product: PublicationHouseCreateView = formGroup.value;
+      this.dataService.create(product)
+        .subscribe(() => this.loadData());
     }
-    loadProducts() {
-        this.dataService.getProducts()
-            .subscribe((data: AllPublicationHouses) => this.products = data);
+    if (!isNew) {
+      const product: PublicationHouseUpdateView = formGroup.value;
+      this.dataService.update(product)
+        .subscribe(() => this.loadData());
     }
-    save() {
-        if (this.product.id == null) {
-            this.dataService.createProduct(this.product)
-                .subscribe((data: PublicationHouse) => this.products.publicationHouses.push(data));
-        } else {
-            this.dataService.updateProduct(this.product)
-                .subscribe(data => this.loadProducts());
-        }
-        this.cancel();
-    }
-    editProduct(p: PublicationHouse) {
-        this.product = p;
-    }
-    cancel() {
-        this.product = new PublicationHouse();
-        this.tableMode = true;
-    }
-    delete(p: PublicationHouse) {
-        this.dataService.deleteProduct(p.id)
-            .subscribe(data => this.loadProducts());
-    }
-    add() {
-        this.cancel();
-        this.tableMode = false;
-    }
+    sender.closeRow(rowIndex);
+  }
+
+  public removeHandler({ dataItem }) {
+    this.dataService.delete(dataItem.id)
+      .subscribe(() => this.loadData());
+  }
+
+  private closeEditor(grid, rowIndex = this.editedRowIndex) {
+    grid.closeRow(rowIndex);
+    this.editedRowIndex = undefined;
+    this.formGroup = undefined;
+  }
 }
