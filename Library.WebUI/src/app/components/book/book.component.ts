@@ -46,7 +46,11 @@ export class BookComponent implements OnInit {
   }
 
   private loadData() {
-    this.dataService.get().subscribe(data => this.books = data);
+    this.dataService.get().subscribe(data => {
+      debugger;
+      this.books = data
+    }
+    );
   }
 
   public addHandler({ sender }) {
@@ -57,8 +61,8 @@ export class BookComponent implements OnInit {
         'id': new FormControl(0),
         'name': new FormControl('', Validators.required),
         'yearOfPublication': new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[0-9]{4}')])),
-        'authorId': new FormControl(''),
-        'publicationHouseIds': new FormControl('')
+        'author': new FormControl(''),
+        'publicationHouses': new FormControl('')
       }
     );
 
@@ -73,8 +77,8 @@ export class BookComponent implements OnInit {
         'id': new FormControl(dataItem.id),
         'name': new FormControl(dataItem.name, Validators.required),
         'yearOfPublication': new FormControl(dataItem.yearOfPublication, Validators.compose([Validators.required, Validators.pattern('^[0-9]{4}')])),
-        'authorId': new FormControl(dataItem.authorId),
-        'publicationHouseIds': new FormControl(dataItem.publicationHouseIds)
+        'author': new FormControl(dataItem.author),
+        'publicationHouses': new FormControl(dataItem.publicationHouses)
       }
     );
 
@@ -113,14 +117,10 @@ export class BookComponent implements OnInit {
   }
 
   private authorChange(value) {
-    this.formGroup.get('authorId').setValue(value.id);
+    this.formGroup.get('author').setValue(value);
   }
 
   private publicationHousesChange(value: Array<any>) {
-    let array = [];
-    value.forEach(function (i) {
-      array.push(i.id);
-    });
-    this.formGroup.get('publicationHouseIds').setValue(array);
+    this.formGroup.get('publicationHouses').setValue(value);
   }
 }

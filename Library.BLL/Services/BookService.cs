@@ -26,8 +26,9 @@ namespace Library.BLL.Services
 
         public void Create(BookCreateView bookViewModel)
         {
-            int bookId = _bookRepository.CreateBook(Mapper.Map<BookCreateView, Book>(bookViewModel));
-			AddPublicationHouses(bookId, bookViewModel.PublicationHouseIds);
+			bookViewModel.AuthorId = bookViewModel.Author.Id;
+			int bookId = _bookRepository.CreateBook(Mapper.Map<BookCreateView, Book>(bookViewModel));
+			AddPublicationHouses(bookId, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
         }
         
         public BookGetView Get(int id)
@@ -78,8 +79,9 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Book not found");
             }
-            _bookRepository.Update(Mapper.Map<BookUpdateView, Book>(bookViewModel));
-			UpdatePublicationHouses(bookViewModel.Id, bookViewModel.PublicationHouseIds);
+			bookViewModel.AuthorId = bookViewModel.Author.Id;
+			_bookRepository.Update(Mapper.Map<BookUpdateView, Book>(bookViewModel));
+			UpdatePublicationHouses(bookViewModel.Id, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
         }
 
 		private void AddPublicationHouses(int bookId, List<int> publicHouseIds){

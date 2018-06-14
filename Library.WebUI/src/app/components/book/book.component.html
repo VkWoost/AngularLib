@@ -14,8 +14,11 @@
   <kendo-grid-column field="author.name" title="Author">
     <ng-template kendoGridEditTemplate >
       <kendo-dropdownlist [data]="authors.authors"
-                          [textField]="'name'"
-                          [valueField]="'id'"
+                          [textField]="name"
+                          [valueField]="id"
+                          [(ngModel)]="author"
+                          [valuePrimitive]="false"
+                          [value]="author"
                           (valueChange)="authorChange($event)">
       </kendo-dropdownlist>
     </ng-template>

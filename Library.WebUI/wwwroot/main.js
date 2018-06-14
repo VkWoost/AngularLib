@@ -299,7 +299,7 @@ var AuthorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"books.books\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"author.name\" title=\"Author\">\r\n    <ng-template kendoGridEditTemplate >\r\n      <kendo-dropdownlist [data]=\"authors.authors\"\r\n                          [textField]=\"'name'\"\r\n                          [valueField]=\"'id'\"\r\n                          (valueChange)=\"authorChange($event)\">\r\n      </kendo-dropdownlist>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"publicationHouses\" title=\"Publication Houses\">\r\n    <ng-template kendoGridEditTemplate>\r\n      <kendo-multiselect [data]=\"publicationHouses.publicationHouses\"\r\n                         [textField]=\"'name'\"\r\n                         [valueField]=\"'id'\"\r\n                         (valueChange)=\"publicationHousesChange($event)\">\r\n      </kendo-multiselect>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"books.books\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-template kendoGridToolbarTemplate>\r\n    <button kendoGridAddCommand>Add new</button>\r\n  </ng-template>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"author.name\" title=\"Author\">\r\n    <ng-template kendoGridEditTemplate >\r\n      <kendo-dropdownlist [data]=\"authors.authors\"\r\n                          [textField]=\"name\"\r\n                          [valueField]=\"id\"\r\n                          [(ngModel)]=\"author\"\r\n                          [valuePrimitive]=\"false\"\r\n                          [value]=\"author\"\r\n                          (valueChange)=\"authorChange($event)\">\r\n      </kendo-dropdownlist>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"publicationHouses\" title=\"Publication Houses\">\r\n    <ng-template kendoGridEditTemplate>\r\n      <kendo-multiselect [data]=\"publicationHouses.publicationHouses\"\r\n                         [textField]=\"'name'\"\r\n                         [valueField]=\"'id'\"\r\n                         (valueChange)=\"publicationHousesChange($event)\">\r\n      </kendo-multiselect>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-command-column title=\"command\" width=\"220\">\r\n    <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n      <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n      <button kendoGridRemoveCommand>Remove</button>\r\n      <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n    </ng-template>\r\n  </kendo-grid-command-column>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -360,7 +360,10 @@ var BookComponent = /** @class */ (function () {
     };
     BookComponent.prototype.loadData = function () {
         var _this = this;
-        this.dataService.get().subscribe(function (data) { return _this.books = data; });
+        this.dataService.get().subscribe(function (data) {
+            debugger;
+            _this.books = data;
+        });
     };
     BookComponent.prototype.addHandler = function (_a) {
         var sender = _a.sender;
@@ -369,8 +372,8 @@ var BookComponent = /** @class */ (function () {
             'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
             'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
             'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
-            'authorId': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
-            'publicationHouseIds': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('')
+            'author': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+            'publicationHouses': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('')
         });
         sender.addRow(this.formGroup);
     };
@@ -381,8 +384,8 @@ var BookComponent = /** @class */ (function () {
             'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
             'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
             'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.yearOfPublication, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
-            'authorId': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.authorId),
-            'publicationHouseIds': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.publicationHouseIds)
+            'author': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.author),
+            'publicationHouses': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.publicationHouses)
         });
         this.editedRowIndex = rowIndex;
         sender.editRow(rowIndex, this.formGroup);
@@ -419,14 +422,10 @@ var BookComponent = /** @class */ (function () {
         this.formGroup = undefined;
     };
     BookComponent.prototype.authorChange = function (value) {
-        this.formGroup.get('authorId').setValue(value.id);
+        this.formGroup.get('author').setValue(value);
     };
     BookComponent.prototype.publicationHousesChange = function (value) {
-        var array = [];
-        value.forEach(function (i) {
-            array.push(i.id);
-        });
-        this.formGroup.get('publicationHouseIds').setValue(array);
+        this.formGroup.get('publicationHouses').setValue(value);
     };
     BookComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
