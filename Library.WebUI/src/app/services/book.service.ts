@@ -16,7 +16,6 @@ export class BookService {
     return this.http.get<AllBooks>(this.url);
   }
   public create(item: BookCreateView) {
-    debugger;
     return this.http.post(this.url, item)
   }
   public update(item: BookUpdateView) {

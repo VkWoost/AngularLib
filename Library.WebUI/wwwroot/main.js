@@ -381,8 +381,8 @@ var BookComponent = /** @class */ (function () {
             'id': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.id),
             'name': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.name, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
             'yearOfPublication': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.yearOfPublication, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^[0-9]{4}')])),
-            'authorId': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.author),
-            'publicationHouseIds': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.publicationHouses)
+            'authorId': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.authorId),
+            'publicationHouseIds': new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](dataItem.publicationHouseIds)
         });
         this.editedRowIndex = rowIndex;
         sender.editRow(rowIndex, this.formGroup);
@@ -1058,7 +1058,6 @@ var BookService = /** @class */ (function () {
         return this.http.get(this.url);
     };
     BookService.prototype.create = function (item) {
-        debugger;
         return this.http.post(this.url, item);
     };
     BookService.prototype.update = function (item) {

@@ -6,16 +6,19 @@ using Library.DAL.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.Author;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Library.BLL.Services
 {
     public class AuthorService
     {
         private IRepository<Author> _authorRepository;
+		private BookRepository _bookRepository;
 
         public AuthorService(LibraryContext context)
         {
             _authorRepository = new EFGenericRepository<Author>(context);
+			_bookRepository = new BookRepository(context);
         }
 
         public void Create(AuthorCreateView authorViewModel)
@@ -47,6 +50,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Author not found");
             }
             _authorRepository.Delete(id);
+			DeleteBooksByAuthorId(id);
         }
 
         public void Update(AuthorUpdateView authorViewModel)
@@ -57,5 +61,10 @@ namespace Library.BLL.Services
             }
             _authorRepository.Update(Mapper.Map<AuthorUpdateView, Author>(authorViewModel));
         }
+
+		private void DeleteBooksByAuthorId(int id){
+			var books = _bookRepository.GetAll().Where(x => x.AuthorId == id).ToList();
+			_bookRepository.DeleteRange(books);
+		}
     }
 }

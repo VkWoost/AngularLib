@@ -15,26 +15,19 @@ namespace Library.DAL.Repositories
 			_dbSet = context.Set<PublicationHouseBook>();
 		}	
 
-		public IEnumerable<PublicationHouseBook> GetAll(int bookId)
-		{
-			//return _dbSet.AsNoTracking().AsEnumerable();
-			return _dbSet.Where(x => x.BookId == bookId).ToList();
-		}
 		public IEnumerable<PublicationHouseBook> GetAll()
 		{
-			//return _dbSet.AsNoTracking().AsEnumerable();
 			return _dbSet.ToList();
 		}
-		public void Create(PublicationHouseBook item)
+		public void Create(List<PublicationHouseBook> item)
 		{
-			_dbSet.Add(item);
+			_dbSet.AddRange(item);
 			_context.SaveChanges();
 		}
 
-		public void Delete(int bookId)
+		public void Delete(List<PublicationHouseBook> item)
 		{
-			PublicationHouseBook item = _dbSet.FirstOrDefault(x => x.BookId == bookId);
-			_dbSet.Remove(item);
+			_dbSet.RemoveRange(item);
 			_context.SaveChanges();
 		}
 	}

@@ -17,12 +17,12 @@ namespace Library.DAL.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
-        public TEntity Get(int id)
-        {
-            return _dbSet.AsNoTracking().AsEnumerable().ToList().FirstOrDefault(x=>x.Id==id);
-        }
+		public TEntity Get(int id)
+		{
+			return _dbSet.AsNoTracking().FirstOrDefault(x => x.Id == id);
+		}
 
-        public virtual IEnumerable<TEntity> GetAll()
+		public virtual IEnumerable<TEntity> GetAll()
         {
             return _dbSet.AsNoTracking().AsEnumerable();
         }

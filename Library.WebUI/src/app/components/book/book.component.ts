@@ -73,8 +73,8 @@ export class BookComponent implements OnInit {
         'id': new FormControl(dataItem.id),
         'name': new FormControl(dataItem.name, Validators.required),
         'yearOfPublication': new FormControl(dataItem.yearOfPublication, Validators.compose([Validators.required, Validators.pattern('^[0-9]{4}')])),
-        'authorId': new FormControl(dataItem.author),
-        'publicationHouseIds': new FormControl(dataItem.publicationHouses)
+        'authorId': new FormControl(dataItem.authorId),
+        'publicationHouseIds': new FormControl(dataItem.publicationHouseIds)
       }
     );
 

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Library.BLL.Infrastructure;
 using Library.DAL;
-using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.Book;
@@ -12,14 +11,14 @@ namespace Library.BLL.Services
 {
     public class BookService
     {
-        private IRepository<Book> _bookRepository;
+        private BookRepository _bookRepository;
 		private PublicationHouseBookRepository _pHouseBookRepository;
         private AuthorService _authorService;
 		private PublicationHouseService _publicationHouseService;
 
         public BookService(LibraryContext context)
         {
-            _bookRepository = new EFGenericRepository<Book>(context);
+            _bookRepository = new BookRepository(context);
 			_pHouseBookRepository = new PublicationHouseBookRepository(context);
             _authorService = new AuthorService(context);
 			_publicationHouseService = new PublicationHouseService(context);
@@ -27,8 +26,8 @@ namespace Library.BLL.Services
 
         public void Create(BookCreateView bookViewModel)
         {
-            _bookRepository.Create(Mapper.Map<BookCreateView, Book>(bookViewModel));
-
+            int bookId = _bookRepository.CreateBook(Mapper.Map<BookCreateView, Book>(bookViewModel));
+			AddPublicationHouses(bookId, bookViewModel.PublicationHouseIds);
         }
         
         public BookGetView Get(int id)
@@ -47,9 +46,11 @@ namespace Library.BLL.Services
         {
             BookGetAllView result = new BookGetAllView();
             result.Books = Mapper.Map<IEnumerable<Book>, List<BookGetView>>(_bookRepository.GetAll());
+
             var authors = _authorService.GetAll();
 			var pHouses = _publicationHouseService.GetAll().PublicationHouses;
 			var publicHouseBook = _pHouseBookRepository.GetAll();
+
 			foreach (var book in result.Books)
             {
                 book.Author = authors.Authors.FirstOrDefault(x => x.Id == book.AuthorId);
@@ -61,11 +62,14 @@ namespace Library.BLL.Services
 
         public void Delete(int id)
         {
-            if (_bookRepository.Get(id) == null)
+			var item = _bookRepository.Get(id);
+
+			if (item == null)
             {
                 throw new BLLException("Book not found");
             }
             _bookRepository.Delete(id);
+			DeletePublicationHouses(id);
         }
 
         public void Update(BookUpdateView bookViewModel)
@@ -75,6 +79,24 @@ namespace Library.BLL.Services
                 throw new BLLException("Book not found");
             }
             _bookRepository.Update(Mapper.Map<BookUpdateView, Book>(bookViewModel));
+			UpdatePublicationHouses(bookViewModel.Id, bookViewModel.PublicationHouseIds);
         }
-    }
+
+		private void AddPublicationHouses(int bookId, List<int> publicHouseIds){
+			var publicationHouses = new List<PublicationHouseBook>();
+			foreach (var publicHouse in publicHouseIds)
+			{
+				publicationHouses.Add(new PublicationHouseBook(bookId, publicHouse));
+			}
+			_pHouseBookRepository.Create(publicationHouses);
+		}
+		private void DeletePublicationHouses(int bookId){
+			var deletedItems = _pHouseBookRepository.GetAll().Where(x => x.BookId == bookId).ToList();
+			_pHouseBookRepository.Delete(deletedItems);
+		}
+		private void UpdatePublicationHouses(int bookId, List<int>publicHouseIds){
+			DeletePublicationHouses(bookId);
+			AddPublicationHouses(bookId, publicHouseIds);
+		}
+	}
 }

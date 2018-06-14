@@ -12,5 +12,12 @@ namespace Library.Entities.Enteties
         [Key, Column(Order = 1)]
         public int PublicationHouseId { get; set; }
         public PublicationHouse PublicationHouse { get; set; }
+
+		public PublicationHouseBook() { }
+
+		public PublicationHouseBook(int bookId, int publicHouseId){
+			BookId = bookId;
+			PublicationHouseId = publicHouseId;
+		}
     }
 }

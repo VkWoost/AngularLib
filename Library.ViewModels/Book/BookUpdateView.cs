@@ -9,6 +9,6 @@ namespace Library.ViewModels.Book
         public string Name { get; set; }
         public int YearOfPublication { get; set; }
         public int? AuthorId { get; set; }
-        public List<PublicationHouseGetView> PublicationHouses { get; set; }
+		public List<int> PublicationHouseIds { get; set; }
     }
 }
