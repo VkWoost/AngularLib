@@ -12,24 +12,32 @@
   </ng-template>
   <kendo-grid-column field="name" title="Name"></kendo-grid-column>
   <kendo-grid-column field="author.name" title="Author">
-    <ng-template kendoGridEditTemplate >
-      <kendo-dropdownlist [data]="authors.authors"
-                          [textField]="name"
-                          [valueField]="id"
-                          [(ngModel)]="author"
-                          [valuePrimitive]="false"
-                          [value]="author"
+    <ng-template kendoGridEditTemplate let-dataItem="dataItem" >
+      <kendo-dropdownlist
+        name="dataItem.author"
+        [data]="authors.authors"
+                         textField="name"
+                          valueField="id"
+                          [(ngModel)]="dataItem.author"
                           (valueChange)="authorChange($event)">
       </kendo-dropdownlist>
     </ng-template>
   </kendo-grid-column>
   <kendo-grid-column field="yearOfPublication" title="Year Of Publication"></kendo-grid-column>
   <kendo-grid-column field="publicationHouses" title="Publication Houses">
-    <ng-template kendoGridEditTemplate>
-      <kendo-multiselect [data]="publicationHouses.publicationHouses"
-                         [textField]="'name'"
-                         [valueField]="'id'"
-                         (valueChange)="publicationHousesChange($event)">
+    <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+
+      <span *ngFor="let publicationHouse of dataItem.publicationHouses">{{publicationHouse.name}}, </span>
+
+    </ng-template>
+    <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+      <kendo-multiselect
+        name="dataItemm.publicationHouses"
+        [data]="publicationHouses.publicationHouses"
+        textField="name"
+        valueField="id"
+        [(ngModel)]="dataItem.publicationHouses"
+        (valueChange)="publicationHousesChange($event)">
       </kendo-multiselect>
     </ng-template>
   </kendo-grid-column>
