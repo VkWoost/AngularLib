@@ -17,6 +17,11 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { UserService } from './services/identity/user.service';
+import { LoginFormComponent } from "./components/login-form/login-form.component";
+import { UserComponent } from "./components/user/user.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +30,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MagazineComponent,
     BrochureComponent,
     PublicationHouseComponent,
-    BookComponent
+    BookComponent,
+    UserComponent,
+    RegistrationFormComponent,
+    LoginFormComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -40,14 +49,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'brochure', component: BrochureComponent },
       { path: 'publicationHouse', component: PublicationHouseComponent },
       { path: 'book', component: BookComponent },
-      { path: '**', redirectTo: 'book' }
+      { path: 'register', component: RegistrationFormComponent },
+      { path: 'login', component: LoginFormComponent },
+      { path: 'user', component: UserComponent },
+      { path: '**', redirectTo: '' }
       ])
     ,
     GridModule,
     DropDownsModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap:[AppComponent]
 })
 export class AppModule { }

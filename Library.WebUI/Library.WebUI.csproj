@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="src\app\components\login-form\login-form.component.spec.ts" />
+    <None Remove="src\app\components\login-form\login-form.component.ts" />
+    <None Remove="src\app\components\registration-form\registration-form.component.spec.ts" />
+    <None Remove="src\app\components\registration-form\registration-form.component.ts" />
+    <None Remove="src\app\components\user\user.component.ts" />
     <None Remove="src\app\models\author\authorCreateView.ts" />
     <None Remove="src\app\models\author\authorGetView.ts" />
     <None Remove="src\app\models\author\authorUpdateView.ts" />
@@ -21,12 +26,18 @@
     <None Remove="src\app\models\brochure\brochureCreateView.ts" />
     <None Remove="src\app\models\brochure\brochureGetView.ts" />
     <None Remove="src\app\models\brochure\brochureUpdateView.ts" />
+    <None Remove="src\app\models\identity\interfaces\credentials.interface.ts" />
+    <None Remove="src\app\models\identity\interfaces\user.registration.interface.ts" />
+    <None Remove="src\app\models\identity\user.ts" />
+    <None Remove="src\app\models\identity\userRegistration.ts" />
     <None Remove="src\app\models\magazine\magazineCreateView.ts" />
     <None Remove="src\app\models\magazine\magazineGetView.ts" />
     <None Remove="src\app\models\magazine\MagazineUpdateView.ts" />
     <None Remove="src\app\models\publicationHouse\publicationHouseCreateView.ts" />
     <None Remove="src\app\models\publicationHouse\publicationHouseGetView.ts" />
     <None Remove="src\app\models\publicationHouse\publicationHouseUpdateView.ts" />
+    <None Remove="src\app\services\identity\base.service.ts" />
+    <None Remove="src\app\services\identity\user.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
@@ -47,6 +61,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\components\login-form\login-form.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\components\login-form\login-form.component.ts" />
+    <TypeScriptCompile Include="src\app\components\registration-form\registration-form.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\components\registration-form\registration-form.component.ts" />
+    <TypeScriptCompile Include="src\app\components\user\user.component.ts" />
     <TypeScriptCompile Include="src\app\models\author\authorCreateView.ts" />
     <TypeScriptCompile Include="src\app\models\author\authorGetView.ts" />
     <TypeScriptCompile Include="src\app\models\author\authorUpdateView.ts" />
@@ -56,12 +75,18 @@
     <TypeScriptCompile Include="src\app\models\brochure\brochureCreateView.ts" />
     <TypeScriptCompile Include="src\app\models\brochure\brochureGetView.ts" />
     <TypeScriptCompile Include="src\app\models\brochure\brochureUpdateView.ts" />
+    <TypeScriptCompile Include="src\app\models\identity\interfaces\credentials.interface.ts" />
+    <TypeScriptCompile Include="src\app\models\identity\interfaces\user.registration.interface.ts" />
+    <TypeScriptCompile Include="src\app\models\identity\user.ts" />
+    <TypeScriptCompile Include="src\app\models\identity\userRegistration.ts" />
     <TypeScriptCompile Include="src\app\models\magazine\magazineCreateView.ts" />
     <TypeScriptCompile Include="src\app\models\magazine\magazineGetView.ts" />
     <TypeScriptCompile Include="src\app\models\magazine\MagazineUpdateView.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\publicationHouseCreateView.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\publicationHouseGetView.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\publicationHouseUpdateView.ts" />
+    <TypeScriptCompile Include="src\app\services\identity\base.service.ts" />
+    <TypeScriptCompile Include="src\app\services\identity\user.service.ts" />
   </ItemGroup>
 
 </Project>

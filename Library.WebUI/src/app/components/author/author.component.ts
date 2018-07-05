@@ -8,11 +8,12 @@ import { AuthorUpdateView } from '../../models/author/authorUpdateView';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
+import { UserService } from '../../services/identity/user.service';
 
 @Component({
   selector: 'auhtor',
   templateUrl: './author.component.html',
-  providers: [AuthorService]
+  providers: [AuthorService, UserService]
 })
 
 export class AuthorComponent implements OnInit {
