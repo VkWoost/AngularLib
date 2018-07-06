@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="src\app\AppHttpInterceptor.ts" />
     <None Remove="src\app\components\login-form\login-form.component.spec.ts" />
     <None Remove="src\app\components\login-form\login-form.component.ts" />
     <None Remove="src\app\components\registration-form\registration-form.component.spec.ts" />
@@ -61,6 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\AppHttpInterceptor.ts" />
     <TypeScriptCompile Include="src\app\components\login-form\login-form.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\login-form\login-form.component.ts" />
     <TypeScriptCompile Include="src\app\components\registration-form\registration-form.component.spec.ts" />

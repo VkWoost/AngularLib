@@ -1,6 +1,7 @@
 using Library.BLL.Services;
 using Library.DAL;
 using Library.ViewModels.Author;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.WebUI.Controllers

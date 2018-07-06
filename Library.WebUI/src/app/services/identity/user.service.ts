@@ -22,8 +22,8 @@ export class UserService extends BaseService {
     this._authNavStatusSource.next(this.loggedIn);
   }
 
-  register(email: string, password: string, firstName: string, lastName: string, location: string) {
-    let user = new UserRegistration(email, password, firstName, lastName, location);
+  register(email: string, password: string, firstName: string, lastName: string) {
+    let user = new UserRegistration(email, password, firstName, lastName);
     return this.http.post('api/Account/Register', user)
       .map(res => true)
       .catch(this.handleError);

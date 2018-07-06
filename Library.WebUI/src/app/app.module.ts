@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -21,6 +21,7 @@ import { RegistrationFormComponent } from './components/registration-form/regist
 import { UserService } from './services/identity/user.service';
 import { LoginFormComponent } from "./components/login-form/login-form.component";
 import { UserComponent } from "./components/user/user.component";
+import { AppHttpInterceptor } from "./AppHttpInterceptor";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,14 @@ import { UserComponent } from "./components/user/user.component";
     DropDownsModule,
     BrowserAnimationsModule
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptor,
+      multi: true
+    } 
+  ],
   bootstrap:[AppComponent]
 })
 export class AppModule { }

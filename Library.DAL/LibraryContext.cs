@@ -13,7 +13,6 @@ namespace Library.DAL
         public DbSet<Book> Books { get; set; }
         public DbSet<PublicationHouse> PublicationHouses { get; set; }
         public DbSet<PublicationHouseBook> PublicationHouseBooks { get; set; }
-		public DbSet<Customer> Customers { get; set; }
 
 		public LibraryContext(DbContextOptions<LibraryContext> options)
             : base(options)

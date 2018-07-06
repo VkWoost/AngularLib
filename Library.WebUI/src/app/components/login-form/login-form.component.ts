@@ -47,8 +47,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       debugger;
       this.userService.login(value.email, value.password)
         .subscribe(
-          result => {
-            if (result) {
+        result => {
+          if (result /*&& result.lenght > 0*/) {
               localStorage.setItem("loginData", result);
               this.router.navigate(['/book']);
             }
