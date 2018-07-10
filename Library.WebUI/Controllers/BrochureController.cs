@@ -1,6 +1,7 @@
 using Library.BLL.Services;
 using Library.DAL;
 using Library.ViewModels.Brochure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.WebUI.Controllers
@@ -27,21 +28,21 @@ namespace Library.WebUI.Controllers
             return Ok(_brochureService.Get(id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Policy = "admin")]
         public IActionResult Create([FromBody] BrochureCreateView brochure)
         {
             _brochureService.Create(brochure);
             return Ok(brochure);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Policy = "admin")]
         public IActionResult Update([FromBody] BrochureUpdateView brochure)
         {
             _brochureService.Update(brochure);
             return Ok(brochure);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
             var item = _brochureService.Get(id);

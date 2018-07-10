@@ -16,7 +16,7 @@ namespace Library.WebUI.Controllers
             _magazineService = new MagazineService(context);
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_magazineService.GetAll());
@@ -28,21 +28,21 @@ namespace Library.WebUI.Controllers
             return Ok(_magazineService.Get(id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Policy = "admin")]
         public IActionResult Create([FromBody] MagazineCreateView magazine)
         {
             _magazineService.Create(magazine);
             return Ok(magazine);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Policy = "admin")]
         public IActionResult Update([FromBody] MagazineUpdateView magazine)
         {
             _magazineService.Update(magazine);
             return Ok(magazine);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
             var item = _magazineService.Get(id);

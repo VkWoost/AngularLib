@@ -7,17 +7,21 @@
             (save)="saveHandler($event)" (remove)="removeHandler($event)"
             (add)="addHandler($event)"
             [navigable]="true">
-  <ng-template kendoGridToolbarTemplate>
-    <button kendoGridAddCommand>Add new</button>
-  </ng-template>
+  <div *ngIf="admin">
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>Add new</button>
+    </ng-template>
+  </div>
   <kendo-grid-column field="name" title="Name"></kendo-grid-column>
   <kendo-grid-column field="adress" title="Adress"></kendo-grid-column>
-  <kendo-grid-command-column title="command" width="220">
-    <ng-template kendoGridCellTemplate let-isNew="isNew">
-      <button kendoGridEditCommand [primary]="true">Edit</button>
-      <button kendoGridRemoveCommand>Remove</button>
-      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-    </ng-template>
-  </kendo-grid-command-column>
+  <div *ngIf="admin">
+    <kendo-grid-command-column title="command" width="220">
+      <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <button kendoGridEditCommand [primary]="true">Edit</button>
+        <button kendoGridRemoveCommand>Remove</button>
+        <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </div>
 </kendo-grid>

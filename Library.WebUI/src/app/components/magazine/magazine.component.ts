@@ -25,6 +25,7 @@ export class MagazineComponent implements OnInit {
   };
   public formGroup: FormGroup;
   private editedRowIndex: number;
+  private admin;
 
   constructor(private dataService: DataService) {
     this.magazines = new AllMagazines();
@@ -32,6 +33,7 @@ export class MagazineComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
+    this.admin = !!(localStorage.getItem("role") == "admin");
   }
 
   private loadData() {

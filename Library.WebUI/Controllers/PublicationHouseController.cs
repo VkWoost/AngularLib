@@ -1,6 +1,7 @@
 using Library.BLL.Services;
 using Library.DAL;
 using Library.ViewModels.PublicationHouse;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.WebUI.Controllers
@@ -27,21 +28,21 @@ namespace Library.WebUI.Controllers
             return Ok(_publicationHouseService.Get(id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Policy = "admin")]
         public IActionResult Create([FromBody] PublicationHouseCreateView publicationHouse)
         {
             _publicationHouseService.Create(publicationHouse);
             return Ok(publicationHouse);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Policy = "admin")]
         public IActionResult Update([FromBody] PublicationHouseUpdateView publicationHouse)
         {
             _publicationHouseService.Update(publicationHouse);
             return Ok(publicationHouse);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
             var item = _publicationHouseService.Get(id);

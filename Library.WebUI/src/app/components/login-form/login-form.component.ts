@@ -25,8 +25,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-
-    // subscribe to router event
     this.subscription = this.activatedRoute.queryParams.subscribe(
       (param: any) => {
         this.brandNew = param['brandNew'];
@@ -35,7 +33,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // prevent memory leak by unsubscribing
     this.subscription.unsubscribe();
   }
 
@@ -44,12 +41,12 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.isRequesting = true;
     this.errors = '';
     if (valid) {
-      debugger;
       this.userService.login(value.email, value.password)
         .subscribe(
         result => {
           if (result /*&& result.lenght > 0*/) {
-              localStorage.setItem("loginData", result);
+            localStorage.setItem("loginData", JSON.parse(result).token);
+            localStorage.setItem("role", JSON.parse(result).role);
               this.router.navigate(['/book']);
             }
             else {

@@ -32,6 +32,7 @@ export class BookComponent implements OnInit {
   };
   public formGroup: FormGroup;
   private editedRowIndex: number;
+  private admin;
 
   constructor(private dataService: BookService, private authorService: AuthorService, private publicationHouseSevice: PublicationHouseService) {
     this.books = new AllBooks();
@@ -43,6 +44,7 @@ export class BookComponent implements OnInit {
     this.loadData();
     this.authorService.get().subscribe(data => this.authors = data);
     this.publicationHouseSevice.get().subscribe(data => this.publicationHouses = data);
+    this.admin = !!(localStorage.getItem("role") == "admin");
   }
 
   private loadData() {

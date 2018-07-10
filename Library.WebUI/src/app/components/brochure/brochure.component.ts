@@ -24,6 +24,7 @@ export class BrochureComponent implements OnInit {
   };
   public formGroup: FormGroup;
   private editedRowIndex: number;
+  private admin;
 
   constructor(private dataService: DataService) {
     this.brochures = new AllBrochures();
@@ -31,6 +32,7 @@ export class BrochureComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
+    this.admin = !!(localStorage.getItem("role") == "admin");
   }
 
   private loadData() {

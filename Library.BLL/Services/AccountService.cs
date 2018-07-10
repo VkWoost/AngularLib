@@ -1,8 +1,11 @@
-﻿using Library.Entities.Identity;
+﻿using Library.DAL;
+using Library.DAL.DbInitializer;
+using Library.Entities.Identity;
 using Library.ViewModels.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,12 +22,12 @@ namespace Library.BLL.Services
 		private readonly UserManager<AppUser> _userManager;
 		private readonly IConfiguration _configuration;
 
-
 		public AccountService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_configuration = configuration;
+			DbHelper.DbInitialize(_userManager);
 		}
 
 		public async Task<AppUser> Register(RegistrationViewModel model)
@@ -32,10 +35,12 @@ namespace Library.BLL.Services
 			var user = new AppUser
 			{
 				UserName = model.Email,
-				Email = model.Email
+				Email = model.Email,
+				FirstName = model.FirstName,
+				LastName = model.LastName,
+				Role = "user"
 			};
 			var result = await _userManager.CreateAsync(user, model.Password);
-
 			if (!result.Succeeded){
 				throw new ApplicationException("UNKNOWN_ERROR");
 			}
@@ -43,7 +48,7 @@ namespace Library.BLL.Services
 			return user;
 		}
 
-		public async Task<string> Login(CredentialsViewModel model)
+		public async Task<object> Login(CredentialsViewModel model)
 		{
 			var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
@@ -51,21 +56,21 @@ namespace Library.BLL.Services
 			{
 				throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
 			}
-			
-			var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.UserName);
-			var res = await GenerateJwtToken(model.UserName, appUser);
 
-			return res;
+			AppUser appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.UserName);
+			var res = await GenerateJwtToken(model.UserName, appUser);
+			return new { Role = appUser.Role, Token = res };
 		}
 
-		private async Task<string> GenerateJwtToken(string email, IdentityUser user)
+		private async Task<string> GenerateJwtToken(string email, AppUser user)
 		{
 			var claims = new List<Claim>
 			{
-				new Claim(JwtRegisteredClaimNames.Sub, email),
+				new Claim(JwtRegisteredClaimNames.Email, email),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-				new Claim(ClaimTypes.NameIdentifier, user.Id)
-			};
+				new Claim(ClaimTypes.NameIdentifier, user.Id),
+				new Claim(ClaimTypes.Role, user.Role)
+				 };
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -74,7 +79,7 @@ namespace Library.BLL.Services
 			var token = new JwtSecurityToken(
 				_configuration["JwtIssuer"],
 				_configuration["JwtIssuer"],
-				claims,
+				claims: claims,
 				expires: expires,
 				signingCredentials: creds
 			);

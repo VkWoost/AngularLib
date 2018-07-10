@@ -22,26 +22,26 @@ export class UserService extends BaseService {
     this._authNavStatusSource.next(this.loggedIn);
   }
 
-  register(email: string, password: string, firstName: string, lastName: string) {
+  public register(email: string, password: string, firstName: string, lastName: string) {
     let user = new UserRegistration(email, password, firstName, lastName);
     return this.http.post('api/Account/Register', user)
       .map(res => true)
       .catch(this.handleError);
   }
 
-  login(userName, password): Observable<any> {
+  public login(userName, password): Observable<any> {
     let user = new User(userName, password);
     return this.http.post('api/Account/Login', user, { responseType: 'text'})
       .catch(this.handleError);
   }
 
-  logout() {
-    localStorage.removeItem("loginData");
+  public logout() {
+    localStorage.clear();
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
   }
 
-  isLoggedIn() {
+  public isLoggedIn() {
     return this.loggedIn;
   }
 }

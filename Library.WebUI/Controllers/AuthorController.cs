@@ -28,21 +28,21 @@ namespace Library.WebUI.Controllers
             return Ok(_authorService.Get(id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Policy = "admin")]
         public IActionResult Create([FromBody] AuthorCreateView author)
         {
             _authorService.Create(author);
             return Ok(author);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Policy = "admin")]
         public IActionResult Update([FromBody] AuthorUpdateView author)
         {
             _authorService.Update(author);
             return Ok(author);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
             var item = _authorService.Get(id);

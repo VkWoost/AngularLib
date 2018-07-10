@@ -12,7 +12,7 @@ import { State, process } from '@progress/kendo-data-query';
 @Component({
     selector: 'publicationHouse',
     templateUrl: './publicationHouse.component.html',
-  providers: [PublicationHouseService]
+    providers: [PublicationHouseService]
 })
 export class PublicationHouseComponent implements OnInit {
     
@@ -24,6 +24,7 @@ export class PublicationHouseComponent implements OnInit {
   };
   public formGroup: FormGroup;
   private editedRowIndex: number;
+  private admin;
 
   constructor(private dataService: PublicationHouseService) {
     this.publicationHouses = new AllPublicationHouses();
@@ -31,6 +32,7 @@ export class PublicationHouseComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
+    this.admin = !!(localStorage.getItem("role") == "admin");
   }
 
   private loadData() {

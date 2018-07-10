@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using Library.BLL.Services;
+using Library.DAL;
 using Library.Entities.Identity;
 using Library.ViewModels.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Library.WebUI.Controllers
 {
@@ -36,6 +38,6 @@ namespace Library.WebUI.Controllers
     {
       var res = await _accountServise.Register(model);
       return Ok(res);
-    }    
+    }
   }
 }

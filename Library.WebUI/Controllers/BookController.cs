@@ -1,6 +1,7 @@
 using Library.BLL.Services;
 using Library.DAL;
 using Library.ViewModels.Book;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.WebUI.Controllers
@@ -27,21 +28,21 @@ namespace Library.WebUI.Controllers
             return Ok(_bookService.Get(id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Policy = "admin")]
         public IActionResult Create([FromBody] BookCreateView book)
         {
             _bookService.Create(book);
             return Ok(book);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Policy = "admin")]
         public IActionResult Update([FromBody] BookUpdateView book)
         {
             _bookService.Update(book);
             return Ok(book);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
             var item = _bookService.Get(id);

@@ -17,7 +17,6 @@ namespace Library.DAL
 		public LibraryContext(DbContextOptions<LibraryContext> options)
             : base(options)
         {
-            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +25,6 @@ namespace Library.DAL
 
 			modelBuilder.Entity<PublicationHouseBook>()
                 .HasKey(x => new { x.BookId, x.PublicationHouseId });
-        }
-    }
+        } 	
+	}
 }

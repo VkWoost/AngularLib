@@ -26,6 +26,7 @@ export class AuthorComponent implements OnInit {
   };
   public formGroup: FormGroup;
   private editedRowIndex: number;
+  private admin;
 
   constructor(private dataService: AuthorService) {
     this.authors = new AllAuthors();
@@ -33,6 +34,7 @@ export class AuthorComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
+    this.admin = !!(localStorage.getItem("role") == "admin");
   }
 
   private loadData() {

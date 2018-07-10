@@ -28,8 +28,7 @@ namespace Library.WebUI
     }
 
     public void ConfigureServices(IServiceCollection services)
-    {
-                        
+    {         
       services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
       b => b.MigrationsAssembly("Library.DAL")));
 
@@ -52,6 +51,7 @@ namespace Library.WebUI
       tokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
 
 
+
       services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<LibraryContext>()
                 .AddDefaultTokenProviders();
@@ -68,6 +68,11 @@ namespace Library.WebUI
         configureOptions.RequireHttpsMetadata = false;
         configureOptions.SaveToken = true;
         configureOptions.TokenValidationParameters = tokenValidationParameters;
+      });
+
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy("admin", policy => policy.RequireRole("admin"));
       });
 
       var builder = services.AddIdentityCore<AppUser>(o =>

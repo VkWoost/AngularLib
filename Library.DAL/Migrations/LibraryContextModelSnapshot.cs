@@ -126,8 +126,6 @@ namespace Library.DAL.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<long?>("FacebookId");
-
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
@@ -148,7 +146,7 @@ namespace Library.DAL.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("PictureUrl");
+                    b.Property<string>("Role");
 
                     b.Property<string>("SecurityStamp");
 
@@ -168,27 +166,6 @@ namespace Library.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Library.Entities.Identity.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Gender");
-
-                    b.Property<string>("IdentityId");
-
-                    b.Property<string>("Locale");
-
-                    b.Property<string>("Location");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdentityId");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -312,13 +289,6 @@ namespace Library.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("PublicationHouseId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Library.Entities.Identity.Customer", b =>
-                {
-                    b.HasOne("Library.Entities.Identity.AppUser", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
