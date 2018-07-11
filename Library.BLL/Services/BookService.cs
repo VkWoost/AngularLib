@@ -68,8 +68,8 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Book not found");
             }
-            _bookRepository.Delete(id);
-			DeletePublicationHouses(id);
+            DeletePublicationHouseBooks(id);
+			_bookRepository.Delete(id);
 			return Mapper.Map<Book, BookGetView>(item);
 		}
 
@@ -92,12 +92,11 @@ namespace Library.BLL.Services
 			}
 			_pHouseBookRepository.Create(publicationHouses);
 		}
-		private void DeletePublicationHouses(int bookId){
-			var deletedItems = _pHouseBookRepository.GetAll().Where(x => x.BookId == bookId).ToList();
-			_pHouseBookRepository.Delete(deletedItems);
+		private void DeletePublicationHouseBooks(int bookId){
+			_pHouseBookRepository.DeleteByBookId(bookId);
 		}
 		private void UpdatePublicationHouses(int bookId, List<int>publicHouseIds){
-			DeletePublicationHouses(bookId);
+			DeletePublicationHouseBooks(bookId);
 			AddPublicationHouses(bookId, publicHouseIds);
 		}
 	}

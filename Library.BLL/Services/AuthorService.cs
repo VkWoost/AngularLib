@@ -66,8 +66,7 @@ namespace Library.BLL.Services
         }
 
 		private void DeleteBooksByAuthorId(int id){
-			var books = _bookRepository.GetAll().Where(x => x.AuthorId == id).ToList();
-			_bookRepository.DeleteRange(books);
+			_bookRepository.DeleteRangeByAuthorId(id);
 		}
     }
 }

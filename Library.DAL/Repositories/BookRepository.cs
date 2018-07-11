@@ -23,21 +23,18 @@ namespace Library.DAL.Repositories
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Open();
-				return connection.QuerySingle<int>(_sqlCreate, item);
+				var response = connection.QuerySingle<int>(_sqlCreate, item);
+				return response;
 			}
 		}
 
-		public void DeleteRange(List<Book> items){
-			foreach (var item in items)
-			{
-				string _sqlDelete = $"DELETE FROM {typeof(Book).Name}s WHERE Id = { item.Id }";
+		public void DeleteRangeByAuthorId(int id)
+		{
+			string _sqlDelete = $"DELETE FROM {typeof(Book).Name}s WHERE AuthorId = { id }";
 
-				using (var connection = new SqlConnection(_connectionString))
-				{
-					connection.Open();
-					connection.Execute(_sqlDelete, new { item.Id });
-				}
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				connection.Execute(_sqlDelete, new { id });
 			}
 		}
 	}

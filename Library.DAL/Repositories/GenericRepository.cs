@@ -23,8 +23,8 @@ namespace Library.DAL.Repositories
             string _sqlGet = $"SELECT * FROM {typeof(TEntity).Name}s WHERE Id = {id}";
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Open();
-				return connection.Query<TEntity>(_sqlGet).FirstOrDefault();
+				var result = connection.Query<TEntity>(_sqlGet).FirstOrDefault();
+				return result;
 			}
 		}
 
@@ -34,20 +34,20 @@ namespace Library.DAL.Repositories
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Open();
-				return connection.Query<TEntity>(_sqlGetAll);
+				var result = connection.Query<TEntity>(_sqlGetAll);
+				return result;
 			}
 		}
 
         public virtual void Create(TEntity item)
         {
-            var stringOfColumns = string.Join(", ", GetColumnsWithoutId());
-            var stringOfParameters = string.Join(", ", GetColumnsWithoutId().Select(e => "@" + e));
+			List<string> columnsWithoutId = new List<string>(GetColumnsWithoutId());
+			var stringOfColumns = string.Join(", ", columnsWithoutId);
+            var stringOfParameters = string.Join(", ", columnsWithoutId.Select(e => "@" + e));
             string _sqlCreate = $"INSERT INTO {typeof(TEntity).Name}s ({stringOfColumns}) VALUES ({stringOfParameters})";
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Open();
 				connection.Execute(_sqlCreate, item);
 			}
 		}
@@ -59,7 +59,6 @@ namespace Library.DAL.Repositories
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Open();
 				connection.Execute(_sqlUpdate, item);
 			}
 		}
@@ -70,7 +69,6 @@ namespace Library.DAL.Repositories
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Open();
 				connection.Execute(_sqlDelete, new { id });
 			}
 		}
