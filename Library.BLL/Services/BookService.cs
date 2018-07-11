@@ -16,12 +16,12 @@ namespace Library.BLL.Services
         private AuthorService _authorService;
 		private PublicationHouseService _publicationHouseService;
 
-        public BookService(LibraryContext context)
+        public BookService(string conn)
         {
-            _bookRepository = new BookRepository(context);
-			_pHouseBookRepository = new PublicationHouseBookRepository(context);
-            _authorService = new AuthorService(context);
-			_publicationHouseService = new PublicationHouseService(context);
+            _bookRepository = new BookRepository(conn);
+			_pHouseBookRepository = new PublicationHouseBookRepository(conn);
+            _authorService = new AuthorService(conn);
+			_publicationHouseService = new PublicationHouseService(conn);
         }
 
         public void Create(BookCreateView bookViewModel)

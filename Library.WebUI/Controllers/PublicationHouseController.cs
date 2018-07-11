@@ -3,6 +3,7 @@ using Library.DAL;
 using Library.ViewModels.PublicationHouse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -11,9 +12,9 @@ namespace Library.WebUI.Controllers
     {
         private PublicationHouseService _publicationHouseService;
 
-        public PublicationHouseController(LibraryContext context)
+        public PublicationHouseController(IConfiguration configuration)
         {
-            _publicationHouseService = new PublicationHouseService(context);
+            _publicationHouseService = new PublicationHouseService(configuration.GetConnectionString("DefaultConnection"));
         }
 
         [HttpGet, Authorize]

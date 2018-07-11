@@ -15,10 +15,10 @@ namespace Library.BLL.Services
         private IRepository<Author> _authorRepository;
 		private BookRepository _bookRepository;
 
-        public AuthorService(LibraryContext context)
+        public AuthorService(string conn)
         {
-            _authorRepository = new EFGenericRepository<Author>(context);
-			_bookRepository = new BookRepository(context);
+            _authorRepository = new GenericRepository<Author>(conn);
+			_bookRepository = new BookRepository(conn);
         }
 
         public void Create(AuthorCreateView authorViewModel)

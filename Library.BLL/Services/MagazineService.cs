@@ -13,9 +13,9 @@ namespace Library.BLL.Services
     {
         private IRepository<Magazine> _magazineRepository;
 
-        public MagazineService(LibraryContext context)
+        public MagazineService(string conn)
         {
-            _magazineRepository = new EFGenericRepository<Magazine>(context);
+            _magazineRepository = new GenericRepository<Magazine>(conn);
         }
 
         public void Create(MagazineCreateView magazineViewModel)

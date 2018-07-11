@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
+using Library.Entities.Enteties;
+using Dapper;
 
 namespace Library.DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private string _connectionString;
 
@@ -18,106 +20,60 @@ namespace Library.DAL.Repositories
 
         public TEntity Get(int id)
         {
-            string _sqlGet = String.Format("SELECT * FROM {0}s WHERE Id = {1}", typeof(TEntity).Name, id);
-            TEntity item = (TEntity)Activator.CreateInstance(typeof(TEntity));
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(_sqlGet, connection);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        foreach (var i in item.GetType().GetProperties())
-                        {
-                            i.SetValue(item, reader.GetValue(reader.GetOrdinal(i.Name)));
-                        }
-                    }
-                }
-            }
-            return item;
-        }
+            string _sqlGet = $"SELECT * FROM {typeof(TEntity).Name}s WHERE Id = {id}";
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				connection.Open();
+				return connection.Query<TEntity>(_sqlGet).FirstOrDefault();
+			}
+		}
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            string _sqlGetAll = String.Format("SELECT * FROM {0}s", typeof(TEntity).Name);
-            List<TEntity> result = new List<TEntity>();
+			string _sqlGetAll = $"SELECT * FROM {typeof(TEntity).Name}s";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(_sqlGetAll, connection);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        TEntity item = (TEntity)Activator.CreateInstance(typeof(TEntity));
-                        foreach (var i in item.GetType().GetProperties())
-                        {
-                            i.SetValue(item, reader.GetValue(reader.GetOrdinal(i.Name)));
-                        }
-                        result.Add(item);
-                    }
-                }
-                return result;
-            }
-        }
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				connection.Open();
+				return connection.Query<TEntity>(_sqlGetAll);
+			}
+		}
 
         public virtual void Create(TEntity item)
         {
             var stringOfColumns = string.Join(", ", GetColumnsWithoutId());
             var stringOfParameters = string.Join(", ", GetColumnsWithoutId().Select(e => "@" + e));
-            string _sqlCreate = String.Format("INSERT INTO {0}s ({1}) VALUES ({2})", typeof(TEntity).Name, stringOfColumns, stringOfParameters);
+            string _sqlCreate = $"INSERT INTO {typeof(TEntity).Name}s ({stringOfColumns}) VALUES ({stringOfParameters})";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(_sqlCreate, connection);
-                List<string> list = new List<string>(GetColumnsWithoutId());
-                int temp = 0;
-                var types = item.GetType().GetProperties().Where(x => x.Name != "Id");
-                foreach (var i in types)
-                {
-                    command.Parameters.Add(new SqlParameter(String.Format("@{0}", list[temp++]), i.GetValue(item)));
-                }
-                command.ExecuteNonQuery();
-            }
-        }
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				connection.Open();
+				connection.Execute(_sqlCreate, item);
+			}
+		}
 
         public virtual void Update(TEntity item)
         {
             var stringOfColumns = string.Join(", ", GetColumnsWithoutId().Select(e => $"{e} = @{e}"));
-            string _sqlUpdate = String.Format("UPDATE {0}s SET {1} WHERE Id = @Id", typeof(TEntity).Name, stringOfColumns);
+            string _sqlUpdate = $"UPDATE {typeof(TEntity).Name}s SET {stringOfColumns} WHERE Id = @Id";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(_sqlUpdate, connection);
-
-                List<string> list = new List<string>(GetColumns());
-                int temp = 0;
-                foreach (var i in item.GetType().GetProperties())
-                {
-                    command.Parameters.Add(new SqlParameter(String.Format("@{0}", list[temp++]), i.GetValue(item)));
-                }
-                command.ExecuteNonQuery();
-            }
-        }
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				connection.Open();
+				connection.Execute(_sqlUpdate, item);
+			}
+		}
 
         public void Delete(int id)
         {
-            string _sqlDelete = String.Format("DELETE FROM {0}s WHERE id = {1}", typeof(TEntity).Name, id);
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(_sqlDelete, connection);
-                command.ExecuteNonQuery();
-            }
-        }
+            string _sqlDelete = $"DELETE FROM {typeof(TEntity).Name}s WHERE id = {id}";
+
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				connection.Open();
+				connection.Execute(_sqlDelete, new { id });
+			}
+		}
 
         private IEnumerable<string> GetColumns()
         {
@@ -126,7 +82,7 @@ namespace Library.DAL.Repositories
                     .Select(e => e.Name);
         }
 
-        private IEnumerable<string> GetColumnsWithoutId()
+		private IEnumerable<string> GetColumnsWithoutId()
         {
             return typeof(TEntity)
                     .GetProperties()

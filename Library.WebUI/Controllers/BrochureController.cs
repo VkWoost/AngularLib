@@ -3,6 +3,7 @@ using Library.DAL;
 using Library.ViewModels.Brochure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -11,9 +12,9 @@ namespace Library.WebUI.Controllers
     {
         private BrochureService _brochureService;
 
-        public BrochureController(LibraryContext context)
+        public BrochureController(IConfiguration configuration)
         {
-            _brochureService = new BrochureService(context);
+            _brochureService = new BrochureService(configuration.GetConnectionString("DefaultConnection"));
         }
 
         [HttpGet, Authorize]

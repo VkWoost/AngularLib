@@ -3,6 +3,7 @@ using Library.DAL;
 using Library.ViewModels.Magazine;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -11,9 +12,9 @@ namespace Library.WebUI.Controllers
     {
         private MagazineService _magazineService;
 
-        public MagazineController(LibraryContext context)
+        public MagazineController(IConfiguration configuration)
         {
-            _magazineService = new MagazineService(context);
+            _magazineService = new MagazineService(configuration.GetConnectionString("DefaultConnection"));
         }
 
         [HttpGet, Authorize]

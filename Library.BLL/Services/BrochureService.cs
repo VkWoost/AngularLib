@@ -13,9 +13,9 @@ namespace Library.BLL.Services
     {
         private IRepository<Brochure> _brochureRepository;
 
-        public BrochureService(LibraryContext context)
+        public BrochureService(string conn)
         {
-            _brochureRepository = new EFGenericRepository<Brochure>(context);
+            _brochureRepository = new GenericRepository<Brochure>(conn);
         }
 
         public void Create(BrochureCreateView brochureViewModel)

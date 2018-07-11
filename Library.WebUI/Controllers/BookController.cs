@@ -3,6 +3,7 @@ using Library.DAL;
 using Library.ViewModels.Book;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -11,9 +12,9 @@ namespace Library.WebUI.Controllers
     {
         private BookService _bookService;
 
-        public BookController(LibraryContext context)
+        public BookController(IConfiguration configuration)
         {
-            _bookService = new BookService(context);
+            _bookService = new BookService(configuration.GetConnectionString("DefaultConnection"));
         }
 
         [HttpGet, Authorize]

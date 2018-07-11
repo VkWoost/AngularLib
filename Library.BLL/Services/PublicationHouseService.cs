@@ -13,9 +13,9 @@ namespace Library.BLL.Services
     {
         private IRepository<PublicationHouse> _publicationHouseRepo;
 
-        public PublicationHouseService(LibraryContext context)
+        public PublicationHouseService(string conn)
         {
-            _publicationHouseRepo = new EFGenericRepository<PublicationHouse>(context);
+            _publicationHouseRepo = new GenericRepository<PublicationHouse>(conn);
         }
 
         public void Create(PublicationHouseCreateView publicationHouseViewModel)

@@ -3,6 +3,7 @@ using Library.DAL;
 using Library.ViewModels.Author;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -11,9 +12,9 @@ namespace Library.WebUI.Controllers
     {
         private AuthorService _authorService;
 
-        public AuthorController(LibraryContext context)
+        public AuthorController(IConfiguration configuration)
         {
-            _authorService = new AuthorService(context);
+            _authorService = new AuthorService(configuration.GetConnectionString("DefaultConnection"));
         }
 
         [HttpGet, Authorize]
