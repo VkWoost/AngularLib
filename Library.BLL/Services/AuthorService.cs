@@ -33,6 +33,7 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Author not found");
             }
+
             return Mapper.Map<Author, AuthorGetView>(author);
         }
 

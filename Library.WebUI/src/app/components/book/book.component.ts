@@ -57,8 +57,7 @@ export class BookComponent implements OnInit {
     private loadData() {
         this.dataService.get().subscribe(data => {
             this.books = data
-        }
-        );
+        });
     }
 
     public addHandler({ sender }) {

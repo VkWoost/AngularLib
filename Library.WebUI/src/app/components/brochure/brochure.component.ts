@@ -82,11 +82,13 @@ export class BrochureComponent implements OnInit {
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
+
         if (!isNew) {
             const product: BrochureUpdateView = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }
+
         sender.closeRow(rowIndex);
     }
 

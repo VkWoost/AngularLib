@@ -33,10 +33,10 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppHttpInterceptor", function() { return AppHttpInterceptor; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm5/Observable.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm5/Observable.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,20 +63,20 @@ var AppHttpInterceptor = /** @class */ (function () {
         console.log(req);
         return next.handle(req)
             .map(function (resp) {
-            if (resp instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]) {
+            if (resp instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpResponse"]) {
                 return resp;
             }
         })
             .catch(function (err) {
             console.log(err);
-            if (err instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]) {
+            if (err instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpErrorResponse"]) {
                 console.log(err.status);
                 console.log(err.statusText);
                 if (err.status === 401) {
                     _this.router.navigate(['/login']);
                 }
             }
-            return rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__["Observable"].of(err);
+            return rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"].of(err);
         });
     };
     AppHttpInterceptor.prototype.getToken = function () {
@@ -85,8 +85,8 @@ var AppHttpInterceptor = /** @class */ (function () {
         }
     };
     AppHttpInterceptor = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], AppHttpInterceptor);
     return AppHttpInterceptor;
 }());
@@ -539,7 +539,10 @@ var BookComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./book.component.html */ "./src/app/components/book/book.component.html"),
             providers: [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"]])
+        __metadata("design:paramtypes", [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"],
+            _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"],
+            _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"],
+            _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"]])
     ], BookComponent);
     return BookComponent;
 }());
@@ -683,7 +686,7 @@ var BrochureComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-6 new-user-alert\">\r\n    <div *ngIf=\"brandNew\" class=\"alert alert-success\" role=\"alert\">\r\n      <strong>All set!</strong> Please login with your account\r\n    </div>\r\n    <h2>Login</h2>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <form #f=\"ngForm\" novalidate (ngSubmit)=\"login(f)\">\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Email</label>\r\n        <input id=\"email\" type=\"text\" required name=\"email\" class=\"form-control\" placeholder=\"Email\" [ngModel]=\"credentials.email\" #email=\"ngModel\" tmFocus validateEmail>\r\n        <small [hidden]=\"email.valid || (email.pristine && !submitted)\" class=\"text-danger\">Please enter a valid email</small>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"password\">Password</label>\r\n        <input type=\"password\" class=\"form-control\" id=\"password\" required name=\"password\" placeholder=\"Password\" ngModel>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"f.invalid || isRequesting\">Login</button>\r\n        <!--<app-spinner [isRunning]=\"isRequesting\"></app-spinner>-->\r\n      </div>\r\n\r\n      <div *ngIf=\"errors\" class=\"alert alert-danger\" role=\"alert\">\r\n        <strong>Oops!</strong> {{errors}}\r\n      </div>\r\n\r\n    </form>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-6 new-user-alert\">\r\n    <div *ngIf=\"brandNew\" class=\"alert alert-success\" role=\"alert\">\r\n      <strong>All set!</strong> Please login with your account\r\n    </div>\r\n    <h2>Login</h2>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <form #f=\"ngForm\" novalidate (ngSubmit)=\"login(f)\">\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Email</label>\r\n        <input id=\"email\" type=\"text\" required name=\"email\" class=\"form-control\" placeholder=\"Email\" [ngModel]=\"credentials.email\" #email=\"ngModel\" tmFocus validateEmail>\r\n        <small [hidden]=\"email.valid || (email.pristine && !submitted)\" class=\"text-danger\">Please enter a valid email</small>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"password\">Password</label>\r\n        <input type=\"password\" class=\"form-control\" id=\"password\" required name=\"password\" placeholder=\"Password\" ngModel>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"f.invalid || isRequesting\">Login</button>\r\n      </div>\r\n\r\n      <div *ngIf=\"errors\" class=\"alert alert-danger\" role=\"alert\">\r\n        <strong>Oops!</strong> {{errors}}\r\n      </div>\r\n\r\n    </form>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -747,21 +750,22 @@ var LoginFormComponent = /** @class */ (function () {
     LoginFormComponent.prototype.login = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
+        if (!valid) {
+            return;
+        }
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
-        if (valid) {
-            this.loginService.login(value.email, value.password)
-                .subscribe(function (result) {
-                if (result) {
-                    localStorage.setItem("data", result);
-                    _this.router.navigate(['/book']);
-                }
-                else {
-                    _this.router.navigate(['/login']);
-                }
-            }, function (error) { return _this.errors = error; });
-        }
+        this.loginService.login(value.email, value.password)
+            .subscribe(function (result) {
+            if (result) {
+                localStorage.setItem("data", result);
+                _this.router.navigate(['/book']);
+            }
+            else {
+                _this.router.navigate(['/login']);
+            }
+        }, function (error) { return _this.errors = error; });
     };
     LoginFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -906,17 +910,6 @@ var MagazineComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/components/navmenu/navmenu.component.css":
-/*!**********************************************************!*\
-  !*** ./src/app/components/navmenu/navmenu.component.css ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "li .glyphicon {\r\n    margin-right: 10px;\r\n}\r\n\r\nli.link-active a,\r\nli.link-active a:hover,\r\nli.link-active a:focus {\r\n    background-color: #4189C7;\r\n    color: white;\r\n}\r\n\r\n.main-nav {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n}\r\n\r\n@media (min-width: 768px) {\r\n    .main-nav {\r\n        height: 100%;\r\n        width: calc(25% - 20px);\r\n    }\r\n    .navbar {\r\n        border-radius: 0px;\r\n        border-width: 0px;\r\n        height: 100%;\r\n    }\r\n    .navbar-header {\r\n        float: none;\r\n    }\r\n    .navbar-collapse {\r\n        border-top: 1px solid #444;\r\n        padding: 0px;\r\n    }\r\n    .navbar ul {\r\n        float: none;\r\n    }\r\n    .navbar li {\r\n        float: none;\r\n        font-size: 15px;\r\n        margin: 6px;\r\n    }\r\n    .navbar li a {\r\n        padding: 10px 16px;\r\n        border-radius: 4px;\r\n    }\r\n    .navbar a {\r\n        width: 100%;\r\n        white-space: nowrap;\r\n        overflow: hidden;\r\n        text-overflow: ellipsis;\r\n    }\r\n}\r\n"
-
-/***/ }),
-
 /***/ "./src/app/components/navmenu/navmenu.component.html":
 /*!***********************************************************!*\
   !*** ./src/app/components/navmenu/navmenu.component.html ***!
@@ -925,6 +918,17 @@ module.exports = "li .glyphicon {\r\n    margin-right: 10px;\r\n}\r\n\r\nli.link
 /***/ (function(module, exports) {
 
 module.exports = "<div class='main-nav'>\r\n  <div class='navbar navbar-inverse'>\r\n    <div class='navbar-header'>\r\n      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>\r\n        <span class='sr-only'>Toggle navigation</span>\r\n        <span class='icon-bar'></span>\r\n        <span class='icon-bar'></span>\r\n        <span class='icon-bar'></span>\r\n      </button>\r\n      <a class='navbar-brand' [routerLink]=\"['/home']\">Library.WEB</a>\r\n    </div>\r\n    <div class='clearfix'></div>\r\n    <div class='navbar-collapse collapse'>\r\n      <ul class='nav navbar-nav'>\r\n        <li [routerLinkActive]=\"['link-active']\">\r\n          <a [routerLink]=\"['/book']\">\r\n            <span class='glyphicon glyphicon-education'></span> Books\r\n          </a>\r\n        </li>\r\n        <li [routerLinkActive]=\"['link-active']\">\r\n          <a [routerLink]=\"['/magazine']\">\r\n            <span class='glyphicon glyphicon-education'></span> Magazines\r\n          </a>\r\n        </li>\r\n        <li [routerLinkActive]=\"['link-active']\">\r\n          <a [routerLink]=\"['/brochure']\">\r\n            <span class='glyphicon glyphicon-education'></span> Brochures\r\n          </a>\r\n        </li>\r\n        <li [routerLinkActive]=\"['link-active']\">\r\n          <a [routerLink]=\"['/author']\">\r\n            <span class='glyphicon glyphicon-education'></span> Authors\r\n          </a>\r\n        </li>\r\n        <li [routerLinkActive]=\"['link-active']\">\r\n          <a [routerLink]=\"['/publicationHouse']\">\r\n            <span class='glyphicon glyphicon-education'></span> PublicationHouses\r\n          </a>\r\n        </li>\r\n        <li [routerLinkActive]=\"['link-active']\">\r\n          <a [routerLink]=\"['/user']\">\r\n            <span class='glyphicon glyphicon-king'></span> User\r\n          </a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/components/navmenu/navmenu.component.scss":
+/*!***********************************************************!*\
+  !*** ./src/app/components/navmenu/navmenu.component.scss ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "li .glyphicon {\n  margin-right: 10px; }\n\nli.link-active a,\nli.link-active a:hover,\nli.link-active a:focus {\n  background-color: #4189C7;\n  color: white; }\n\n.main-nav {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n@media (min-width: 768px) {\n  .main-nav {\n    height: 100%;\n    width: calc(25% - 20px); }\n  .navbar {\n    border-radius: 0px;\n    border-width: 0px;\n    height: 100%; }\n  .navbar-header {\n    float: none; }\n  .navbar-collapse {\n    border-top: 1px solid #444;\n    padding: 0px; }\n  .navbar ul {\n    float: none; }\n  .navbar li {\n    float: none;\n    font-size: 15px;\n    margin: 6px; }\n  .navbar li a {\n    padding: 10px 16px;\n    border-radius: 4px; }\n  .navbar a {\n    width: 100%;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis; } }\n"
 
 /***/ }),
 
@@ -953,7 +957,7 @@ var NavMenuComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'nav-menu',
             template: __webpack_require__(/*! ./navmenu.component.html */ "./src/app/components/navmenu/navmenu.component.html"),
-            styles: [__webpack_require__(/*! ./navmenu.component.css */ "./src/app/components/navmenu/navmenu.component.css")]
+            styles: [__webpack_require__(/*! ./navmenu.component.scss */ "./src/app/components/navmenu/navmenu.component.scss")]
         })
     ], NavMenuComponent);
     return NavMenuComponent;
@@ -1096,7 +1100,7 @@ var PublicationHouseComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <h2>Please enter your information</h2>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <form #f=\"ngForm\" novalidate (ngSubmit)=\"registerUser(f)\">\r\n      <div class=\"form-group\">\r\n        <label for=\"first-name\">First name</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"first-name\" placeholder=\"First name\" name=\"firstName\" tmFocus ngModel>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"last-name\">Last name</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"last-name\" placeholder=\"Last name\" name=\"lastName\" ngModel>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Email</label>\r\n        <input id=\"email\" type=\"text\" required name=\"email\" validateEmail class=\"form-control\" placeholder=\"Email\" ngModel #email=\"ngModel\">\r\n        <small [hidden]=\"email.valid || (email.pristine && !submitted)\" class=\"text-danger\">Please enter a valid email</small>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"password\">Password</label>\r\n        <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" placeholder=\"Password\" ngModel>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"f.invalid || isRequesting\">Sign Up</button>\r\n        <!--<app-spinner [isRunning]=\"isRequesting\"></app-spinner>-->\r\n      </div>\r\n\r\n      <div *ngIf=\"errors\" class=\"alert alert-danger\" role=\"alert\">\r\n        <strong>Oops!</strong> {{errors}}\r\n      </div>\r\n\r\n    </form>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <h2>Please enter your information</h2>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-md-6\">\r\n    <form #f=\"ngForm\" novalidate (ngSubmit)=\"registerUser(f)\">\r\n      <div class=\"form-group\">\r\n        <label for=\"first-name\">First name</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"first-name\" placeholder=\"First name\" name=\"firstName\" tmFocus ngModel>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"last-name\">Last name</label>\r\n        <input type=\"text\" class=\"form-control\" id=\"last-name\" placeholder=\"Last name\" name=\"lastName\" ngModel>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Email</label>\r\n        <input id=\"email\" type=\"text\" required name=\"email\" validateEmail class=\"form-control\" placeholder=\"Email\" ngModel #email=\"ngModel\">\r\n        <small [hidden]=\"email.valid || (email.pristine && !submitted)\" class=\"text-danger\">Please enter a valid email</small>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"password\">Password</label>\r\n        <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" placeholder=\"Password\" ngModel>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"f.invalid || isRequesting\">Sign Up</button>\r\n      </div>\r\n\r\n      <div *ngIf=\"errors\" class=\"alert alert-danger\" role=\"alert\">\r\n        <strong>Oops!</strong> {{errors}}\r\n      </div>\r\n\r\n    </form>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1136,18 +1140,19 @@ var RegistrationFormComponent = /** @class */ (function () {
     RegistrationFormComponent.prototype.registerUser = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
+        if (!valid) {
+            return;
+        }
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
-        if (valid) {
-            this.loginService.register(value.email, value.password, value.firstName, value.lastName)
-                .finally(function () { return _this.isRequesting = false; })
-                .subscribe(function (result) {
-                if (result) {
-                    _this.router.navigate(['/login'], { queryParams: { brandNew: true, email: value.email } });
-                }
-            }, function (errors) { return _this.errors = errors; });
-        }
+        this.loginService.register(value.email, value.password, value.firstName, value.lastName)
+            .finally(function () { return _this.isRequesting = false; })
+            .subscribe(function (result) {
+            if (result) {
+                _this.router.navigate(['/login'], { queryParams: { brandNew: true, email: value.email } });
+            }
+        }, function (errors) { return _this.errors = errors; });
     };
     RegistrationFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1548,7 +1553,6 @@ var BaseService = /** @class */ (function () {
     function BaseService() {
     }
     BaseService.prototype.handleError = function (error) {
-        debugger;
         var applicationError = error.headers.get('Application-Error');
         if (applicationError) {
             return rxjs_Rx__WEBPACK_IMPORTED_MODULE_0__["Observable"].throw(applicationError);
@@ -1557,8 +1561,9 @@ var BaseService = /** @class */ (function () {
         var serverError = error.json();
         if (!serverError.type) {
             for (var key in serverError) {
-                if (serverError[key])
+                if (serverError[key]) {
                     modelStateErrors += serverError[key] + '\n';
+                }
             }
         }
         modelStateErrors = modelStateErrors = '' ? undefined : modelStateErrors;
@@ -1671,7 +1676,7 @@ var UserService = /** @class */ (function () {
         this.isLoggedIn = false;
         this.isAdmin = false;
         this.isLoggedIn = !!localStorage.getItem("data");
-        this.isAdminFromLocalStorage();
+        this.getIsAdminFromLocalStorage();
     }
     UserService.prototype.logout = function () {
         this.loginService.logout();
@@ -1686,7 +1691,7 @@ var UserService = /** @class */ (function () {
     UserService.prototype.changeRole = function (role) {
         this.isAdmin = role;
     };
-    UserService.prototype.isAdminFromLocalStorage = function () {
+    UserService.prototype.getIsAdminFromLocalStorage = function () {
         if (localStorage.getItem("data")) {
             this.changeRole(!!(JSON.parse(localStorage.getItem("data")).role == "admin"));
         }

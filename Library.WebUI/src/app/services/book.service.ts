@@ -15,12 +15,15 @@ export class BookService {
     public get() {
         return this.http.get<AllBooks>(this.url);
     }
+
     public create(item: BookCreateView) {
         return this.http.post(this.url, item)
     }
+
     public update(item: BookUpdateView) {
         return this.http.put(this.url, item)
     }
+
     public delete(id?: number) {
         return this.http.delete(`${this.url}/${id}`);
     }

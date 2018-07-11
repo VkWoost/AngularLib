@@ -15,12 +15,15 @@ export class DataService {
     public get() {
         return this.http.get<AllBrochures>(this.url);
     }
+
     public create(item: BrochureCreateView) {
         return this.http.post(this.url, item)
     }
+
     public update(item: BrochureUpdateView) {
         return this.http.put(this.url, item)
     }
+
     public delete(id?: number) {
         return this.http.delete(`${this.url}/${id}`);
     }

@@ -5,7 +5,6 @@ export abstract class BaseService {
     constructor() { }
 
     protected handleError(error: any) {
-        debugger;
         var applicationError = error.headers.get('Application-Error');
 
         if (applicationError) {
@@ -17,8 +16,9 @@ export abstract class BaseService {
 
         if (!serverError.type) {
             for (var key in serverError) {
-                if (serverError[key])
+                if (serverError[key]) {
                     modelStateErrors += serverError[key] + '\n';
+                }
             }
         }
 

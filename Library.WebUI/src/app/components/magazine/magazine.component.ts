@@ -83,11 +83,13 @@ export class MagazineComponent implements OnInit {
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
+
         if (!isNew) {
             const product: MagazineUpdateView = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }
+
         sender.closeRow(rowIndex);
     }
 

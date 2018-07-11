@@ -15,12 +15,15 @@ export class PublicationHouseService {
     public get() {
         return this.http.get<AllPublicationHouses>(this.url);
     }
+
     public create(item: PublicationHouseCreateView) {
         return this.http.post(this.url, item)
     }
+
     public update(item: PublicationHouseUpdateView) {
         return this.http.put(this.url, item)
     }
+
     public delete(id?: number) {
         return this.http.delete(`${this.url}/${id}`);
     }

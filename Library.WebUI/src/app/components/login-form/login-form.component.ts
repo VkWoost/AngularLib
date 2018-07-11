@@ -38,22 +38,25 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     }
 
     public login({ value, valid }: { value: Credentials, valid: boolean }) {
+        if (!valid) {
+            return;
+        }
+
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
-        if (valid) {
-            this.loginService.login(value.email, value.password)
-                .subscribe(
-                    result => {
-                        if (result) {
-                            localStorage.setItem("data", result);
-                            this.router.navigate(['/book']);
-                        }
-                        else {
-                            this.router.navigate(['/login']);
-                        }
-                    },
-                    error => this.errors = error);
-        }
+
+        this.loginService.login(value.email, value.password)
+            .subscribe(
+                result => {
+                    if (result) {
+                        localStorage.setItem("data", result);
+                        this.router.navigate(['/book']);
+                    }
+                    else {
+                        this.router.navigate(['/login']);
+                    }
+                },
+                error => this.errors = error);
     }
 }
