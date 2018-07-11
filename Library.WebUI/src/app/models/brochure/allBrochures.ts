@@ -6,5 +6,4 @@ export class AllBrochures {
         this.brochures = new Array<BrochureGetView>();
     }
     public brochures: BrochureGetView[]
-
 }

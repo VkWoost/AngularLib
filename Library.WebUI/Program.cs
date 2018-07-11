@@ -1,4 +1,3 @@
-using Library.DAL.DbInitializer;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

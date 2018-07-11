@@ -5,55 +5,55 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Credentials } from '../../models/identity/interfaces/credentials.interface';
 import { UserService } from '../../services/identity/user.service';
 import { Local } from 'protractor/built/driverProviders';
+import { LoginService } from '../../services/identity/login.service';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+    selector: 'app-login-form',
+    templateUrl: './login-form.component.html',
+    styleUrls: ['./login-form.component.scss']
 })
 
 export class LoginFormComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
+    private subscription: Subscription;
 
-  brandNew: boolean;
-  errors: string;
-  isRequesting: boolean;
-  submitted: boolean = false;
-  credentials: Credentials = { email: '', password: '' };
+    private brandNew: boolean;
+    private errors: string;
+    private isRequesting: boolean;
+    private submitted: boolean = false;
+    private credentials: Credentials = { email: '', password: '' };
 
-  constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
+    constructor(private loginService: LoginService, private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.subscription = this.activatedRoute.queryParams.subscribe(
-      (param: any) => {
-        this.brandNew = param['brandNew'];
-        this.credentials.email = param['email'];
-      });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  login({ value, valid }: { value: Credentials, valid: boolean }) {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.errors = '';
-    if (valid) {
-      this.userService.login(value.email, value.password)
-        .subscribe(
-        result => {
-          if (result /*&& result.lenght > 0*/) {
-            localStorage.setItem("loginData", JSON.parse(result).token);
-            localStorage.setItem("role", JSON.parse(result).role);
-              this.router.navigate(['/book']);
-            }
-            else {
-              this.router.navigate(['/login']);
-            }
-          },
-          error => this.errors = error);
+    ngOnInit() {
+        this.subscription = this.activatedRoute.queryParams.subscribe(
+            (param: any) => {
+                this.brandNew = param['brandNew'];
+                this.credentials.email = param['email'];
+            });
     }
-  }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
+    public login({ value, valid }: { value: Credentials, valid: boolean }) {
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors = '';
+        if (valid) {
+            this.loginService.login(value.email, value.password)
+                .subscribe(
+                    result => {
+                        if (result) {
+                            localStorage.setItem("data", result);
+                            this.router.navigate(['/book']);
+                        }
+                        else {
+                            this.router.navigate(['/login']);
+                        }
+                    },
+                    error => this.errors = error);
+        }
+    }
 }

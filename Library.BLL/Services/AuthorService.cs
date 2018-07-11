@@ -43,15 +43,18 @@ namespace Library.BLL.Services
             return result;
         }
 
-        public void Delete(int id)
+        public AuthorGetView Delete(int id)
         {
-            if (_authorRepository.Get(id) == null)
+			var author = _authorRepository.Get(id);
+
+			if (author == null)
             {
                 throw new BLLException("Author not found");
             }
             _authorRepository.Delete(id);
 			DeleteBooksByAuthorId(id);
-        }
+			return Mapper.Map<Author, AuthorGetView>(author);
+		}
 
         public void Update(AuthorUpdateView authorViewModel)
         {

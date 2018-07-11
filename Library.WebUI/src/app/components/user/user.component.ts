@@ -1,32 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/identity/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'user',
-  templateUrl: './user.component.html',
-  providers: [UserService]
+    selector: 'user',
+    templateUrl: './user.component.html',
+    providers: [UserService]
 })
 
 export class UserComponent implements OnInit {
-  email: string;
-  status: boolean;
-  subscription: Subscription;
+    status: boolean;
 
-  constructor(private userService: UserService) {
-  }
+    constructor(private userService: UserService, private router: Router) {
+    }
 
-  logout() {
-    this.userService.logout();
-  }
+    logout() {
+        this.userService.logout();
+        this.router.navigate(['/login']);
+    }
 
-  ngOnInit() {
-    this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
-    this.email = localStorage.getItem("loginData");
-  }
+    ngOnInit() {
+        this.status = this.userService.getIsLoggedIn();
+    }
 
-  ngOnDestroy() {
-    // prevent memory leak when component is destroyed
-    this.subscription.unsubscribe();
-  }
+    ngOnDestroy() {
+    }
 }

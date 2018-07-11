@@ -8,20 +8,20 @@ import { BookUpdateView } from '../models/book/bookUpdateView';
 @Injectable()
 export class BookService {
 
-  private url: string = "/api/Book";
+    private url: string = "/api/Book";
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  public get() {
-    return this.http.get<AllBooks>(this.url);
-  }
-  public create(item: BookCreateView) {
-    return this.http.post(this.url, item)
-  }
-  public update(item: BookUpdateView) {
-    return this.http.put(this.url, item)
-  }
-  public delete(id?: number) {
-    return this.http.delete(`${this.url}/${id}`);
-  }
+    public get() {
+        return this.http.get<AllBooks>(this.url);
+    }
+    public create(item: BookCreateView) {
+        return this.http.post(this.url, item)
+    }
+    public update(item: BookUpdateView) {
+        return this.http.put(this.url, item)
+    }
+    public delete(id?: number) {
+        return this.http.delete(`${this.url}/${id}`);
+    }
 }

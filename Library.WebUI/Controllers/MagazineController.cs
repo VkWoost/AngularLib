@@ -16,13 +16,13 @@ namespace Library.WebUI.Controllers
             _magazineService = new MagazineService(context);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetAll()
         {
             return Ok(_magazineService.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
             return Ok(_magazineService.Get(id));
@@ -45,8 +45,7 @@ namespace Library.WebUI.Controllers
         [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
-            var item = _magazineService.Get(id);
-            _magazineService.Delete(id);
+            var item = _magazineService.Delete(id);
             return Ok(item);
         }
     }

@@ -38,6 +38,7 @@
     <None Remove="src\app\models\publicationHouse\publicationHouseGetView.ts" />
     <None Remove="src\app\models\publicationHouse\publicationHouseUpdateView.ts" />
     <None Remove="src\app\services\identity\base.service.ts" />
+    <None Remove="src\app\services\identity\login.service.ts" />
     <None Remove="src\app\services\identity\user.service.ts" />
   </ItemGroup>
 
@@ -88,6 +89,7 @@
     <TypeScriptCompile Include="src\app\models\publicationHouse\publicationHouseGetView.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\publicationHouseUpdateView.ts" />
     <TypeScriptCompile Include="src\app\services\identity\base.service.ts" />
+    <TypeScriptCompile Include="src\app\services\identity\login.service.ts" />
     <TypeScriptCompile Include="src\app\services\identity\user.service.ts" />
   </ItemGroup>
 

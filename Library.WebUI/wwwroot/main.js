@@ -36,6 +36,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm5/Observable.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -48,40 +49,44 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AppHttpInterceptor = /** @class */ (function () {
-    function AppHttpInterceptor() {
+    function AppHttpInterceptor(router) {
+        this.router = router;
+        this.getToken();
     }
     AppHttpInterceptor.prototype.intercept = function (req, next) {
-        var token = localStorage.getItem("loginData");
-        if (token) {
-            req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
+        var _this = this;
+        if (this.token) {
+            req = req.clone({ setHeaders: { 'Authorization': 'Bearer ' + this.token } });
         }
         console.log(req);
         return next.handle(req)
             .map(function (resp) {
-            // on Response 
             if (resp instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]) {
-                // Do whatever you want with the response. 
                 return resp;
             }
         })
             .catch(function (err) {
-            // onError 
             console.log(err);
             if (err instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]) {
                 console.log(err.status);
                 console.log(err.statusText);
                 if (err.status === 401) {
-                    // redirect the user to login page 
-                    // 401 unauthorised user 
+                    _this.router.navigate(['/login']);
                 }
             }
             return rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__["Observable"].of(err);
         });
     };
+    AppHttpInterceptor.prototype.getToken = function () {
+        if (localStorage.getItem("data")) {
+            this.token = JSON.parse(localStorage.getItem("data")).token;
+        }
+    };
     AppHttpInterceptor = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], AppHttpInterceptor);
     return AppHttpInterceptor;
 }());
@@ -178,12 +183,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_login_form_login_form_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/login-form/login-form.component */ "./src/app/components/login-form/login-form.component.ts");
 /* harmony import */ var _components_user_user_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/user/user.component */ "./src/app/components/user/user.component.ts");
 /* harmony import */ var _AppHttpInterceptor__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./AppHttpInterceptor */ "./src/app/AppHttpInterceptor.ts");
+/* harmony import */ var _services_identity_login_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/identity/login.service */ "./src/app/services/identity/login.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -246,6 +253,7 @@ var AppModule = /** @class */ (function () {
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_15__["BrowserAnimationsModule"]
             ],
             providers: [
+                _services_identity_login_service__WEBPACK_IMPORTED_MODULE_21__["LoginService"],
                 _services_identity_user_service__WEBPACK_IMPORTED_MODULE_17__["UserService"],
                 {
                     provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
@@ -270,7 +278,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"authors.authors\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <div *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </div>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <div *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </div>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"authors.authors\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-container *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </ng-container>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <ng-container *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </ng-container>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -304,8 +312,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AuthorComponent = /** @class */ (function () {
-    function AuthorComponent(dataService) {
+    function AuthorComponent(dataService, userService) {
         this.dataService = dataService;
+        this.userService = userService;
         this.gridState = {
             sort: [],
             skip: 0,
@@ -315,7 +324,7 @@ var AuthorComponent = /** @class */ (function () {
     }
     AuthorComponent.prototype.ngOnInit = function () {
         this.loadData();
-        this.admin = !!(localStorage.getItem("role") == "admin");
+        this.admin = this.userService.getIsAdmin();
     };
     AuthorComponent.prototype.loadData = function () {
         var _this = this;
@@ -377,7 +386,7 @@ var AuthorComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./author.component.html */ "./src/app/components/author/author.component.html"),
             providers: [_services_author_service__WEBPACK_IMPORTED_MODULE_2__["AuthorService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_author_service__WEBPACK_IMPORTED_MODULE_2__["AuthorService"]])
+        __metadata("design:paramtypes", [_services_author_service__WEBPACK_IMPORTED_MODULE_2__["AuthorService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]])
     ], AuthorComponent);
     return AuthorComponent;
 }());
@@ -393,7 +402,7 @@ var AuthorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"books.books\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <div *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </div>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"author.name\" title=\"Author\">\r\n    <ng-template kendoGridEditTemplate let-dataItem=\"dataItem\" >\r\n      <kendo-dropdownlist\r\n        name=\"dataItem.author\"\r\n        [data]=\"authors.authors\"\r\n                         textField=\"name\"\r\n                          valueField=\"id\"\r\n                          [(ngModel)]=\"dataItem.author\"\r\n                          (valueChange)=\"authorChange($event)\">\r\n      </kendo-dropdownlist>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"publicationHouses\" title=\"Publication Houses\">\r\n    <ng-template kendoGridCellTemplate let-dataItem=\"dataItem\">\r\n\r\n      <span *ngFor=\"let publicationHouse of dataItem.publicationHouses\">{{publicationHouse.name}}, </span>\r\n\r\n    </ng-template>\r\n    <ng-template kendoGridEditTemplate let-dataItem=\"dataItem\">\r\n      <kendo-multiselect\r\n        name=\"dataItem.publicationHouses\"\r\n        [data]=\"publicationHouses.publicationHouses\"\r\n        textField=\"name\"\r\n        valueField=\"id\"\r\n        [(ngModel)]=\"dataItem.publicationHouses\"\r\n        (valueChange)=\"publicationHousesChange($event)\">\r\n      </kendo-multiselect>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <div *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </div>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"books.books\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-container *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </ng-container>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"author.name\" title=\"Author\">\r\n    <ng-template kendoGridEditTemplate let-dataItem=\"dataItem\" >\r\n      <kendo-dropdownlist\r\n        name=\"dataItem.author\"\r\n        [data]=\"authors.authors\"\r\n                         textField=\"name\"\r\n                          valueField=\"id\"\r\n                          [(ngModel)]=\"dataItem.author\"\r\n                          (valueChange)=\"authorChange($event)\">\r\n      </kendo-dropdownlist>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"publicationHouses\" title=\"Publication Houses\">\r\n    <ng-template kendoGridCellTemplate let-dataItem=\"dataItem\">\r\n\r\n      <span *ngFor=\"let publicationHouse of dataItem.publicationHouses\">{{publicationHouse.name}}, </span>\r\n\r\n    </ng-template>\r\n    <ng-template kendoGridEditTemplate let-dataItem=\"dataItem\">\r\n      <kendo-multiselect\r\n        name=\"dataItem.publicationHouses\"\r\n        [data]=\"publicationHouses.publicationHouses\"\r\n        textField=\"name\"\r\n        valueField=\"id\"\r\n        [(ngModel)]=\"dataItem.publicationHouses\"\r\n        (valueChange)=\"publicationHousesChange($event)\">\r\n      </kendo-multiselect>\r\n    </ng-template>\r\n  </kendo-grid-column>\r\n  <ng-container *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </ng-container>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -415,6 +424,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/publicationHouse/allPublicationHouses */ "./src/app/models/publicationHouse/allPublicationHouses.ts");
 /* harmony import */ var _models_book_allBooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/book/allBooks */ "./src/app/models/book/allBooks.ts");
 /* harmony import */ var _models_author_allAuthors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../models/author/allAuthors */ "./src/app/models/author/allAuthors.ts");
+/* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -432,11 +442,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var BookComponent = /** @class */ (function () {
-    function BookComponent(dataService, authorService, publicationHouseSevice) {
+    function BookComponent(dataService, authorService, publicationHouseSevice, userService) {
         this.dataService = dataService;
         this.authorService = authorService;
         this.publicationHouseSevice = publicationHouseSevice;
+        this.userService = userService;
         this.gridState = {
             sort: [],
             skip: 0,
@@ -451,7 +463,7 @@ var BookComponent = /** @class */ (function () {
         this.loadData();
         this.authorService.get().subscribe(function (data) { return _this.authors = data; });
         this.publicationHouseSevice.get().subscribe(function (data) { return _this.publicationHouses = data; });
-        this.admin = !!(localStorage.getItem("role") == "admin");
+        this.admin = this.userService.getIsAdmin();
     };
     BookComponent.prototype.loadData = function () {
         var _this = this;
@@ -525,9 +537,9 @@ var BookComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'book',
             template: __webpack_require__(/*! ./book.component.html */ "./src/app/components/book/book.component.html"),
-            providers: [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"]]
+            providers: [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"]])
+        __metadata("design:paramtypes", [_services_book_service__WEBPACK_IMPORTED_MODULE_2__["BookService"], _services_author_service__WEBPACK_IMPORTED_MODULE_3__["AuthorService"], _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__["PublicationHouseService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"]])
     ], BookComponent);
     return BookComponent;
 }());
@@ -543,7 +555,7 @@ var BookComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"brochures.brochures\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <div *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </div>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"typeOfCover\" title=\"Type Of Cover\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"numberOfPages\" title=\"Number Of Pages\"></kendo-grid-column>\r\n  <div *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </div>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"brochures.brochures\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-container *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </ng-container>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"typeOfCover\" title=\"Type Of Cover\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"numberOfPages\" title=\"Number Of Pages\"></kendo-grid-column>\r\n  <ng-container *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </ng-container>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -561,6 +573,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_brochure_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/brochure.service */ "./src/app/services/brochure.service.ts");
 /* harmony import */ var _models_brochure_allBrochures__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/brochure/allBrochures */ "./src/app/models/brochure/allBrochures.ts");
+/* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -574,9 +587,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var BrochureComponent = /** @class */ (function () {
-    function BrochureComponent(dataService) {
+    function BrochureComponent(dataService, userService) {
         this.dataService = dataService;
+        this.userService = userService;
         this.gridState = {
             sort: [],
             skip: 0,
@@ -586,7 +601,7 @@ var BrochureComponent = /** @class */ (function () {
     }
     BrochureComponent.prototype.ngOnInit = function () {
         this.loadData();
-        this.admin = !!(localStorage.getItem("role") == "admin");
+        this.admin = this.userService.getIsAdmin();
     };
     BrochureComponent.prototype.loadData = function () {
         var _this = this;
@@ -650,9 +665,9 @@ var BrochureComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'brochure',
             template: __webpack_require__(/*! ./brochure.component.html */ "./src/app/components/brochure/brochure.component.html"),
-            providers: [_services_brochure_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]]
+            providers: [_services_brochure_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_brochure_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]])
+        __metadata("design:paramtypes", [_services_brochure_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]])
     ], BrochureComponent);
     return BrochureComponent;
 }());
@@ -696,6 +711,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
+/* harmony import */ var _services_identity_login_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/identity/login.service */ "./src/app/services/identity/login.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -708,8 +724,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var LoginFormComponent = /** @class */ (function () {
-    function LoginFormComponent(userService, router, activatedRoute) {
+    function LoginFormComponent(loginService, userService, router, activatedRoute) {
+        this.loginService = loginService;
         this.userService = userService;
         this.router = router;
         this.activatedRoute = activatedRoute;
@@ -733,11 +751,10 @@ var LoginFormComponent = /** @class */ (function () {
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.userService.login(value.email, value.password)
+            this.loginService.login(value.email, value.password)
                 .subscribe(function (result) {
-                if (result /*&& result.lenght > 0*/) {
-                    localStorage.setItem("loginData", JSON.parse(result).token);
-                    localStorage.setItem("role", JSON.parse(result).role);
+                if (result) {
+                    localStorage.setItem("data", result);
                     _this.router.navigate(['/book']);
                 }
                 else {
@@ -752,7 +769,7 @@ var LoginFormComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login-form.component.html */ "./src/app/components/login-form/login-form.component.html"),
             styles: [__webpack_require__(/*! ./login-form.component.scss */ "./src/app/components/login-form/login-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_identity_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [_services_identity_login_service__WEBPACK_IMPORTED_MODULE_3__["LoginService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
     ], LoginFormComponent);
     return LoginFormComponent;
 }());
@@ -768,7 +785,7 @@ var LoginFormComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"magazines.magazines\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <div *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </div>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"number\" title=\"Number\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <div *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </div>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"magazines.magazines\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-container *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </ng-container>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"number\" title=\"Number\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"yearOfPublication\" title=\"Year Of Publication\"></kendo-grid-column>\r\n  <ng-container *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </ng-container>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -786,6 +803,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_magazine_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/magazine.service */ "./src/app/services/magazine.service.ts");
 /* harmony import */ var _models_magazine_allMagazines__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/magazine/allMagazines */ "./src/app/models/magazine/allMagazines.ts");
+/* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -799,9 +817,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var MagazineComponent = /** @class */ (function () {
-    function MagazineComponent(dataService) {
+    function MagazineComponent(dataService, userService) {
         this.dataService = dataService;
+        this.userService = userService;
         this.gridState = {
             sort: [],
             skip: 0,
@@ -811,7 +831,7 @@ var MagazineComponent = /** @class */ (function () {
     }
     MagazineComponent.prototype.ngOnInit = function () {
         this.loadData();
-        this.admin = !!(localStorage.getItem("role") == "admin");
+        this.admin = this.userService.getIsAdmin();
     };
     MagazineComponent.prototype.loadData = function () {
         var _this = this;
@@ -875,9 +895,9 @@ var MagazineComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'magazine',
             template: __webpack_require__(/*! ./magazine.component.html */ "./src/app/components/magazine/magazine.component.html"),
-            providers: [_services_magazine_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]]
+            providers: [_services_magazine_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_magazine_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]])
+        __metadata("design:paramtypes", [_services_magazine_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]])
     ], MagazineComponent);
     return MagazineComponent;
 }());
@@ -950,7 +970,7 @@ var NavMenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<kendo-grid [data]=\"publicationHouses.publicationHouses\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <div *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </div>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"adress\" title=\"Adress\"></kendo-grid-column>\r\n  <div *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </div>\r\n</kendo-grid>\r\n"
+module.exports = "<kendo-grid [data]=\"publicationHouses.publicationHouses\"\r\n            [height]=\"533\"\r\n            [pageSize]=\"gridState.take\" [skip]=\"gridState.skip\" [sort]=\"gridState.sort\"\r\n            [pageable]=\"true\" [sortable]=\"true\"\r\n            (dataStateChange)=\"onStateChange($event)\"\r\n            (edit)=\"editHandler($event)\" (cancel)=\"cancelHandler($event)\"\r\n            (save)=\"saveHandler($event)\" (remove)=\"removeHandler($event)\"\r\n            (add)=\"addHandler($event)\"\r\n            [navigable]=\"true\">\r\n  <ng-container *ngIf=\"admin\">\r\n    <ng-template kendoGridToolbarTemplate>\r\n      <button kendoGridAddCommand>Add new</button>\r\n    </ng-template>\r\n  </ng-container>\r\n  <kendo-grid-column field=\"name\" title=\"Name\"></kendo-grid-column>\r\n  <kendo-grid-column field=\"adress\" title=\"Adress\"></kendo-grid-column>\r\n  <ng-container *ngIf=\"admin\">\r\n    <kendo-grid-command-column title=\"command\" width=\"220\">\r\n      <ng-template kendoGridCellTemplate let-isNew=\"isNew\">\r\n        <button kendoGridEditCommand [primary]=\"true\">Edit</button>\r\n        <button kendoGridRemoveCommand>Remove</button>\r\n        <button kendoGridSaveCommand [disabled]=\"formGroup?.invalid\">{{ isNew ? 'Add' : 'Update' }}</button>\r\n        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>\r\n      </ng-template>\r\n    </kendo-grid-command-column>\r\n  </ng-container>\r\n</kendo-grid>\r\n"
 
 /***/ }),
 
@@ -968,6 +988,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/publicationHouse.service */ "./src/app/services/publicationHouse.service.ts");
 /* harmony import */ var _models_publicationHouse_allPublicationHouses__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/publicationHouse/allPublicationHouses */ "./src/app/models/publicationHouse/allPublicationHouses.ts");
+/* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -981,9 +1002,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var PublicationHouseComponent = /** @class */ (function () {
-    function PublicationHouseComponent(dataService) {
+    function PublicationHouseComponent(dataService, userService) {
         this.dataService = dataService;
+        this.userService = userService;
         this.gridState = {
             sort: [],
             skip: 0,
@@ -993,7 +1016,7 @@ var PublicationHouseComponent = /** @class */ (function () {
     }
     PublicationHouseComponent.prototype.ngOnInit = function () {
         this.loadData();
-        this.admin = !!(localStorage.getItem("role") == "admin");
+        this.admin = this.userService.getIsAdmin();
     };
     PublicationHouseComponent.prototype.loadData = function () {
         var _this = this;
@@ -1055,9 +1078,9 @@ var PublicationHouseComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'publicationHouse',
             template: __webpack_require__(/*! ./publicationHouse.component.html */ "./src/app/components/publicationHouse/publicationHouse.component.html"),
-            providers: [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__["PublicationHouseService"]]
+            providers: [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__["PublicationHouseService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__["PublicationHouseService"]])
+        __metadata("design:paramtypes", [_services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__["PublicationHouseService"], _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]])
     ], PublicationHouseComponent);
     return PublicationHouseComponent;
 }());
@@ -1089,7 +1112,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegistrationFormComponent", function() { return RegistrationFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
+/* harmony import */ var _services_identity_login_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/identity/login.service */ "./src/app/services/identity/login.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1103,9 +1126,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var RegistrationFormComponent = /** @class */ (function () {
-    function RegistrationFormComponent(userService, router) {
-        this.userService = userService;
+    function RegistrationFormComponent(router, loginService) {
         this.router = router;
+        this.loginService = loginService;
         this.submitted = false;
     }
     RegistrationFormComponent.prototype.ngOnInit = function () {
@@ -1117,7 +1140,7 @@ var RegistrationFormComponent = /** @class */ (function () {
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.userService.register(value.email, value.password, value.firstName, value.lastName)
+            this.loginService.register(value.email, value.password, value.firstName, value.lastName)
                 .finally(function () { return _this.isRequesting = false; })
                 .subscribe(function (result) {
                 if (result) {
@@ -1131,7 +1154,7 @@ var RegistrationFormComponent = /** @class */ (function () {
             selector: 'app-registration-form',
             template: __webpack_require__(/*! ./registration-form.component.html */ "./src/app/components/registration-form/registration-form.component.html"),
         }),
-        __metadata("design:paramtypes", [_services_identity_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _services_identity_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]])
     ], RegistrationFormComponent);
     return RegistrationFormComponent;
 }());
@@ -1163,6 +1186,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserComponent", function() { return UserComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1174,21 +1198,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var UserComponent = /** @class */ (function () {
-    function UserComponent(userService) {
+    function UserComponent(userService, router) {
         this.userService = userService;
+        this.router = router;
     }
     UserComponent.prototype.logout = function () {
         this.userService.logout();
+        this.router.navigate(['/login']);
     };
     UserComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.subscription = this.userService.authNavStatus$.subscribe(function (status) { return _this.status = status; });
-        this.email = localStorage.getItem("loginData");
+        this.status = this.userService.getIsLoggedIn();
     };
     UserComponent.prototype.ngOnDestroy = function () {
-        // prevent memory leak when component is destroyed
-        this.subscription.unsubscribe();
     };
     UserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1196,7 +1219,7 @@ var UserComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./user.component.html */ "./src/app/components/user/user.component.html"),
             providers: [_services_identity_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]]
         }),
-        __metadata("design:paramtypes", [_services_identity_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]])
+        __metadata("design:paramtypes", [_services_identity_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], UserComponent);
     return UserComponent;
 }());
@@ -1527,7 +1550,6 @@ var BaseService = /** @class */ (function () {
     BaseService.prototype.handleError = function (error) {
         debugger;
         var applicationError = error.headers.get('Application-Error');
-        // either applicationError in header or model error in body
         if (applicationError) {
             return rxjs_Rx__WEBPACK_IMPORTED_MODULE_0__["Observable"].throw(applicationError);
         }
@@ -1549,22 +1571,21 @@ var BaseService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/services/identity/user.service.ts":
-/*!***************************************************!*\
-  !*** ./src/app/services/identity/user.service.ts ***!
-  \***************************************************/
-/*! exports provided: UserService */
+/***/ "./src/app/services/identity/login.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/services/identity/login.service.ts ***!
+  \****************************************************/
+/*! exports provided: LoginService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginService", function() { return LoginService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _base_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./base.service */ "./src/app/services/identity/base.service.ts");
-/* harmony import */ var rxjs_Rx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/Rx */ "./node_modules/rxjs-compat/_esm5/Rx.js");
+/* harmony import */ var _models_identity_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/identity/user */ "./src/app/models/identity/user.ts");
+/* harmony import */ var _base_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./base.service */ "./src/app/services/identity/base.service.ts");
 /* harmony import */ var _models_identity_userRegistration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/identity/userRegistration */ "./src/app/models/identity/userRegistration.ts");
-/* harmony import */ var _models_identity_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/identity/user */ "./src/app/models/identity/user.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1589,44 +1610,93 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
-var UserService = /** @class */ (function (_super) {
-    __extends(UserService, _super);
-    function UserService(http) {
+var LoginService = /** @class */ (function (_super) {
+    __extends(LoginService, _super);
+    function LoginService(http) {
         var _this = _super.call(this) || this;
         _this.http = http;
-        _this._authNavStatusSource = new rxjs_Rx__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
-        _this.authNavStatus$ = _this._authNavStatusSource.asObservable();
-        _this.loggedIn = false;
-        _this.loggedIn = !!localStorage.getItem("loginData");
-        _this._authNavStatusSource.next(_this.loggedIn);
         return _this;
     }
-    UserService.prototype.register = function (email, password, firstName, lastName) {
+    LoginService.prototype.register = function (email, password, firstName, lastName) {
         var user = new _models_identity_userRegistration__WEBPACK_IMPORTED_MODULE_4__["UserRegistration"](email, password, firstName, lastName);
         return this.http.post('api/Account/Register', user)
             .map(function (res) { return true; })
             .catch(this.handleError);
     };
-    UserService.prototype.login = function (userName, password) {
-        var user = new _models_identity_user__WEBPACK_IMPORTED_MODULE_5__["User"](userName, password);
+    LoginService.prototype.login = function (userName, password) {
+        var user = new _models_identity_user__WEBPACK_IMPORTED_MODULE_2__["User"](userName, password);
         return this.http.post('api/Account/Login', user, { responseType: 'text' })
             .catch(this.handleError);
     };
-    UserService.prototype.logout = function () {
-        localStorage.clear();
-        this.loggedIn = false;
-        this._authNavStatusSource.next(false);
+    LoginService.prototype.logout = function () {
+        localStorage.removeItem("data");
     };
-    UserService.prototype.isLoggedIn = function () {
-        return this.loggedIn;
+    LoginService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], LoginService);
+    return LoginService;
+}(_base_service__WEBPACK_IMPORTED_MODULE_3__["BaseService"]));
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/identity/user.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/services/identity/user.service.ts ***!
+  \***************************************************/
+/*! exports provided: UserService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _login_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login.service */ "./src/app/services/identity/login.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UserService = /** @class */ (function () {
+    function UserService(loginService) {
+        this.loginService = loginService;
+        this.isLoggedIn = false;
+        this.isAdmin = false;
+        this.isLoggedIn = !!localStorage.getItem("data");
+        this.isAdminFromLocalStorage();
+    }
+    UserService.prototype.logout = function () {
+        this.loginService.logout();
+        this.isLoggedIn = false;
+    };
+    UserService.prototype.getIsLoggedIn = function () {
+        return this.isLoggedIn;
+    };
+    UserService.prototype.getIsAdmin = function () {
+        return this.isAdmin;
+    };
+    UserService.prototype.changeRole = function (role) {
+        this.isAdmin = role;
+    };
+    UserService.prototype.isAdminFromLocalStorage = function () {
+        if (localStorage.getItem("data")) {
+            this.changeRole(!!(JSON.parse(localStorage.getItem("data")).role == "admin"));
+        }
     };
     UserService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_login_service__WEBPACK_IMPORTED_MODULE_1__["LoginService"]])
     ], UserService);
     return UserService;
-}(_base_service__WEBPACK_IMPORTED_MODULE_2__["BaseService"]));
+}());
 
 
 

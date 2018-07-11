@@ -40,16 +40,18 @@ namespace Library.BLL.Services
             return result;
         }
 
-        public void Delete(int id)
+        public PublicationHouseGetView Delete(int id)
         {
-            if (_publicationHouseRepo.Get(id) == null)
+			var publicationHouse = _publicationHouseRepo.Get(id);
+			if (publicationHouse == null)
             {
                 throw new BLLException("Publication House not found");
             }
             _publicationHouseRepo.Delete(id);
-        }
+			return Mapper.Map<PublicationHouse, PublicationHouseGetView>(publicationHouse);
+		}
 
-        public void Update(PublicationHouseUpdateView publicationHouseViewModel)
+		public void Update(PublicationHouseUpdateView publicationHouseViewModel)
         {
             if (_publicationHouseRepo.Get(publicationHouseViewModel.Id) == null)
             {

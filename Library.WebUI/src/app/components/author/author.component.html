@@ -7,13 +7,13 @@
             (save)="saveHandler($event)" (remove)="removeHandler($event)"
             (add)="addHandler($event)"
             [navigable]="true">
-  <div *ngIf="admin">
+  <ng-container *ngIf="admin">
     <ng-template kendoGridToolbarTemplate>
       <button kendoGridAddCommand>Add new</button>
     </ng-template>
-  </div>
+  </ng-container>
   <kendo-grid-column field="name" title="Name"></kendo-grid-column>
-  <div *ngIf="admin">
+  <ng-container *ngIf="admin">
     <kendo-grid-command-column title="command" width="220">
       <ng-template kendoGridCellTemplate let-isNew="isNew">
         <button kendoGridEditCommand [primary]="true">Edit</button>
@@ -22,5 +22,5 @@
         <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
       </ng-template>
     </kendo-grid-command-column>
-  </div>
+  </ng-container>
 </kendo-grid>

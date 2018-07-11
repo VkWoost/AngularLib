@@ -1,38 +1,44 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
-  constructor() {
-  }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = localStorage.getItem("loginData");
-    if (token) {
-      req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
-    } 
-    console.log(req);
-    return next.handle(req)
-      .map(resp => {
-        // on Response 
-        if(resp  instanceof  HttpResponse ){
-      // Do whatever you want with the response. 
-          return resp;
-        }
-      })
-      .catch(err => {
-    // onError 
-        console.log(err);
-        if(err  instanceof  HttpErrorResponse ) {
-          console.log(err.status);
-          console.log(err.statusText);
-          if (err.status === 401) {
-      // redirect the user to login page 
-      // 401 unauthorised user 
+    private token: string;
+
+    constructor(private router: Router) {
+        this.getToken();
     }
-  } 
-   return Observable.of(err); 
-      });
-  }
-} 
+
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (this.token) {
+            req = req.clone({ setHeaders: { 'Authorization': 'Bearer ' + this.token } });
+        }
+        console.log(req);
+        return next.handle(req)
+            .map(resp => {
+                if (resp instanceof HttpResponse) {
+                    return resp;
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                if (err instanceof HttpErrorResponse) {
+                    console.log(err.status);
+                    console.log(err.statusText);
+                    if (err.status === 401) {
+                        this.router.navigate(['/login']);
+                    }
+                }
+                return Observable.of(err);
+            });
+    }
+
+    private getToken() {
+        if (localStorage.getItem("data")) {
+            this.token = JSON.parse(localStorage.getItem("data")).token;
+        }
+    }
+}

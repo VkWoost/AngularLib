@@ -4,5 +4,5 @@ export class AllAuthors {
     constructor() {
         this.authors = new Array<AuthorGetView>()
     }
-  public authors: AuthorGetView[];
+    public authors: AuthorGetView[];
 }

@@ -40,14 +40,16 @@ namespace Library.BLL.Services
             return result;
         }
 
-        public void Delete(int id)
+        public BrochureGetView Delete(int id)
         {
-            if (_brochureRepository.Get(id) == null)
+			var brochure = _brochureRepository.Get(id);
+			if (brochure == null)
             {
                 throw new BLLException("Brochure not found");
             }
             _brochureRepository.Delete(id);
-        }
+			return Mapper.Map<Brochure, BrochureGetView>(brochure);
+		}
 
         public void Update(BrochureUpdateView brochureViewModel)
         {

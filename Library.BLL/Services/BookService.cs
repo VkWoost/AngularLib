@@ -61,17 +61,17 @@ namespace Library.BLL.Services
             return result;
         }
 
-        public void Delete(int id)
+        public BookGetView Delete(int id)
         {
 			var item = _bookRepository.Get(id);
-
 			if (item == null)
             {
                 throw new BLLException("Book not found");
             }
             _bookRepository.Delete(id);
 			DeletePublicationHouses(id);
-        }
+			return Mapper.Map<Book, BookGetView>(item);
+		}
 
         public void Update(BookUpdateView bookViewModel)
         {

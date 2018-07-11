@@ -16,13 +16,13 @@ namespace Library.WebUI.Controllers
             _authorService = new AuthorService(context);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetAll()
         {
             return Ok(_authorService.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
             return Ok(_authorService.Get(id));
@@ -45,8 +45,7 @@ namespace Library.WebUI.Controllers
         [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
-            var item = _authorService.Get(id);
-            _authorService.Delete(id);
+            var item = _authorService.Delete(id);
             return Ok(item);
         }
     }

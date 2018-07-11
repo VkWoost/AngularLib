@@ -10,34 +10,28 @@ using System.Linq;
 
 namespace Library.WebUI.Controllers
 {
-  [Route("api/[controller]/[action]")]
-  public class AccountController : Controller
-  {
-    private readonly SignInManager<AppUser> _signInManager;
-    private readonly UserManager<AppUser> _userManager;
-    private readonly IConfiguration _configuration;
-    private AccountService _accountServise;
-
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
+    [Route("api/[controller]/[action]")]
+    public class AccountController : Controller
     {
-      _userManager = userManager;
-      _signInManager = signInManager;
-      _configuration = configuration;
-      _accountServise = new AccountService(userManager, signInManager, configuration);
-    }
+        private AccountService _accountServise;
 
-    [HttpPost]
-    public async Task<IActionResult> Login([FromBody] CredentialsViewModel model)
-    {
-      var res = await _accountServise.Login(model);
-      return Ok(res);
-    }
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
+        {
+            _accountServise = new AccountService(userManager, signInManager, configuration);
+        }
 
-    [HttpPost]
-    public async Task<IActionResult> Register([FromBody] RegistrationViewModel model)
-    {
-      var res = await _accountServise.Register(model);
-      return Ok(res);
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] CredentialsViewModel model)
+        {
+            var res = await _accountServise.Login(model);
+            return Ok(res);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] RegistrationViewModel model)
+        {
+            var res = await _accountServise.Register(model);
+            return Ok(res);
+        }
     }
-  }
 }

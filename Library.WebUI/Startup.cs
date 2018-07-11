@@ -18,8 +18,6 @@ namespace Library.WebUI
 {
   public class Startup
   {
-    private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; 
-    private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
     public IConfiguration Configuration { get; }
 
     public Startup(IConfiguration configuration)
@@ -44,13 +42,11 @@ namespace Library.WebUI
       tokenValidationParameters.ValidAudience = Configuration["JwtIssuer"];
 
       tokenValidationParameters.ValidateIssuerSigningKey = true;
-      tokenValidationParameters.IssuerSigningKey = _signingKey;
+      tokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JwtKey"]));
 
       tokenValidationParameters.RequireExpirationTime = true;
       tokenValidationParameters.ValidateLifetime = true;
       tokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
-
-
 
       services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<LibraryContext>()

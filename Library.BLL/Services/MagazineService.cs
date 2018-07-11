@@ -40,14 +40,16 @@ namespace Library.BLL.Services
             return result;
         }
 
-        public void Delete(int id)
+        public MagazineGetView Delete(int id)
         {
-            if (_magazineRepository.Get(id) == null)
+			var magazine = _magazineRepository.Get(id);
+			if (magazine == null)
             {
                 throw new BLLException("Magazine not found");
             }
             _magazineRepository.Delete(id);
-        }
+			return Mapper.Map<Magazine, MagazineGetView>(magazine);
+		}
 
         public void Update(MagazineUpdateView magazineViewModel)
         {

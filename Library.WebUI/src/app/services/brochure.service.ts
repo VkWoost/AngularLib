@@ -8,20 +8,20 @@ import { BrochureUpdateView } from '../models/brochure/brochureUpdateView';
 @Injectable()
 export class DataService {
 
-  private url: string = "/api/Brochure";
+    private url: string = "/api/Brochure";
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  public get() {
-    return this.http.get<AllBrochures>(this.url);
-  }
-  public create(item: BrochureCreateView) {
-    return this.http.post(this.url, item)
-  }
-  public update(item: BrochureUpdateView) {
-    return this.http.put(this.url, item)
-  }
-  public delete(id?: number) {
-    return this.http.delete(`${this.url}/${id}`);
-  }
+    public get() {
+        return this.http.get<AllBrochures>(this.url);
+    }
+    public create(item: BrochureCreateView) {
+        return this.http.post(this.url, item)
+    }
+    public update(item: BrochureUpdateView) {
+        return this.http.put(this.url, item)
+    }
+    public delete(id?: number) {
+        return this.http.delete(`${this.url}/${id}`);
+    }
 }

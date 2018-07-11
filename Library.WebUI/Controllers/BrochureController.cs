@@ -16,13 +16,13 @@ namespace Library.WebUI.Controllers
             _brochureService = new BrochureService(context);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetAll()
         {
             return Ok(_brochureService.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
             return Ok(_brochureService.Get(id));
@@ -45,8 +45,7 @@ namespace Library.WebUI.Controllers
         [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
-            var item = _brochureService.Get(id);
-            _brochureService.Delete(id);
+            var item = _brochureService.Delete(id);
             return Ok(item);
         }
     }

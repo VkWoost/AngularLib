@@ -16,13 +16,13 @@ namespace Library.WebUI.Controllers
             _bookService = new BookService(context);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetAll()
         {
             return Ok(_bookService.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
             return Ok(_bookService.Get(id));
@@ -45,8 +45,7 @@ namespace Library.WebUI.Controllers
         [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
-            var item = _bookService.Get(id);
-            _bookService.Delete(id);
+            var item = _bookService.Delete(id);
             return Ok(item);
         }
     }

@@ -1,47 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
-
-import { BaseService } from "./base.service";
-import { BehaviorSubject } from 'rxjs/Rx';
-import { UserRegistration } from '../../models/identity/userRegistration';
-import { User } from '../../models/identity/user';
-import { ObservableInput } from 'rxjs';
-import { Observable } from 'rxjs';
+import { LoginService } from './login.service';
 
 @Injectable()
-export class UserService extends BaseService {
+export class UserService {
 
-  private _authNavStatusSource = new BehaviorSubject<boolean>(false);
-  authNavStatus$ = this._authNavStatusSource.asObservable();
+    private isLoggedIn: boolean = false;
+    private isAdmin: boolean = false;
 
-  private loggedIn = false;
+    constructor(private loginService: LoginService) {
+        this.isLoggedIn = !!localStorage.getItem("data");
+        this.getIsAdminFromLocalStorage();
+    }
 
-  constructor(private http: HttpClient) {
-    super();
-    this.loggedIn = !!localStorage.getItem("loginData");
-    this._authNavStatusSource.next(this.loggedIn);
-  }
+    public logout() {
+        this.loginService.logout();
+        this.isLoggedIn = false;
+    }
 
-  public register(email: string, password: string, firstName: string, lastName: string) {
-    let user = new UserRegistration(email, password, firstName, lastName);
-    return this.http.post('api/Account/Register', user)
-      .map(res => true)
-      .catch(this.handleError);
-  }
+    public getIsLoggedIn() {
+        return this.isLoggedIn;
+    }
 
-  public login(userName, password): Observable<any> {
-    let user = new User(userName, password);
-    return this.http.post('api/Account/Login', user, { responseType: 'text'})
-      .catch(this.handleError);
-  }
+    public getIsAdmin() {
+        return this.isAdmin;
+    }
 
-  public logout() {
-    localStorage.clear();
-    this.loggedIn = false;
-    this._authNavStatusSource.next(false);
-  }
+    public changeRole(role: boolean) {
+        this.isAdmin = role;
+    }
 
-  public isLoggedIn() {
-    return this.loggedIn;
-  }
+    public getIsAdminFromLocalStorage() {
+        if (localStorage.getItem("data")) {
+            this.changeRole(!!(JSON.parse(localStorage.getItem("data")).role == "admin"));
+        }
+    }
 }

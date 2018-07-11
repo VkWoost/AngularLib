@@ -3,37 +3,37 @@ import { Router } from '@angular/router';
 
 import { UserRegistration } from '../../models/identity/interfaces/user.registration.interface';
 import { UserService } from '../../services/identity/user.service';
+import { LoginService } from '../../services/identity/login.service';
 
 @Component({
-  selector: 'app-registration-form',
-  templateUrl: './registration-form.component.html',
-  //styleUrls: ['./registration-form.component.scss']
+    selector: 'app-registration-form',
+    templateUrl: './registration-form.component.html',
 })
 export class RegistrationFormComponent implements OnInit {
 
-  errors: string;
-  isRequesting: boolean;
-  submitted: boolean = false;
+    private errors: string;
+    private isRequesting: boolean;
+    private submitted: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) { }
+    constructor(private router: Router, private loginService: LoginService) { }
 
-  ngOnInit() {
-  }
-
-  registerUser({ value, valid }: { value: UserRegistration, valid: boolean }) {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.errors = '';
-    if (valid) {
-      this.userService.register(value.email, value.password, value.firstName, value.lastName)
-        .finally(() => this.isRequesting = false)
-        .subscribe(
-          result => {
-            if (result) {
-              this.router.navigate(['/login'], { queryParams: { brandNew: true, email: value.email } });
-            }
-          },
-          errors => this.errors = errors);
+    ngOnInit() {
     }
-  }
+
+    public registerUser({ value, valid }: { value: UserRegistration, valid: boolean }) {
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors = '';
+        if (valid) {
+            this.loginService.register(value.email, value.password, value.firstName, value.lastName)
+                .finally(() => this.isRequesting = false)
+                .subscribe(
+                    result => {
+                        if (result) {
+                            this.router.navigate(['/login'], { queryParams: { brandNew: true, email: value.email } });
+                        }
+                    },
+                    errors => this.errors = errors);
+        }
+    }
 }

@@ -16,13 +16,13 @@ namespace Library.WebUI.Controllers
             _publicationHouseService = new PublicationHouseService(context);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetAll()
         {
             return Ok(_publicationHouseService.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
             return Ok(_publicationHouseService.Get(id));
@@ -45,8 +45,7 @@ namespace Library.WebUI.Controllers
         [HttpDelete("{id}"), Authorize(Policy = "admin")]
         public IActionResult Delete(int id)
         {
-            var item = _publicationHouseService.Get(id);
-            _publicationHouseService.Delete(id);
+            var item = _publicationHouseService.Delete(id);
             return Ok(item);
         }
     }

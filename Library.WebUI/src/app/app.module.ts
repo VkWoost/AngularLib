@@ -22,52 +22,54 @@ import { UserService } from './services/identity/user.service';
 import { LoginFormComponent } from "./components/login-form/login-form.component";
 import { UserComponent } from "./components/user/user.component";
 import { AppHttpInterceptor } from "./AppHttpInterceptor";
+import { LoginService } from "./services/identity/login.service";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    AuthorComponent,
-    MagazineComponent,
-    BrochureComponent,
-    PublicationHouseComponent,
-    BookComponent,
-    UserComponent,
-    RegistrationFormComponent,
-    LoginFormComponent,
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    RouterModule
-    .forRoot([
-      { path: '', redirectTo: 'book', pathMatch: 'full' },
-      { path: 'author', component: AuthorComponent },
-      { path: "magazine", component: MagazineComponent },
-      { path: 'brochure', component: BrochureComponent },
-      { path: 'publicationHouse', component: PublicationHouseComponent },
-      { path: 'book', component: BookComponent },
-      { path: 'register', component: RegistrationFormComponent },
-      { path: 'login', component: LoginFormComponent },
-      { path: 'user', component: UserComponent },
-      { path: '**', redirectTo: '' }
-      ])
-    ,
-    GridModule,
-    DropDownsModule,
-    BrowserAnimationsModule
-  ],
-  providers: [
-    UserService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AppHttpInterceptor,
-      multi: true
-    } 
-  ],
-  bootstrap:[AppComponent]
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        AuthorComponent,
+        MagazineComponent,
+        BrochureComponent,
+        PublicationHouseComponent,
+        BookComponent,
+        UserComponent,
+        RegistrationFormComponent,
+        LoginFormComponent,
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        RouterModule
+            .forRoot([
+                { path: '', redirectTo: 'book', pathMatch: 'full' },
+                { path: 'author', component: AuthorComponent },
+                { path: "magazine", component: MagazineComponent },
+                { path: 'brochure', component: BrochureComponent },
+                { path: 'publicationHouse', component: PublicationHouseComponent },
+                { path: 'book', component: BookComponent },
+                { path: 'register', component: RegistrationFormComponent },
+                { path: 'login', component: LoginFormComponent },
+                { path: 'user', component: UserComponent },
+                { path: '**', redirectTo: '' }
+            ])
+        ,
+        GridModule,
+        DropDownsModule,
+        BrowserAnimationsModule
+    ],
+    providers: [
+        LoginService,
+        UserService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AppHttpInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
