@@ -9,7 +9,7 @@ using Dapper;
 
 namespace Library.DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class GenericRepository<TEntity> : IGEnericRepository<TEntity> where TEntity : BaseEntity
     {
         private string _connectionString;
 
@@ -18,7 +18,7 @@ namespace Library.DAL.Repositories
             _connectionString = conn;
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(long id)
         {
             string _sqlGet = $"SELECT * FROM {typeof(TEntity).Name}s WHERE Id = {id}";
 			using (var connection = new SqlConnection(_connectionString))
@@ -41,6 +41,7 @@ namespace Library.DAL.Repositories
 
         public virtual void Create(TEntity item)
         {
+			//item.CreationDate = DateTime.Now;
 			List<string> columnsWithoutId = new List<string>(GetColumnsWithoutId());
 			var stringOfColumns = string.Join(", ", columnsWithoutId);
             var stringOfParameters = string.Join(", ", columnsWithoutId.Select(e => "@" + e));
@@ -63,7 +64,7 @@ namespace Library.DAL.Repositories
 			}
 		}
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             string _sqlDelete = $"DELETE FROM {typeof(TEntity).Name}s WHERE id = {id}";
 

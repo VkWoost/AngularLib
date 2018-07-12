@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using Library.BLL.Infrastructure;
-using Library.DAL;
+﻿using Library.BLL.Infrastructure;
+using Library.BLL.Interfaces;
 using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
-using Library.ViewModels.Author;
+using Library.ViewModels.AuthorViewModels;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Library.BLL.Services
 {
-    public class AuthorService
-    {
-        private IRepository<Author> _authorRepository;
-		private BookRepository _bookRepository;
+    public class AuthorService : IAuthorService
+	{
+        private IGEnericRepository<Author> _authorRepository;
+		private IBookRepository _bookRepository;
 
         public AuthorService(string conn)
         {
@@ -21,12 +19,17 @@ namespace Library.BLL.Services
 			_bookRepository = new BookRepository(conn);
         }
 
-        public void Create(AuthorCreateView authorViewModel)
+        public void Create(CreateAuthorViewModel authorViewModel)
         {
-            _authorRepository.Create(Mapper.Map<AuthorCreateView, Author>(authorViewModel));
+			Author author = new Author()
+			{
+				Id = authorViewModel.Id,
+				Name = authorViewModel.Name
+			};
+            _authorRepository.Create(author);
         }
 
-        public AuthorGetView Get(int id)
+        public GetAuthorViewModel Get(long id)
         {
             var author = _authorRepository.Get(id);
             if (author == null)
@@ -34,17 +37,31 @@ namespace Library.BLL.Services
                 throw new BLLException("Author not found");
             }
 
-            return Mapper.Map<Author, AuthorGetView>(author);
+			GetAuthorViewModel result = new GetAuthorViewModel()
+			{
+				Id = author.Id,
+				Name = author.Name
+			};
+			return result;
         }
 
-        public AuthorGetAllView GetAll()
+        public GetAllAuthorViewModel GetAll()
         {
-            AuthorGetAllView result = new AuthorGetAllView();
-            result.Authors = Mapper.Map<IEnumerable<Author>, List<AuthorGetView>>(_authorRepository.GetAll());
+			IEnumerable<Author> authors = _authorRepository.GetAll();
+			GetAllAuthorViewModel result = new GetAllAuthorViewModel();
+
+			foreach(var author in authors){
+				result.Authors.Add(new GetAuthorViewModel()
+				{
+					Id = author.Id,
+					Name = author.Name
+				});
+			}
+
             return result;
         }
 
-        public AuthorGetView Delete(int id)
+        public GetAuthorViewModel Delete(long id)
         {
 			var author = _authorRepository.Get(id);
 
@@ -54,19 +71,30 @@ namespace Library.BLL.Services
             }
             _authorRepository.Delete(id);
 			DeleteBooksByAuthorId(id);
-			return Mapper.Map<Author, AuthorGetView>(author);
+			GetAuthorViewModel result = new GetAuthorViewModel()
+			{
+				Id = author.Id,
+				Name = author.Name
+			};
+			return result;
 		}
 
-        public void Update(AuthorUpdateView authorViewModel)
+        public void Update(UpdateAuthorViewModel authorViewModel)
         {
             if (_authorRepository.Get(authorViewModel.Id) == null)
             {
                 throw new BLLException("Author not found");
             }
-            _authorRepository.Update(Mapper.Map<AuthorUpdateView, Author>(authorViewModel));
+			Author author = new Author()
+			{
+				Id = authorViewModel.Id,
+				Name = authorViewModel.Name
+			};
+			_authorRepository.Update(author);
         }
 
-		private void DeleteBooksByAuthorId(int id){
+		private void DeleteBooksByAuthorId(long id)
+		{
 			_bookRepository.DeleteRangeByAuthorId(id);
 		}
     }

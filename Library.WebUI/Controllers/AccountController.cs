@@ -1,23 +1,20 @@
 using System.Threading.Tasks;
 using Library.BLL.Services;
-using Library.DAL;
-using Library.Entities.Identity;
 using Library.ViewModels.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
+using Library.BLL.Interfaces;
+using Library.BLL.Infrastructure;
 
 namespace Library.WebUI.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        private AccountService _accountServise;
+        private IAccountService _accountServise;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
+        public AccountController(ApplicationManager applicationManager)
         {
-            _accountServise = new AccountService(userManager, signInManager, configuration);
+            _accountServise = new AccountService(applicationManager);
         }
 
         [HttpPost]

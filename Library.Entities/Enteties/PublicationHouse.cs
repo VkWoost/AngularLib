@@ -2,6 +2,7 @@
 {
     public class PublicationHouse : BaseEntity
     {
-        public string Adress { get; set; }
+		public string Name { get; set; }
+		public string Adress { get; set; }
     }
 }

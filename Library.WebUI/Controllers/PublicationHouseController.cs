@@ -1,6 +1,6 @@
+using Library.BLL.Interfaces;
 using Library.BLL.Services;
-using Library.DAL;
-using Library.ViewModels.PublicationHouse;
+using Library.ViewModels.PublicationHouseViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ namespace Library.WebUI.Controllers
   [Route("api/[controller]")]
     public class PublicationHouseController : Controller
     {
-        private PublicationHouseService _publicationHouseService;
+        private IPublicationHouseService _publicationHouseService;
 
         public PublicationHouseController(IConfiguration configuration)
         {
@@ -20,31 +20,33 @@ namespace Library.WebUI.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            return Ok(_publicationHouseService.GetAll());
+            var res = _publicationHouseService.GetAll();
+            return Ok(res);
         }
 
         [HttpGet("{id}"), Authorize]
-        public IActionResult Get(int id)
+        public IActionResult Get(long id)
         {
-            return Ok(_publicationHouseService.Get(id));
+            var res = _publicationHouseService.Get(id);
+            return Ok(res);
         }
 
-        [HttpPost, Authorize(Policy = "admin")]
-        public IActionResult Create([FromBody] PublicationHouseCreateView publicationHouse)
+        [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Create([FromBody] CreatePublicationHouseViewModel publicationHouse)
         {
             _publicationHouseService.Create(publicationHouse);
             return Ok(publicationHouse);
         }
 
-        [HttpPut, Authorize(Policy = "admin")]
-        public IActionResult Update([FromBody] PublicationHouseUpdateView publicationHouse)
+        [HttpPut, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Update([FromBody] UpdatePublicationHouseViewModel publicationHouse)
         {
             _publicationHouseService.Update(publicationHouse);
             return Ok(publicationHouse);
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = "admin")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id}"), Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Delete(long id)
         {
             var item = _publicationHouseService.Delete(id);
             return Ok(item);

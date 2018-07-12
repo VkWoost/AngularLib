@@ -1,9 +1,5 @@
-﻿using FluentValidation.Attributes;
-using Library.ViewModels.Identity.Validators;
-
-namespace Library.ViewModels.Identity
+﻿namespace Library.ViewModels.Identity
 {
-	[Validator(typeof(CredentialsViewModelValidator))]
 	public class CredentialsViewModel
 	{
 		public string UserName { get; set; }

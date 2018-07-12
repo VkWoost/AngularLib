@@ -1,54 +1,88 @@
-﻿using AutoMapper;
-using Library.BLL.Infrastructure;
-using Library.DAL;
+﻿using Library.BLL.Infrastructure;
+using Library.BLL.Interfaces;
 using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
-using Library.ViewModels.Brochure;
+using Library.ViewModels.BrochureViewModels;
 using System.Collections.Generic;
 
 namespace Library.BLL.Services
 {
-    public class BrochureService
+    public class BrochureService : IBrochureService
     {
-        private IRepository<Brochure> _brochureRepository;
+        private IGEnericRepository<Brochure> _brochureRepository;
 
         public BrochureService(string conn)
         {
             _brochureRepository = new GenericRepository<Brochure>(conn);
         }
 
-        public void Create(BrochureCreateView brochureViewModel)
+        public void Create(CreateBrochureViewModel brochureViewModel)
         {
-            _brochureRepository.Create(Mapper.Map<BrochureCreateView, Brochure>(brochureViewModel));
+			Brochure brochure = new Brochure()
+			{
+				Id = brochureViewModel.Id,
+				Name = brochureViewModel.Name,
+				TypeOfCover = brochureViewModel.TypeOfCover,
+				NumberOfPages = brochureViewModel.NumberOfPages
+			};
+
+            _brochureRepository.Create(brochure);
         }
 
-        public BrochureGetView Get(int id)
+        public GetBrochureViewModel Get(long id)
         {
             var brochure = _brochureRepository.Get(id);
             if (brochure == null)
             {
                 throw new BLLException("Brochure not found");
             }
-            return Mapper.Map<Brochure, BrochureGetView>(brochure);
+
+			GetBrochureViewModel result = new GetBrochureViewModel() 
+			{
+				Id = brochure.Id,
+				Name = brochure.Name,
+				TypeOfCover = brochure.TypeOfCover,
+				NumberOfPages = brochure.NumberOfPages
+			};
+
+			return result;
         }
 
-        public BrochureGetAllView GetAll()
+        public GetAllBrochureViewModel GetAll()
         {
-            BrochureGetAllView result = new BrochureGetAllView();
-            result.Brochures = Mapper.Map<IEnumerable<Brochure>, List<BrochureGetView>>(_brochureRepository.GetAll());
+			IEnumerable<Brochure> brochures = _brochureRepository.GetAll();
+			GetAllBrochureViewModel result = new GetAllBrochureViewModel();
+
+			foreach(var brochure in brochures){
+				result.Brochures.Add(new BrochureViewModel()
+				{
+					Id = brochure.Id,
+					Name = brochure.Name,
+					NumberOfPages = brochure.NumberOfPages,
+					TypeOfCover = brochure.TypeOfCover
+				});
+			}
             return result;
         }
 
-        public BrochureGetView Delete(int id)
+        public GetBrochureViewModel Delete(long id)
         {
 			var brochure = _brochureRepository.Get(id);
 			if (brochure == null)
             {
                 throw new BLLException("Brochure not found");
             }
-            _brochureRepository.Delete(id);
-			return Mapper.Map<Brochure, BrochureGetView>(brochure);
+			var result = new GetBrochureViewModel()
+			{
+				Id = brochure.Id,
+				Name = brochure.Name,
+				TypeOfCover = brochure.TypeOfCover,
+				NumberOfPages = brochure.NumberOfPages
+			}; 
+			            
+			_brochureRepository.Delete(id);
+			return result;
 		}
 
         public void Update(BrochureUpdateView brochureViewModel)
@@ -57,7 +91,16 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Brochure not found");
             }
-            _brochureRepository.Update(Mapper.Map<BrochureUpdateView, Brochure>(brochureViewModel));
+
+			Brochure brochure = new Brochure()
+			{
+				Id = brochureViewModel.Id,
+				Name = brochureViewModel.Name,
+				TypeOfCover = brochureViewModel.TypeOfCover,
+				NumberOfPages = brochureViewModel.NumberOfPages
+			};
+
+			_brochureRepository.Update(brochure);
         }
 
     }

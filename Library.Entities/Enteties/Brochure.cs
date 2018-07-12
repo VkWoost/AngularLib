@@ -2,7 +2,8 @@
 {
     public class Brochure : BaseEntity
     {
-        public string TypeOfCover { get; set; }
+		public string Name { get; set; }
+		public string TypeOfCover { get; set; }
         public int NumberOfPages { get; set; }
     }
 }

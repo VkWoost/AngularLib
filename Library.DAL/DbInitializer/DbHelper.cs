@@ -1,7 +1,5 @@
-using Library.Entities.Identity;
+using Library.Entities.Enteties;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
@@ -9,13 +7,13 @@ namespace Library.DAL.DbInitializer
 {
 	public static class DbHelper
     {
-		public static async void DbInitialize(UserManager<AppUser> userManager)
+		public static async void DbInitialize(UserManager<ApplicationUser> userManager)
 		{
 			if (userManager.Users.Any())
 			{
 				return;
 			}
-			var user = new AppUser
+			var user = new ApplicationUser
 			{
 				UserName = "admin@gmail.com",
 				Email = "admin@gmail.com",

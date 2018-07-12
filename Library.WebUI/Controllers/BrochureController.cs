@@ -1,6 +1,6 @@
+using Library.BLL.Interfaces;
 using Library.BLL.Services;
-using Library.DAL;
-using Library.ViewModels.Brochure;
+using Library.ViewModels.BrochureViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ namespace Library.WebUI.Controllers
   [Route("api/[controller]")]
     public class BrochureController : Controller
     {
-        private BrochureService _brochureService;
+        private IBrochureService _brochureService;
 
         public BrochureController(IConfiguration configuration)
         {
@@ -20,30 +20,32 @@ namespace Library.WebUI.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            return Ok(_brochureService.GetAll());
+            var res = _brochureService.GetAll();
+            return Ok(res);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            return Ok(_brochureService.Get(id));
+            var res = _brochureService.Get(id);
+            return Ok(res);
         }
 
-        [HttpPost, Authorize(Policy = "admin")]
-        public IActionResult Create([FromBody] BrochureCreateView brochure)
+        [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Create([FromBody] CreateBrochureViewModel brochure)
         {
             _brochureService.Create(brochure);
             return Ok(brochure);
         }
 
-        [HttpPut, Authorize(Policy = "admin")]
+        [HttpPut, Authorize(Policy = nameof(IdentityRoles.admin))]
         public IActionResult Update([FromBody] BrochureUpdateView brochure)
         {
             _brochureService.Update(brochure);
             return Ok(brochure);
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = "admin")]
+        [HttpDelete("{id}"), Authorize(Policy = nameof(IdentityRoles.admin))]
         public IActionResult Delete(int id)
         {
             var item = _brochureService.Delete(id);

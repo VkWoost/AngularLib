@@ -1,63 +1,108 @@
-﻿using AutoMapper;
-using Library.BLL.Infrastructure;
-using Library.DAL;
+﻿using Library.BLL.Infrastructure;
+using Library.BLL.Interfaces;
 using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
-using Library.ViewModels.Magazine;
+using Library.ViewModels.MagazineViewModels;
 using System.Collections.Generic;
 
 namespace Library.BLL.Services
 {
-    public class MagazineService
+    public class MagazineService : IMagazineService
     {
-        private IRepository<Magazine> _magazineRepository;
+        private IGEnericRepository<Magazine> _magazineRepository;
 
         public MagazineService(string conn)
         {
             _magazineRepository = new GenericRepository<Magazine>(conn);
         }
 
-        public void Create(MagazineCreateView magazineViewModel)
+        public void Create(CreateMagazineViewModel magazineViewModel)
         {
-            _magazineRepository.Create(Mapper.Map<MagazineCreateView, Magazine>(magazineViewModel));
+			Magazine magazine = new Magazine()
+			{
+				Id = magazineViewModel.Id,
+				Name = magazineViewModel.Name,
+				Number = magazineViewModel.Number,
+				YearOfPublication = magazineViewModel.YearOfPublication
+			};
+
+            _magazineRepository.Create(magazine);
         }
 
-        public MagazineGetView Get(int id)
+        public GetMagazineViewModel Get(long id)
         {
             var magazine = _magazineRepository.Get(id);
             if (magazine == null)
             {
                 throw new BLLException("Magazine not found");
             }
-            return Mapper.Map<Magazine, MagazineGetView>(magazine);
+
+			GetMagazineViewModel result = new GetMagazineViewModel()
+			{
+				Id = magazine.Id,
+				Name = magazine.Name,
+				Number = magazine.Number,
+				YearOfPublication = magazine.YearOfPublication
+			};
+
+			return result;
         }
 
-        public MagazineGetAllView GetAll()
+        public GetAllMagazineViewModel GetAll()
         {
-            MagazineGetAllView result = new MagazineGetAllView();
-            result.Magazines = Mapper.Map<IEnumerable<Magazine>, List<MagazineGetView>>(_magazineRepository.GetAll());
+			IEnumerable<Magazine> magazines = _magazineRepository.GetAll();
+			GetAllMagazineViewModel result = new GetAllMagazineViewModel();
+
+			foreach(var magazine in magazines){
+				result.Magazines.Add(new MagazineViewModel() 
+				{ 
+					Id = magazine.Id,
+					Name = magazine.Name,
+					Number = magazine.Number,
+					YearOfPublication = magazine.YearOfPublication
+				});
+			}
+
             return result;
         }
 
-        public MagazineGetView Delete(int id)
+        public GetMagazineViewModel Delete(long id)
         {
 			var magazine = _magazineRepository.Get(id);
 			if (magazine == null)
             {
                 throw new BLLException("Magazine not found");
             }
-            _magazineRepository.Delete(id);
-			return Mapper.Map<Magazine, MagazineGetView>(magazine);
+			
+			GetMagazineViewModel result = new GetMagazineViewModel()
+			{
+				Id = magazine.Id,
+				Name = magazine.Name,
+				Number = magazine.Number,
+				YearOfPublication = magazine.YearOfPublication
+			};
+
+			_magazineRepository.Delete(id);
+			return result;
 		}
 
-        public void Update(MagazineUpdateView magazineViewModel)
+        public void Update(UpdateMagazineViewModel magazineViewModel)
         {
             if (_magazineRepository.Get(magazineViewModel.Id) == null)
             {
                 throw new BLLException("Magazine not found");
             }
-            _magazineRepository.Update(Mapper.Map<MagazineUpdateView, Magazine>(magazineViewModel));
+
+			Magazine magazine = new Magazine()
+			{
+				Id = magazineViewModel.Id,
+				Name = magazineViewModel.Name,
+				Number = magazineViewModel.Number,
+				YearOfPublication = magazineViewModel.YearOfPublication
+			};
+
+			_magazineRepository.Update(magazine);
         }
 
     }

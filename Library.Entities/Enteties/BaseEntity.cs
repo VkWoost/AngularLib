@@ -1,8 +1,10 @@
-﻿namespace Library.Entities.Enteties
+﻿using System;
+
+namespace Library.Entities.Enteties
 {
 	public class BaseEntity
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
+		public long Id { get; set; }
+		public DateTime CreationDate { get; set; }
 	}
 }

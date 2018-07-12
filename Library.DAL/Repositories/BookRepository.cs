@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Library.DAL.Interfaces;
 using Library.Entities.Enteties;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Reflection;
 
 namespace Library.DAL.Repositories
 {
-	public class BookRepository : GenericRepository<Book>
+	public class BookRepository : GenericRepository<Book>, IBookRepository
     {
 		private string _connectionString;
 		
@@ -28,7 +29,7 @@ namespace Library.DAL.Repositories
 			}
 		}
 
-		public void DeleteRangeByAuthorId(int id)
+		public void DeleteRangeByAuthorId(long id)
 		{
 			string _sqlDelete = $"DELETE FROM {typeof(Book).Name}s WHERE AuthorId = { id }";
 

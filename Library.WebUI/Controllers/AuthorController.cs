@@ -1,5 +1,6 @@
+using Library.BLL.Interfaces;
 using Library.BLL.Services;
-using Library.ViewModels.Author;
+using Library.ViewModels.AuthorViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ namespace Library.WebUI.Controllers
     [Route("api/[controller]")]
     public class AuthorController : Controller
     {
-        private AuthorService _authorService;
+        private IAuthorService _authorService;
 
         public AuthorController(IConfiguration configuration)
         {
@@ -19,30 +20,32 @@ namespace Library.WebUI.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            return Ok(_authorService.GetAll());
+            var res = _authorService.GetAll();
+            return Ok(res);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            return Ok(_authorService.Get(id));
+            var res = _authorService.Get(id);
+            return Ok(res);
         }
 
-        [HttpPost, Authorize(Policy = "admin")]
-        public IActionResult Create([FromBody] AuthorCreateView author)
+        [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Create([FromBody] CreateAuthorViewModel author)
         {
             _authorService.Create(author);
             return Ok(author);
         }
 
-        [HttpPut, Authorize(Policy = "admin")]
-        public IActionResult Update([FromBody] AuthorUpdateView author)
+        [HttpPut, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Update([FromBody] UpdateAuthorViewModel author)
         {
             _authorService.Update(author);
             return Ok(author);
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = "admin")]
+        [HttpDelete("{id}"), Authorize(Policy = nameof(IdentityRoles.admin))]
         public IActionResult Delete(int id)
         {
             var item = _authorService.Delete(id);

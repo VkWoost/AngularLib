@@ -1,6 +1,6 @@
+using Library.BLL.Interfaces;
 using Library.BLL.Services;
-using Library.DAL;
-using Library.ViewModels.Magazine;
+using Library.ViewModels.MagazineViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ namespace Library.WebUI.Controllers
     [Route("api/[controller]")]
     public class MagazineController : Controller
     {
-        private MagazineService _magazineService;
+        private IMagazineService _magazineService;
 
         public MagazineController(IConfiguration configuration)
         {
@@ -20,31 +20,33 @@ namespace Library.WebUI.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            return Ok(_magazineService.GetAll());
+            var res = _magazineService.GetAll();
+            return Ok(res);
         }
 
         [HttpGet("{id}"), Authorize]
-        public IActionResult Get(int id)
+        public IActionResult Get(long id)
         {
-            return Ok(_magazineService.Get(id));
+            var res = _magazineService.Get(id);
+            return Ok(res);
         }
 
-        [HttpPost, Authorize(Policy = "admin")]
-        public IActionResult Create([FromBody] MagazineCreateView magazine)
+        [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Create([FromBody] CreateMagazineViewModel magazine)
         {
             _magazineService.Create(magazine);
             return Ok(magazine);
         }
 
-        [HttpPut, Authorize(Policy = "admin")]
-        public IActionResult Update([FromBody] MagazineUpdateView magazine)
+        [HttpPut, Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Update([FromBody] UpdateMagazineViewModel magazine)
         {
             _magazineService.Update(magazine);
             return Ok(magazine);
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = "admin")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id}"), Authorize(Policy = nameof(IdentityRoles.admin))]
+        public IActionResult Delete(long id)
         {
             var item = _magazineService.Delete(id);
             return Ok(item);

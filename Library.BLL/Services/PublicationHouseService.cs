@@ -1,63 +1,103 @@
-﻿using AutoMapper;
-using Library.BLL.Infrastructure;
-using Library.DAL;
+﻿using Library.BLL.Infrastructure;
+using Library.BLL.Interfaces;
 using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
-using Library.ViewModels.PublicationHouse;
+using Library.ViewModels.PublicationHouseViewModels;
 using System.Collections.Generic;
 
 namespace Library.BLL.Services
 {
-    public class PublicationHouseService
-    {
-        private IRepository<PublicationHouse> _publicationHouseRepo;
+    public class PublicationHouseService : IPublicationHouseService
+	{
+        private IGEnericRepository<PublicationHouse> _publicationHouseRepo;
 
         public PublicationHouseService(string conn)
         {
             _publicationHouseRepo = new GenericRepository<PublicationHouse>(conn);
         }
 
-        public void Create(PublicationHouseCreateView publicationHouseViewModel)
+        public void Create(CreatePublicationHouseViewModel publicationHouseViewModel)
         {
-            _publicationHouseRepo.Create(Mapper.Map<PublicationHouseCreateView, PublicationHouse>(publicationHouseViewModel));
+
+			PublicationHouse publicationHouse = new PublicationHouse()
+			{
+				Id = publicationHouseViewModel.Id,
+				Name = publicationHouseViewModel.Name,
+				Adress = publicationHouseViewModel.Adress
+			};
+
+            _publicationHouseRepo.Create(publicationHouse);
         }
 
-        public PublicationHouseGetView Get(int id)
+        public GetPublicationHouseViewModel Get(long id)
         {
             var publicationHouse = _publicationHouseRepo.Get(id);
             if (publicationHouse == null)
             {
                 throw new BLLException("Publication House not found");
             }
-            return Mapper.Map<PublicationHouse, PublicationHouseGetView>(publicationHouse);
+
+			GetPublicationHouseViewModel result = new GetPublicationHouseViewModel()
+			{
+				Id = publicationHouse.Id,
+				Name = publicationHouse.Name,
+				Adress = publicationHouse.Adress
+			};
+			return result;
         }
 
-        public PublicationHouseGetAllView GetAll()
+        public GetAllPublicationHouseViewModel GetAll()
         {
-            PublicationHouseGetAllView result = new PublicationHouseGetAllView();
-            result.PublicationHouses = Mapper.Map<IEnumerable<PublicationHouse>, List<PublicationHouseGetView>>(_publicationHouseRepo.GetAll());
+			IEnumerable<PublicationHouse> publicationHouses = _publicationHouseRepo.GetAll();
+			GetAllPublicationHouseViewModel result = new GetAllPublicationHouseViewModel();
+
+			foreach(var publicationHouse in publicationHouses){
+				result.PublicationHouses.Add(new GetPublicationHouseViewModel()
+				{
+					Id = publicationHouse.Id,
+					Name = publicationHouse.Name,
+					Adress = publicationHouse.Adress
+				});
+			}
+
             return result;
         }
 
-        public PublicationHouseGetView Delete(int id)
+        public GetPublicationHouseViewModel Delete(long id)
         {
 			var publicationHouse = _publicationHouseRepo.Get(id);
 			if (publicationHouse == null)
             {
                 throw new BLLException("Publication House not found");
             }
-            _publicationHouseRepo.Delete(id);
-			return Mapper.Map<PublicationHouse, PublicationHouseGetView>(publicationHouse);
+
+			GetPublicationHouseViewModel result = new GetPublicationHouseViewModel()
+			{
+				Id = publicationHouse.Id,
+				Name = publicationHouse.Name,
+				Adress = publicationHouse.Adress
+			};
+
+			_publicationHouseRepo.Delete(id);
+			return result;
 		}
 
-		public void Update(PublicationHouseUpdateView publicationHouseViewModel)
+		public void Update(UpdatePublicationHouseViewModel publicationHouseViewModel)
         {
             if (_publicationHouseRepo.Get(publicationHouseViewModel.Id) == null)
             {
                 throw new BLLException("Publication House not found");
             }
-            _publicationHouseRepo.Update(Mapper.Map<PublicationHouseUpdateView, PublicationHouse>(publicationHouseViewModel));
+
+			PublicationHouse publicationHouse = new PublicationHouse()
+			{
+				Id = publicationHouseViewModel.Id,
+				Name = publicationHouseViewModel.Name,
+				Adress = publicationHouseViewModel.Adress
+			};
+
+			_publicationHouseRepo.Update(publicationHouse);
         }
 
     }
