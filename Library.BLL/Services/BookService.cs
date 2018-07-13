@@ -3,7 +3,9 @@ using Library.BLL.Interfaces;
 using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
+using Library.ViewModels.AuthorViewModels;
 using Library.ViewModels.BookViewModels;
+using Library.ViewModels.PublicationHouseViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +28,7 @@ namespace Library.BLL.Services
 
         public void Create(CreateBookViewModel bookViewModel)
         {
-			Book book = new Book()
+			var book = new Book()
 			{
 				Id = bookViewModel.Id,
 				Name = bookViewModel.Name,
@@ -36,6 +38,7 @@ namespace Library.BLL.Services
 			bookViewModel.AuthorId = bookViewModel.Author.Id;
 			
 			int bookId = _bookRepository.CreateBook(book);
+			
 			AddPublicationHouses(bookId, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
         }
         
@@ -47,7 +50,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Book not found");
             }
 
-			GetBookViewModel result = new GetBookViewModel()
+			var result = new GetBookViewModel()
 			{
 				Id = book.Id,
 				Name = book.Name,
@@ -61,11 +64,11 @@ namespace Library.BLL.Services
 
         public GetAllBookViewModel GetAll()
         {
-			IEnumerable<Book> books = _bookRepository.GetAll();
-			GetAllBookViewModel result = new GetAllBookViewModel();
+			var books = _bookRepository.GetAll();
+			var result = new GetAllBookViewModel();
 
 			foreach( var book in books){
-				result.Books.Add(new GetBookViewModel() 
+				result.Books.Add(new BookViewItem() 
 				{
 					Id = book.Id,
 					Name = book.Name,
@@ -80,9 +83,27 @@ namespace Library.BLL.Services
 
 			foreach (var book in result.Books)
             {
-                book.Author = authors.Authors.FirstOrDefault(x => x.Id == book.AuthorId);
+				var author = authors.Authors.FirstOrDefault(x => x.Id == book.AuthorId);
+
+				book.Author = new GetAuthorViewModel()
+				{
+					Id = author.Id,
+					Name = author.Name
+				};
+
 				var currentPublicHouseBook = publicHouseBook.Where(x => x.BookId == book.Id).Select(x=>x.PublicationHouseId).ToList();
-				book.PublicationHouses = pHouses.Where(x => currentPublicHouseBook.Contains(x.Id)).ToList();
+				
+				var publicationHouses = pHouses.Where(x => currentPublicHouseBook.Contains(x.Id)).ToList();
+				
+				book.PublicationHouses = new List<GetPublicationHouseViewModel>();
+				foreach(var item in publicationHouses){
+					book.PublicationHouses.Add(new GetPublicationHouseViewModel()
+					{
+						Id = item.Id,
+						Name = item.Name,
+						Adress = item.Adress
+					});
+				}
             }
             return result;
         }
@@ -94,16 +115,19 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Book not found");
             }
-            DeletePublicationHouseBooks(id);
+            
+			DeletePublicationHouseBooks(id);
+			
 			_bookRepository.Delete(id);
 
-			GetBookViewModel result = new GetBookViewModel()
+			var result = new GetBookViewModel()
 			{
 				Id = book.Id,
 				Name = book.Name,
 				AuthorId = book.AuthorId,
 				YearOfPublication = book.YearOfPublication
 			};
+			
 			return result;
 		}
 
@@ -113,33 +137,43 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Book not found");
             }
+			
 			bookViewModel.AuthorId = bookViewModel.Author.Id;
 
-			Book book = new Book()
+			var book = new Book()
 			{
 				Id = bookViewModel.Id,
 				Name = bookViewModel.Name,
 				AuthorId = bookViewModel.Author.Id,
 				YearOfPublication = bookViewModel.YearOfPublication
 			};
+			
 			bookViewModel.AuthorId = bookViewModel.Author.Id;
 
 			_bookRepository.Update(book);
+			
 			UpdatePublicationHouses(bookViewModel.Id, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
         }
 
-		private void AddPublicationHouses(long bookId, List<long> publicHouseIds){
+		private void AddPublicationHouses(long bookId, List<long> publicHouseIds)
+		{
 			var publicationHouses = new List<PublicationHousesInBook>();
+			
 			foreach (var publicHouse in publicHouseIds)
 			{
 				publicationHouses.Add(new PublicationHousesInBook(bookId, publicHouse));
 			}
+			
 			_pHouseBookRepository.Create(publicationHouses);
 		}
-		private void DeletePublicationHouseBooks(long bookId){
+
+		private void DeletePublicationHouseBooks(long bookId)
+		{
 			_pHouseBookRepository.DeleteByBookId(bookId);
 		}
-		private void UpdatePublicationHouses(long bookId, List<long>publicHouseIds){
+
+		private void UpdatePublicationHouses(long bookId, List<long>publicHouseIds)
+		{
 			DeletePublicationHouseBooks(bookId);
 			AddPublicationHouses(bookId, publicHouseIds);
 		}

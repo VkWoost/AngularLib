@@ -4,11 +4,18 @@ namespace Library.ViewModels.PublicationHouseViewModels
 {
 	public class GetAllPublicationHouseViewModel
     {
-        public List<GetPublicationHouseViewModel> PublicationHouses { get; set; }
+        public List<PublicationHouseViewItem> PublicationHouses { get; set; }
 
         public GetAllPublicationHouseViewModel()
         {
-            PublicationHouses = new List<GetPublicationHouseViewModel>();
+            PublicationHouses = new List<PublicationHouseViewItem>();
         }
     }
+
+	public class PublicationHouseViewItem
+	{
+		public long Id { get; set; }
+		public string Name { get; set; }
+		public string Adress { get; set; }
+	}
 }

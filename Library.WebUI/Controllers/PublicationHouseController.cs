@@ -1,9 +1,9 @@
 using Library.BLL.Interfaces;
 using Library.BLL.Services;
 using Library.ViewModels.PublicationHouseViewModels;
+using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -12,23 +12,23 @@ namespace Library.WebUI.Controllers
     {
         private IPublicationHouseService _publicationHouseService;
 
-        public PublicationHouseController(IConfiguration configuration)
+        public PublicationHouseController(PublicationHouseService publicationHouseService)
         {
-            _publicationHouseService = new PublicationHouseService(configuration.GetConnectionString("DefaultConnection"));
+            _publicationHouseService = publicationHouseService;
         }
 
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var res = _publicationHouseService.GetAll();
-            return Ok(res);
+            var result = _publicationHouseService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(long id)
         {
-            var res = _publicationHouseService.Get(id);
-            return Ok(res);
+            var result = _publicationHouseService.Get(id);
+            return Ok(result);
         }
 
         [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]

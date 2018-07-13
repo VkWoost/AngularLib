@@ -14,6 +14,7 @@ using Library.Entities.Enteties;
 using Library.BLL.Interfaces;
 using Library.BLL.Services;
 using Library.BLL.Infrastructure;
+using Library.WebUI.Enums;
 
 namespace Library.WebUI
 {
@@ -34,14 +35,18 @@ namespace Library.WebUI
             services.AddTransient(typeof(UserManager<ApplicationUser>));
             services.AddTransient(typeof(SignInManager<ApplicationUser>));
 
-            services.AddSingleton(typeof(ApplicationManager));
+            services.AddTransient(typeof(ConfigurationManager));
 
-            services.AddTransient<IAuthorService, AuthorService>();
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IBookService, BookService>();
-            services.AddTransient<IBrochureService, BrochureService>();
-            services.AddTransient<IMagazineService, MagazineService>();
-            services.AddTransient<IPublicationHouseService, PublicationHouseService>();
+            services.AddTransient<AuthorService>
+                (provider => new AuthorService(Configuration.GetConnectionString("DefaultConnection")));    
+            services.AddTransient<BookService>
+                (provider => new BookService(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<BrochureService>
+                (provider => new BrochureService(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<MagazineService>
+                (provider => new MagazineService(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<PublicationHouseService>
+                (provider => new PublicationHouseService(Configuration.GetConnectionString("DefaultConnection")));
 
             var tokenValidationParameters = new TokenValidationParameters();
 

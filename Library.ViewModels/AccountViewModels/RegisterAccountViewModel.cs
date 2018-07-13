@@ -1,7 +1,7 @@
-﻿namespace Library.ViewModels.Identity
+﻿namespace Library.ViewModels.AccountViewModels
 {
-	public class RegistrationViewModel
-	{
+	public class RegisterAccountViewModel
+    {
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public string FirstName { get; set; }

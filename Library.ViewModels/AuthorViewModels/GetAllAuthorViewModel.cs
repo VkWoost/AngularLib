@@ -4,15 +4,15 @@ namespace Library.ViewModels.AuthorViewModels
 {
 	public class GetAllAuthorViewModel
     {
-        public List<GetAuthorViewModel> Authors { get; set; }
+        public List<AuthorViewItem> Authors { get; set; }
 
         public GetAllAuthorViewModel()
         {
-            Authors = new List<GetAuthorViewModel>();
+            Authors = new List<AuthorViewItem>();
         }
     }
 
-	public class AuthorViewModel
+	public class AuthorViewItem
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }

@@ -19,7 +19,7 @@ namespace Library.BLL.Services
 
         public void Create(CreateMagazineViewModel magazineViewModel)
         {
-			Magazine magazine = new Magazine()
+			var magazine = new Magazine()
 			{
 				Id = magazineViewModel.Id,
 				Name = magazineViewModel.Name,
@@ -38,7 +38,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Magazine not found");
             }
 
-			GetMagazineViewModel result = new GetMagazineViewModel()
+			var result = new GetMagazineViewModel()
 			{
 				Id = magazine.Id,
 				Name = magazine.Name,
@@ -51,11 +51,11 @@ namespace Library.BLL.Services
 
         public GetAllMagazineViewModel GetAll()
         {
-			IEnumerable<Magazine> magazines = _magazineRepository.GetAll();
-			GetAllMagazineViewModel result = new GetAllMagazineViewModel();
+			var magazines = _magazineRepository.GetAll();
+			var result = new GetAllMagazineViewModel();
 
 			foreach(var magazine in magazines){
-				result.Magazines.Add(new MagazineViewModel() 
+				result.Magazines.Add(new MagazineViewItem() 
 				{ 
 					Id = magazine.Id,
 					Name = magazine.Name,
@@ -74,8 +74,8 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Magazine not found");
             }
-			
-			GetMagazineViewModel result = new GetMagazineViewModel()
+
+			var result = new GetMagazineViewModel()
 			{
 				Id = magazine.Id,
 				Name = magazine.Name,
@@ -94,7 +94,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Magazine not found");
             }
 
-			Magazine magazine = new Magazine()
+			var magazine = new Magazine()
 			{
 				Id = magazineViewModel.Id,
 				Name = magazineViewModel.Name,

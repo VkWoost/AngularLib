@@ -19,7 +19,7 @@ namespace Library.BLL.Services
 
         public void Create(CreateBrochureViewModel brochureViewModel)
         {
-			Brochure brochure = new Brochure()
+			var brochure = new Brochure()
 			{
 				Id = brochureViewModel.Id,
 				Name = brochureViewModel.Name,
@@ -38,7 +38,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Brochure not found");
             }
 
-			GetBrochureViewModel result = new GetBrochureViewModel() 
+			var result = new GetBrochureViewModel() 
 			{
 				Id = brochure.Id,
 				Name = brochure.Name,
@@ -51,11 +51,11 @@ namespace Library.BLL.Services
 
         public GetAllBrochureViewModel GetAll()
         {
-			IEnumerable<Brochure> brochures = _brochureRepository.GetAll();
-			GetAllBrochureViewModel result = new GetAllBrochureViewModel();
+			var brochures = _brochureRepository.GetAll();
+			var result = new GetAllBrochureViewModel();
 
 			foreach(var brochure in brochures){
-				result.Brochures.Add(new BrochureViewModel()
+				result.Brochures.Add(new BrochureViewItem()
 				{
 					Id = brochure.Id,
 					Name = brochure.Name,
@@ -73,6 +73,7 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Brochure not found");
             }
+			
 			var result = new GetBrochureViewModel()
 			{
 				Id = brochure.Id,
@@ -82,6 +83,7 @@ namespace Library.BLL.Services
 			}; 
 			            
 			_brochureRepository.Delete(id);
+			
 			return result;
 		}
 
@@ -92,7 +94,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Brochure not found");
             }
 
-			Brochure brochure = new Brochure()
+			var brochure = new Brochure()
 			{
 				Id = brochureViewModel.Id,
 				Name = brochureViewModel.Name,

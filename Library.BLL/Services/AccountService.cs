@@ -2,7 +2,7 @@
 using Library.BLL.Interfaces;
 using Library.DAL.DbInitializer;
 using Library.Entities.Enteties;
-using Library.ViewModels.Identity;
+using Library.ViewModels.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +22,7 @@ namespace Library.BLL.Services
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly IConfiguration _configuration;
 
-		public AccountService(ApplicationManager applicationManager)
+		public AccountService(ConfigurationManager applicationManager)
 		{
 			_userManager = applicationManager.userManager;
 			_signInManager = applicationManager.signInManager;
@@ -30,7 +30,7 @@ namespace Library.BLL.Services
 			DbHelper.DbInitialize(_userManager);
 		}
 
-		public async Task<ApplicationUser> Register(RegistrationViewModel model)
+		public async Task<ApplicationUser> Register(RegisterAccountViewModel model)
 		{
 			var user = new ApplicationUser
 			{
@@ -40,27 +40,31 @@ namespace Library.BLL.Services
 				LastName = model.LastName,
 				Role = "user"
 			};
+			
 			var result = await _userManager.CreateAsync(user, model.Password);
+			
 			if (!result.Succeeded){
 				var errors = result.Errors.ToString();
 				throw new BLLException(errors);
 			}
+			
 			await _signInManager.SignInAsync(user, false);
 			return user;
 		}
 
-		public async Task<object> Login(CredentialsViewModel model)
+		public async Task<object> Login(LoginAccountViewModel model)
 		{
 			var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
 			if (!result.Succeeded)
 			{
-				throw new BLLException("INVALID_LOGIN_ATTEMPT");
+				throw new BLLException("Wrong Login Or Password");
 			}
 
 			ApplicationUser appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.UserName);
-			var res = await GenerateJwtToken(model.UserName, appUser);
-			return new { Role = appUser.Role, Token = res };
+			var token = await GenerateJwtToken(model.UserName, appUser);
+			
+			return new { Role = appUser.Role, Token = token };
 		}
 
 		private async Task<string> GenerateJwtToken(string email, ApplicationUser user)

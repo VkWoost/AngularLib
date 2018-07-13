@@ -1,10 +1,9 @@
 using Library.BLL.Interfaces;
 using Library.BLL.Services;
-using Library.DAL;
 using Library.ViewModels.BookViewModels;
+using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -13,23 +12,23 @@ namespace Library.WebUI.Controllers
     {
         private IBookService _bookService;
 
-        public BookController(IConfiguration configuration)
+        public BookController(BookService bookService)
         {
-            _bookService = new BookService(configuration.GetConnectionString("DefaultConnection"));
+            _bookService = bookService;
         }
 
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var res = _bookService.GetAll();
-            return Ok(res);
+            var result = _bookService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            var res = _bookService.Get(id);
-            return Ok(res);
+            var result = _bookService.Get(id);
+            return Ok(result);
         }
 
         [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]

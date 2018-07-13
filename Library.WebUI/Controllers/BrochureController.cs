@@ -1,9 +1,9 @@
 using Library.BLL.Interfaces;
 using Library.BLL.Services;
 using Library.ViewModels.BrochureViewModels;
+using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -12,23 +12,23 @@ namespace Library.WebUI.Controllers
     {
         private IBrochureService _brochureService;
 
-        public BrochureController(IConfiguration configuration)
+        public BrochureController( BrochureService brochureService)
         {
-            _brochureService = new BrochureService(configuration.GetConnectionString("DefaultConnection"));
+            _brochureService = brochureService;
         }
 
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var res = _brochureService.GetAll();
-            return Ok(res);
+            var result = _brochureService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            var res = _brochureService.Get(id);
-            return Ok(res);
+            var result = _brochureService.Get(id);
+            return Ok(result);
         }
 
         [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]

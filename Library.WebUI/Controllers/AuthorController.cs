@@ -1,6 +1,7 @@
 using Library.BLL.Interfaces;
 using Library.BLL.Services;
 using Library.ViewModels.AuthorViewModels;
+using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -12,23 +13,23 @@ namespace Library.WebUI.Controllers
     {
         private IAuthorService _authorService;
 
-        public AuthorController(IConfiguration configuration)
+        public AuthorController(AuthorService authorService)
         {
-            _authorService = new AuthorService(configuration.GetConnectionString("DefaultConnection"));
+            _authorService = authorService;
         }
 
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var res = _authorService.GetAll();
-            return Ok(res);
+            var result = _authorService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            var res = _authorService.Get(id);
-            return Ok(res);
+            var result = _authorService.Get(id);
+            return Ok(result);
         }
 
         [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]

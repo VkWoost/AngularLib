@@ -1,4 +1,4 @@
-namespace Library.WebUI
+namespace Library.WebUI.Enums
 {
     public enum IdentityRoles
     {

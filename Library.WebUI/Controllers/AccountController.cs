@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Library.BLL.Services;
-using Library.ViewModels.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Library.BLL.Interfaces;
 using Library.BLL.Infrastructure;
+using Library.ViewModels.AccountViewModels;
 
 namespace Library.WebUI.Controllers
 {
@@ -12,23 +12,23 @@ namespace Library.WebUI.Controllers
     {
         private IAccountService _accountServise;
 
-        public AccountController(ApplicationManager applicationManager)
+        public AccountController(ConfigurationManager applicationManager)
         {
             _accountServise = new AccountService(applicationManager);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] CredentialsViewModel model)
+        public async Task<IActionResult> Login([FromBody] LoginAccountViewModel model)
         {
-            var res = await _accountServise.Login(model);
-            return Ok(res);
+            var result = await _accountServise.Login(model);
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegistrationViewModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterAccountViewModel model)
         {
-            var res = await _accountServise.Register(model);
-            return Ok(res);
+            var result = await _accountServise.Register(model);
+            return Ok(result);
         }
     }
 }

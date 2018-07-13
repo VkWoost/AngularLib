@@ -4,7 +4,6 @@ using Library.DAL.Interfaces;
 using Library.DAL.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.AuthorViewModels;
-using System.Collections.Generic;
 
 namespace Library.BLL.Services
 {
@@ -21,12 +20,13 @@ namespace Library.BLL.Services
 
         public void Create(CreateAuthorViewModel authorViewModel)
         {
-			Author author = new Author()
+			var author = new Author()
 			{
 				Id = authorViewModel.Id,
 				Name = authorViewModel.Name
 			};
-            _authorRepository.Create(author);
+            
+			_authorRepository.Create(author);
         }
 
         public GetAuthorViewModel Get(long id)
@@ -37,22 +37,23 @@ namespace Library.BLL.Services
                 throw new BLLException("Author not found");
             }
 
-			GetAuthorViewModel result = new GetAuthorViewModel()
+			var result = new GetAuthorViewModel()
 			{
 				Id = author.Id,
 				Name = author.Name
 			};
+			
 			return result;
         }
 
         public GetAllAuthorViewModel GetAll()
         {
-			IEnumerable<Author> authors = _authorRepository.GetAll();
-			GetAllAuthorViewModel result = new GetAllAuthorViewModel();
+			var authors = _authorRepository.GetAll();
+			var result = new GetAllAuthorViewModel();
 
 			foreach (var author in authors)
 			{
-				result.Authors.Add(new GetAuthorViewModel()
+				result.Authors.Add(new AuthorViewItem()
 				{
 					Id = author.Id,
 					Name = author.Name
@@ -73,8 +74,8 @@ namespace Library.BLL.Services
 
             _authorRepository.Delete(id);
 			DeleteBooksByAuthorId(id);
-			
-			GetAuthorViewModel result = new GetAuthorViewModel()
+
+			var result = new GetAuthorViewModel()
 			{
 				Id = author.Id,
 				Name = author.Name
@@ -89,11 +90,13 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Author not found");
             }
-			Author author = new Author()
+			
+			var author = new Author()
 			{
 				Id = authorViewModel.Id,
 				Name = authorViewModel.Name
 			};
+			
 			_authorRepository.Update(author);
         }
 

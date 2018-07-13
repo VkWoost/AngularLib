@@ -1,9 +1,9 @@
 using Library.BLL.Interfaces;
 using Library.BLL.Services;
 using Library.ViewModels.MagazineViewModels;
+using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
@@ -12,23 +12,23 @@ namespace Library.WebUI.Controllers
     {
         private IMagazineService _magazineService;
 
-        public MagazineController(IConfiguration configuration)
+        public MagazineController(MagazineService magazineService)
         {
-            _magazineService = new MagazineService(configuration.GetConnectionString("DefaultConnection"));
+            _magazineService = magazineService;
         }
 
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var res = _magazineService.GetAll();
-            return Ok(res);
+            var result = _magazineService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(long id)
         {
-            var res = _magazineService.Get(id);
-            return Ok(res);
+            var result = _magazineService.Get(id);
+            return Ok(result);
         }
 
         [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]

@@ -20,7 +20,7 @@ namespace Library.BLL.Services
         public void Create(CreatePublicationHouseViewModel publicationHouseViewModel)
         {
 
-			PublicationHouse publicationHouse = new PublicationHouse()
+			var publicationHouse = new PublicationHouse()
 			{
 				Id = publicationHouseViewModel.Id,
 				Name = publicationHouseViewModel.Name,
@@ -38,7 +38,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Publication House not found");
             }
 
-			GetPublicationHouseViewModel result = new GetPublicationHouseViewModel()
+			var result = new GetPublicationHouseViewModel()
 			{
 				Id = publicationHouse.Id,
 				Name = publicationHouse.Name,
@@ -49,11 +49,11 @@ namespace Library.BLL.Services
 
         public GetAllPublicationHouseViewModel GetAll()
         {
-			IEnumerable<PublicationHouse> publicationHouses = _publicationHouseRepo.GetAll();
-			GetAllPublicationHouseViewModel result = new GetAllPublicationHouseViewModel();
+			var publicationHouses = _publicationHouseRepo.GetAll();
+			var result = new GetAllPublicationHouseViewModel();
 
 			foreach(var publicationHouse in publicationHouses){
-				result.PublicationHouses.Add(new GetPublicationHouseViewModel()
+				result.PublicationHouses.Add(new PublicationHouseViewItem()
 				{
 					Id = publicationHouse.Id,
 					Name = publicationHouse.Name,
@@ -72,7 +72,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Publication House not found");
             }
 
-			GetPublicationHouseViewModel result = new GetPublicationHouseViewModel()
+			var result = new GetPublicationHouseViewModel()
 			{
 				Id = publicationHouse.Id,
 				Name = publicationHouse.Name,
@@ -90,7 +90,7 @@ namespace Library.BLL.Services
                 throw new BLLException("Publication House not found");
             }
 
-			PublicationHouse publicationHouse = new PublicationHouse()
+			var publicationHouse = new PublicationHouse()
 			{
 				Id = publicationHouseViewModel.Id,
 				Name = publicationHouseViewModel.Name,

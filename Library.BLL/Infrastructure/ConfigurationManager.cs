@@ -4,13 +4,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace Library.BLL.Infrastructure
 {
-	public class ApplicationManager
+	public class ConfigurationManager
     {
 		public UserManager<ApplicationUser> userManager;
 		public SignInManager<ApplicationUser> signInManager;
 		public IConfiguration configuration;
 
-		public ApplicationManager(UserManager<ApplicationUser> uManager, SignInManager<ApplicationUser> sInManager, IConfiguration config)
+		public ConfigurationManager(UserManager<ApplicationUser> uManager, SignInManager<ApplicationUser> sInManager, IConfiguration config)
 		{
 			userManager = uManager;
 			signInManager = sInManager;
