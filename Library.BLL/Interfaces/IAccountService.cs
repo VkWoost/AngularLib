@@ -7,6 +7,6 @@ namespace Library.BLL.Interfaces
 	public interface IAccountService
     {
 		Task<ApplicationUser> Register(RegisterAccountViewModel model);
-		Task<object> Login(LoginAccountViewModel model);
+		Task<RoleTokenViewModel> Login(LoginAccountViewModel model);
 	}
 }

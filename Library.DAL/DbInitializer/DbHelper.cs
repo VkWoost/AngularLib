@@ -13,19 +13,17 @@ namespace Library.DAL.DbInitializer
 			{
 				return;
 			}
+
 			var user = new ApplicationUser
 			{
 				UserName = "admin@gmail.com",
 				Email = "admin@gmail.com",
 				Role = "admin"
 			};
+
 			string password = "123456";
 
-			var result = await userManager.CreateAsync(user, password);
-			if (!result.Succeeded)
-			{
-				throw new ApplicationException("UNKNOWN_ERROR");
-			}
+			await userManager.CreateAsync(user, password);
 		}
 	}
 }

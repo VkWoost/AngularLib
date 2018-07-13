@@ -84,18 +84,16 @@ namespace Library.WebUI
             });
             
 
-            var sp = services.BuildServiceProvider();
-            services.AddTransient(typeof(ConfigurationManager));
+            var serviceProvider = services.BuildServiceProvider();
             services.AddTransient<ConfigurationManager>
                 (provider => new ConfigurationManager()
                 {
-                    Configuration = sp.GetService<IConfiguration>(),
-                    UserManager = sp.GetService<UserManager<ApplicationUser>>(),
-                    SignInManager = sp.GetService<SignInManager<ApplicationUser>>()
+                    Configuration = serviceProvider.GetService<IConfiguration>(),
+                    UserManager = serviceProvider.GetService<UserManager<ApplicationUser>>(),
+                    SignInManager = serviceProvider.GetService<SignInManager<ApplicationUser>>()
                 });
 
-
-                var builder = services.AddIdentityCore<ApplicationUser>(o =>
+            var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
