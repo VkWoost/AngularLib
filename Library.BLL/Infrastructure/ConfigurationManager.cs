@@ -6,16 +6,8 @@ namespace Library.BLL.Infrastructure
 {
 	public class ConfigurationManager
     {
-		public UserManager<ApplicationUser> userManager;
-		public SignInManager<ApplicationUser> signInManager;
-		public IConfiguration configuration;
-
-		public ConfigurationManager(UserManager<ApplicationUser> uManager, SignInManager<ApplicationUser> sInManager, IConfiguration config)
-		{
-			userManager = uManager;
-			signInManager = sInManager;
-			configuration = config;
-		}
-
+		public UserManager<ApplicationUser> UserManager{ get; set; }
+		public SignInManager<ApplicationUser> SignInManager{ get; set; }
+		public IConfiguration Configuration{ get; set; }
 	}
 }

@@ -22,11 +22,11 @@ namespace Library.BLL.Services
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly IConfiguration _configuration;
 
-		public AccountService(ConfigurationManager applicationManager)
+		public AccountService(ConfigurationManager confugurationManager)
 		{
-			_userManager = applicationManager.userManager;
-			_signInManager = applicationManager.signInManager;
-			_configuration = applicationManager.configuration;
+			_userManager = confugurationManager.UserManager;
+			_signInManager = confugurationManager.SignInManager;
+			_configuration = confugurationManager.Configuration;
 			DbHelper.DbInitialize(_userManager);
 		}
 

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Library.Entities.Enteties;
-using Library.BLL.Interfaces;
 using Library.BLL.Services;
 using Library.BLL.Infrastructure;
 using Library.WebUI.Enums;
@@ -34,8 +33,6 @@ namespace Library.WebUI
 
             services.AddTransient(typeof(UserManager<ApplicationUser>));
             services.AddTransient(typeof(SignInManager<ApplicationUser>));
-
-            services.AddTransient(typeof(ConfigurationManager));
 
             services.AddTransient<AuthorService>
                 (provider => new AuthorService(Configuration.GetConnectionString("DefaultConnection")));    
@@ -85,8 +82,20 @@ namespace Library.WebUI
             {
                 options.AddPolicy(nameof(IdentityRoles.admin), policy => policy.RequireRole(nameof(IdentityRoles.admin)));
             });
+            
 
-            var builder = services.AddIdentityCore<ApplicationUser>(o =>
+            var sp = services.BuildServiceProvider();
+            services.AddTransient(typeof(ConfigurationManager));
+            services.AddTransient<ConfigurationManager>
+                (provider => new ConfigurationManager()
+                {
+                    Configuration = sp.GetService<IConfiguration>(),
+                    UserManager = sp.GetService<UserManager<ApplicationUser>>(),
+                    SignInManager = sp.GetService<SignInManager<ApplicationUser>>()
+                });
+
+
+                var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
@@ -99,11 +108,12 @@ namespace Library.WebUI
             builder.AddEntityFrameworkStores<LibraryContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
