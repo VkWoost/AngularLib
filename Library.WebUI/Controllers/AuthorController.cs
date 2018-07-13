@@ -4,7 +4,6 @@ using Library.ViewModels.AuthorViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Library.WebUI.Controllers
 {
