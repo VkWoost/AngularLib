@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AllAuthors } from '../models/author/allAuthors';
-import { AuthorCreateView } from '../models/author/authorCreateView';
-import { AuthorUpdateView } from '../models/author/authorUpdateView';
+import { GetAllAuthorsViewModel } from '../models/author/GetAllAuthorsViewModel';
+import { CreateAuthorViewModel } from '../models/author/CreateAuthorViewModel';
+import { UpdateAuthorViewModel } from '../models/author/UpdateAuthorViewModel';
 
 @Injectable()
 export class AuthorService {
@@ -13,14 +13,14 @@ export class AuthorService {
     constructor(private http: HttpClient) { }
 
     public get() {
-        return this.http.get<AllAuthors>(this.url);
+        return this.http.get<GetAllAuthorsViewModel>(this.url);
     }
 
-    public create(item: AuthorCreateView) {
+    public create(item: CreateAuthorViewModel) {
         return this.http.post(this.url, item)
     }
 
-    public update(item: AuthorUpdateView) {
+    public update(item: UpdateAuthorViewModel) {
         return this.http.put(this.url, item)
     }
 

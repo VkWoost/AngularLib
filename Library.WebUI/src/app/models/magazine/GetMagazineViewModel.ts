@@ -1,4 +1,4 @@
-export class MagazineUpdateView {
+export class GetMagazineViewModel {
     constructor(
         public id?: number,
         public name?: string,

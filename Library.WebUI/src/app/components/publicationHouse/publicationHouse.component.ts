@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { PublicationHouseService } from '../../services/publicationHouse.service';
-import { AllPublicationHouses } from '../../models/publicationHouse/allPublicationHouses';
-import { PublicationHouseCreateView } from '../../models/publicationHouse/publicationHouseCreateView';
-import { PublicationHouseUpdateView } from '../../models/publicationHouse/publicationHouseUpdateView';
+import { CreatePublicationHouseViewModel } from '../../models/publicationHouse/CreatePublicationHouseViewModel';
+import { UpdatePublicationHouseViewModel } from '../../models/publicationHouse/UpdatePublicationHouseViewModel';
+import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/GetAllPublicationHousesViewModel';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
@@ -17,7 +17,7 @@ import { UserService } from '../../services/identity/user.service';
 })
 export class PublicationHouseComponent implements OnInit {
 
-    public publicationHouses: AllPublicationHouses;
+    public publicationHouses: GetAllPublicationHousesViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -28,7 +28,7 @@ export class PublicationHouseComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: PublicationHouseService, private userService: UserService) {
-        this.publicationHouses = new AllPublicationHouses();
+        this.publicationHouses = new GetAllPublicationHousesViewModel();
     }
 
     public ngOnInit(): void {
@@ -76,13 +76,13 @@ export class PublicationHouseComponent implements OnInit {
 
     public saveHandler({ sender, rowIndex, formGroup, isNew }) {
         if (isNew) {
-            const product: PublicationHouseCreateView = formGroup.value;
+            const product: CreatePublicationHouseViewModel = formGroup.value;
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
 
         if (!isNew) {
-            const product: PublicationHouseUpdateView = formGroup.value;
+            const product: UpdatePublicationHouseViewModel = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }

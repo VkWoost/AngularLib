@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from '../../services/magazine.service';
-import { AllMagazines } from '../../models/magazine/allMagazines';
-import { MagazineUpdateView } from '../../models/magazine/MagazineUpdateView';
-import { MagazineCreateView } from '../../models/magazine/magazineCreateView';
+import { GetAllMagazinesViewModel } from '../../models/magazine/GetAllMagazinesViewModel';
+import { CreateMagazineViewModel } from '../../models/magazine/CreateMagazineViewModel';
+import { UpdateMagazineViewModel } from '../../models/magazine/UpdateMagazineViewModel';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
@@ -18,7 +18,7 @@ import { UserService } from '../../services/identity/user.service';
 
 export class MagazineComponent implements OnInit {
 
-    public magazines: AllMagazines;
+    public magazines: GetAllMagazinesViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -29,7 +29,7 @@ export class MagazineComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: DataService, private userService: UserService) {
-        this.magazines = new AllMagazines();
+        this.magazines = new GetAllMagazinesViewModel();
     }
 
     public ngOnInit(): void {
@@ -79,13 +79,13 @@ export class MagazineComponent implements OnInit {
 
     public saveHandler({ sender, rowIndex, formGroup, isNew }) {
         if (isNew) {
-            const product: MagazineCreateView = formGroup.value;
+            const product: CreateMagazineViewModel = formGroup.value;
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
 
         if (!isNew) {
-            const product: MagazineUpdateView = formGroup.value;
+            const product: UpdateMagazineViewModel = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }

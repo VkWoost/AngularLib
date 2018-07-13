@@ -5,11 +5,11 @@ import { BookService } from '../../services/book.service';
 import { AuthorService } from '../../services/author.service';
 import { PublicationHouseService } from '../../services/publicationHouse.service';
 
-import { AllPublicationHouses } from '../../models/publicationHouse/allPublicationHouses';
-import { AllBooks } from '../../models/book/allBooks';
-import { AllAuthors } from '../../models/author/allAuthors';
-import { BookUpdateView } from '../../models/book/bookUpdateView';
-import { BookCreateView } from '../../models/book/bookCreateView';
+import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/GetAllPublicationHousesViewModel';
+import { GetAllAuthorsViewModel } from '../../models/author/GetAllAuthorsViewModel';
+import { CreateBookViewModel } from '../../models/book/CreateBookViewModel';
+import { UpdateBookViewModel } from '../../models/book/UpdateBookViewModel';
+import { GetAllBooksViewModel } from '../../models/book/GetAllBooksViewModel';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
@@ -23,9 +23,9 @@ import { UserService } from '../../services/identity/user.service';
 })
 export class BookComponent implements OnInit {
 
-    public books: AllBooks;
-    public authors: AllAuthors;
-    public publicationHouses: AllPublicationHouses;
+    public books: GetAllBooksViewModel;
+    public authors: GetAllAuthorsViewModel;
+    public publicationHouses: GetAllPublicationHousesViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -42,9 +42,9 @@ export class BookComponent implements OnInit {
         private userService: UserService
     )
     {
-        this.books = new AllBooks();
-        this.authors = new AllAuthors();
-        this.publicationHouses = new AllPublicationHouses();
+        this.books = new GetAllBooksViewModel();
+        this.authors = new GetAllAuthorsViewModel();
+        this.publicationHouses = new GetAllPublicationHousesViewModel();
     }
 
     public ngOnInit(): void {
@@ -100,12 +100,12 @@ export class BookComponent implements OnInit {
 
     public saveHandler({ sender, rowIndex, formGroup, isNew }) {
         if (isNew) {
-            const product: BookCreateView = formGroup.value;
+            const product: CreateBookViewModel = formGroup.value;
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
         if (!isNew) {
-            const product: BookUpdateView = formGroup.value;
+            const product: UpdateBookViewModel = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }

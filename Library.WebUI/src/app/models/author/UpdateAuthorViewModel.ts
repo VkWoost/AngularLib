@@ -1,4 +1,4 @@
-export class AuthorGetView {
+export class UpdateAuthorViewModel {
     constructor(
         public id?: number,
         public name?: string) { }

@@ -41,7 +41,7 @@ namespace Library.DAL.Repositories
 
         public virtual void Create(TEntity item)
         {
-			//item.CreationDate = DateTime.Now;
+			item.CreationDate = DateTime.Now;
 			List<string> columnsWithoutId = new List<string>(GetColumnsWithoutId());
 			var stringOfColumns = string.Join(", ", columnsWithoutId);
             var stringOfParameters = string.Join(", ", columnsWithoutId.Select(e => "@" + e));
@@ -55,7 +55,8 @@ namespace Library.DAL.Repositories
 
         public virtual void Update(TEntity item)
         {
-            var stringOfColumns = string.Join(", ", GetColumnsWithoutId().Select(e => $"{e} = @{e}"));
+			item.CreationDate = DateTime.Now;
+			var stringOfColumns = string.Join(", ", GetColumnsWithoutId().Select(e => $"{e} = @{e}"));
             string _sqlUpdate = $"UPDATE {typeof(TEntity).Name}s SET {stringOfColumns} WHERE Id = @Id";
 
 			using (var connection = new SqlConnection(_connectionString))

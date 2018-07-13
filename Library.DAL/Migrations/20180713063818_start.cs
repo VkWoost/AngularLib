@@ -2,7 +2,7 @@
 
 namespace Library.DAL.Migrations
 {
-    public partial class creationDate : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

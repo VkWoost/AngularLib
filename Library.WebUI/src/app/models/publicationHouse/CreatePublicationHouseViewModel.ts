@@ -1,4 +1,4 @@
-export class PublicationHouseUpdateView {
+export class CreatePublicationHouseViewModel {
     constructor(
         public id?: number,
         public name?: string,

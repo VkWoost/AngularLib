@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AllPublicationHouses } from '../models/publicationHouse/allPublicationHouses';
-import { PublicationHouseCreateView } from '../models/publicationHouse/publicationHouseCreateView';
-import { PublicationHouseUpdateView } from '../models/publicationHouse/publicationHouseUpdateView';
+import { GetAllPublicationHousesViewModel } from '../models/publicationHouse/GetAllPublicationHousesViewModel';
+import { CreatePublicationHouseViewModel } from '../models/publicationHouse/CreatePublicationHouseViewModel';
+import { UpdatePublicationHouseViewModel } from '../models/publicationHouse/UpdatePublicationHouseViewModel';
 
 @Injectable()
 export class PublicationHouseService {
@@ -13,14 +13,14 @@ export class PublicationHouseService {
     constructor(private http: HttpClient) { }
 
     public get() {
-        return this.http.get<AllPublicationHouses>(this.url);
+        return this.http.get<GetAllPublicationHousesViewModel>(this.url);
     }
 
-    public create(item: PublicationHouseCreateView) {
+    public create(item: CreatePublicationHouseViewModel) {
         return this.http.post(this.url, item)
     }
 
-    public update(item: PublicationHouseUpdateView) {
+    public update(item: UpdatePublicationHouseViewModel) {
         return this.http.put(this.url, item)
     }
 

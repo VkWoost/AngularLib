@@ -34,7 +34,7 @@ namespace Library.WebUI
             services.AddTransient(typeof(UserManager<ApplicationUser>));
             services.AddTransient(typeof(SignInManager<ApplicationUser>));
 
-            services.AddTransient(typeof(ApplicationManager));
+            services.AddSingleton(typeof(ApplicationManager));
 
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IAccountService, AccountService>();

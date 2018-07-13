@@ -2,23 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthorService } from '../../services/author.service';
-import { AllAuthors } from '../../models/author/allAuthors';
-import { AuthorCreateView } from '../../models/author/authorCreateView';
-import { AuthorUpdateView } from '../../models/author/authorUpdateView';
+import { GetAllAuthorsViewModel } from '../../models/author/GetAllAuthorsViewModel';
+import { CreateAuthorViewModel } from '../../models/author/CreateAuthorViewModel';
+import { UpdateAuthorViewModel } from '../../models/author/UpdateAuthorViewModel';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
 import { UserService } from '../../services/identity/user.service';
 
 @Component({
-    selector: 'auhtor',
+    selector: 'author',
     templateUrl: './author.component.html',
     providers: [AuthorService, UserService]
 })
 
 export class AuthorComponent implements OnInit {
 
-    public authors: AllAuthors;
+    public authors: GetAllAuthorsViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -29,7 +29,7 @@ export class AuthorComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: AuthorService, private userService: UserService) {
-        this.authors = new AllAuthors();
+        this.authors = new GetAllAuthorsViewModel();
     }
 
     public ngOnInit(): void {
@@ -75,12 +75,12 @@ export class AuthorComponent implements OnInit {
 
     public saveHandler({ sender, rowIndex, formGroup, isNew }) {
         if (isNew) {
-            const product: AuthorCreateView = formGroup.value;
+            const product: CreateAuthorViewModel = formGroup.value;
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
         if (!isNew) {
-            const product: AuthorUpdateView = formGroup.value;
+            const product: UpdateAuthorViewModel = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }

@@ -50,15 +50,16 @@ namespace Library.BLL.Services
 			IEnumerable<Author> authors = _authorRepository.GetAll();
 			GetAllAuthorViewModel result = new GetAllAuthorViewModel();
 
-			foreach(var author in authors){
+			foreach (var author in authors)
+			{
 				result.Authors.Add(new GetAuthorViewModel()
 				{
 					Id = author.Id,
 					Name = author.Name
 				});
 			}
-
-            return result;
+ 
+			return result;
         }
 
         public GetAuthorViewModel Delete(long id)
@@ -69,13 +70,16 @@ namespace Library.BLL.Services
             {
                 throw new BLLException("Author not found");
             }
+
             _authorRepository.Delete(id);
 			DeleteBooksByAuthorId(id);
+			
 			GetAuthorViewModel result = new GetAuthorViewModel()
 			{
 				Id = author.Id,
 				Name = author.Name
 			};
+			
 			return result;
 		}
 

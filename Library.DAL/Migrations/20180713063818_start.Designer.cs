@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.DAL.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20180712141843_creationDate")]
-    partial class creationDate
+    [Migration("20180713063818_start")]
+    partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Library.DAL.Migrations
 {
-    public partial class start : Migration
+    public partial class creationDate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,8 +54,9 @@ namespace Library.DAL.Migrations
                 name: "Authors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -67,10 +68,11 @@ namespace Library.DAL.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<int>(nullable: false),
+                    AuthorId = table.Column<long>(nullable: false),
                     YearOfPublication = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -82,8 +84,9 @@ namespace Library.DAL.Migrations
                 name: "Brochures",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     TypeOfCover = table.Column<string>(nullable: true),
                     NumberOfPages = table.Column<int>(nullable: false)
@@ -97,8 +100,9 @@ namespace Library.DAL.Migrations
                 name: "Magazines",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Number = table.Column<int>(nullable: false),
                     YearOfPublication = table.Column<int>(nullable: false)
@@ -109,11 +113,24 @@ namespace Library.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PublicationHouseBooks",
+                columns: table => new
+                {
+                    BookId = table.Column<long>(nullable: false),
+                    PublicationHouseId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PublicationHouseBooks", x => new { x.BookId, x.PublicationHouseId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PublicationHouses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Adress = table.Column<string>(nullable: true)
                 },
@@ -228,30 +245,6 @@ namespace Library.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PublicationHouseBooks",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(nullable: false),
-                    PublicationHouseId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PublicationHouseBooks", x => new { x.BookId, x.PublicationHouseId });
-                    table.ForeignKey(
-                        name: "FK_PublicationHouseBooks_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PublicationHouseBooks_PublicationHouses_PublicationHouseId",
-                        column: x => x.PublicationHouseId,
-                        principalTable: "PublicationHouses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -290,11 +283,6 @@ namespace Library.DAL.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PublicationHouseBooks_PublicationHouseId",
-                table: "PublicationHouseBooks",
-                column: "PublicationHouseId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -318,6 +306,9 @@ namespace Library.DAL.Migrations
                 name: "Authors");
 
             migrationBuilder.DropTable(
+                name: "Books");
+
+            migrationBuilder.DropTable(
                 name: "Brochures");
 
             migrationBuilder.DropTable(
@@ -327,16 +318,13 @@ namespace Library.DAL.Migrations
                 name: "PublicationHouseBooks");
 
             migrationBuilder.DropTable(
+                name: "PublicationHouses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Books");
-
-            migrationBuilder.DropTable(
-                name: "PublicationHouses");
         }
     }
 }

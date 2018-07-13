@@ -1,4 +1,4 @@
-export class PublicationHouseGetView {
+export class GetPublicationHouseViewModel {
     constructor(
         public id?: number,
         public name?: string,

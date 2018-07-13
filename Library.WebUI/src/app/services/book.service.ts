@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AllBooks } from '../models/book/allBooks';
-import { BookCreateView } from '../models/book/bookCreateView';
-import { BookUpdateView } from '../models/book/bookUpdateView';
+import { GetAllBooksViewModel } from '../models/book/GetAllBooksViewModel';
+import { CreateBookViewModel } from '../models/book/CreateBookViewModel';
+import { UpdateBookViewModel } from '../models/book/UpdateBookViewModel';
 
 @Injectable()
 export class BookService {
@@ -13,14 +13,14 @@ export class BookService {
     constructor(private http: HttpClient) { }
 
     public get() {
-        return this.http.get<AllBooks>(this.url);
+        return this.http.get<GetAllBooksViewModel>(this.url);
     }
 
-    public create(item: BookCreateView) {
+    public create(item: CreateBookViewModel) {
         return this.http.post(this.url, item)
     }
 
-    public update(item: BookUpdateView) {
+    public update(item: UpdateBookViewModel) {
         return this.http.put(this.url, item)
     }
 

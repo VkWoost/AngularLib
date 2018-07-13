@@ -2,10 +2,8 @@
 using Library.DAL.Interfaces;
 using Library.Entities.Enteties;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection;
 
 namespace Library.DAL.Repositories
 {
@@ -20,7 +18,8 @@ namespace Library.DAL.Repositories
 		}
 
 		public int CreateBook(Book item){
-			string _sqlCreate = "INSERT INTO Books (AuthorId, YearOfPublication, Name) OUTPUT INSERTED.[Id] VALUES (@AuthorId, @YearOfPublication, @Name)";
+			item.CreationDate = DateTime.Now;
+			string _sqlCreate = "INSERT INTO Books (AuthorId, CreationDate, YearOfPublication, Name) OUTPUT INSERTED.[Id] VALUES (@AuthorId, @CreationDate, @YearOfPublication, @Name)";
 
 			using (var connection = new SqlConnection(_connectionString))
 			{

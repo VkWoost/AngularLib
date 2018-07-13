@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from '../../services/brochure.service';
-import { AllBrochures } from '../../models/brochure/allBrochures';
-import { BrochureCreateView } from '../../models/brochure/brochureCreateView';
-import { BrochureUpdateView } from '../../models/brochure/brochureUpdateView';
+import { GetAllBrochuresViewModel } from '../../models/brochure/GetAllBrochuresViewModel';
+import { CreateBrochureViewModel } from '../../models/brochure/CreateBrochureViewModel';
+import { UpdateBrochureViewModel } from '../../models/brochure/UpdateBrochureViewModel';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
@@ -17,7 +17,7 @@ import { UserService } from '../../services/identity/user.service';
 })
 export class BrochureComponent implements OnInit {
 
-    public brochures: AllBrochures;
+    public brochures: GetAllBrochuresViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -28,7 +28,7 @@ export class BrochureComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: DataService, private userService: UserService) {
-        this.brochures = new AllBrochures();
+        this.brochures = new GetAllBrochuresViewModel();
     }
 
     public ngOnInit(): void {
@@ -78,13 +78,13 @@ export class BrochureComponent implements OnInit {
 
     public saveHandler({ sender, rowIndex, formGroup, isNew }) {
         if (isNew) {
-            const product: BrochureCreateView = formGroup.value;
+            const product: CreateBrochureViewModel = formGroup.value;
             this.dataService.create(product)
                 .subscribe(() => this.loadData());
         }
 
         if (!isNew) {
-            const product: BrochureUpdateView = formGroup.value;
+            const product: UpdateBrochureViewModel = formGroup.value;
             this.dataService.update(product)
                 .subscribe(() => this.loadData());
         }

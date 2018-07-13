@@ -1,4 +1,4 @@
-export class MagazineCreateView {
+export class CreateMagazineViewModel {
     constructor(
         public id?: number,
         public name?: string,
