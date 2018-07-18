@@ -1,5 +1,4 @@
-using Library.BLL.Interfaces;
-using Library.BLL.Services;
+using Library.BusinessLogic.Services;
 using Library.ViewModels.AuthorViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ namespace Library.WebUI.Controllers
     [Route("api/[controller]")]
     public class AuthorController : Controller
     {
-        private IAuthorService _authorService;
+        private AuthorService _authorService;
 
         public AuthorController(AuthorService authorService)
         {

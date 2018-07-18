@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
-namespace Library.BLL.Infrastructure
+namespace Library.BusinessLogic.Infrastructure
 {
 	public class ConfigurationManager
     {

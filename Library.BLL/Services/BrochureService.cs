@@ -1,19 +1,19 @@
-﻿using Library.BLL.Infrastructure;
-using Library.BLL.Interfaces;
-using Library.DAL.Interfaces;
-using Library.DAL.Repositories;
+﻿using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.Interfaces;
+using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.BrochureViewModels;
 
-namespace Library.BLL.Services
+namespace Library.BusinessLogic.Services
 {
     public class BrochureService : IBrochureService
     {
         private IGEnericRepository<Brochure> _brochureRepository;
 
-        public BrochureService(string conn)
+        public BrochureService(string connectionString)
         {
-            _brochureRepository = new GenericRepository<Brochure>(conn);
+            _brochureRepository = new GenericRepository<Brochure>(connectionString);
         }
 
         public void Create(CreateBrochureViewModel brochureViewModel)
@@ -34,7 +34,7 @@ namespace Library.BLL.Services
             var brochure = _brochureRepository.Get(id);
             if (brochure == null)
             {
-                throw new BLLException("Brochure not found");
+                throw new BusinessLogicException("Brochure not found");
             }
 
 			var result = new GetBrochureViewModel() 
@@ -70,7 +70,7 @@ namespace Library.BLL.Services
 			var brochure = _brochureRepository.Get(id);
 			if (brochure == null)
             {
-                throw new BLLException("Brochure not found");
+                throw new BusinessLogicException("Brochure not found");
             }
 			
 			var result = new GetBrochureViewModel()
@@ -90,7 +90,7 @@ namespace Library.BLL.Services
         {
             if (_brochureRepository.Get(brochureViewModel.Id) == null)
             {
-                throw new BLLException("Brochure not found");
+                throw new BusinessLogicException("Brochure not found");
             }
 
 			var brochure = new Brochure()

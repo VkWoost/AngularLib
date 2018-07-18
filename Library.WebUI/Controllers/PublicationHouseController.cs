@@ -1,5 +1,4 @@
-using Library.BLL.Interfaces;
-using Library.BLL.Services;
+using Library.BusinessLogic.Services;
 using Library.ViewModels.PublicationHouseViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ namespace Library.WebUI.Controllers
   [Route("api/[controller]")]
     public class PublicationHouseController : Controller
     {
-        private IPublicationHouseService _publicationHouseService;
+        private PublicationHouseService _publicationHouseService;
 
         public PublicationHouseController(PublicationHouseService publicationHouseService)
         {

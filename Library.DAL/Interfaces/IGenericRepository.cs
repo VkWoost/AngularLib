@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Library.DAL.Interfaces
+namespace Library.DataAccess.Interfaces
 {
     public interface IGEnericRepository<TEntity> where TEntity : class
     {

@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
-using Library.BLL.Services;
+using Library.BusinessLogic.Services;
 using Microsoft.AspNetCore.Mvc;
-using Library.BLL.Interfaces;
-using Library.BLL.Infrastructure;
+using Library.BusinessLogic.Infrastructure;
 using Library.ViewModels.AccountViewModels;
 
 namespace Library.WebUI.Controllers
@@ -10,7 +9,7 @@ namespace Library.WebUI.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        private IAccountService _accountServise;
+        private AccountService _accountServise;
 
         public AccountController(ConfigurationManager applicationManager)
         {

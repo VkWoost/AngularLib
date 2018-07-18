@@ -1,6 +1,6 @@
-﻿using Library.BLL.Infrastructure;
-using Library.BLL.Interfaces;
-using Library.DAL.DbInitializer;
+﻿using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.DbInitializer;
 using Library.Entities.Enteties;
 using Library.ViewModels.AccountViewModels;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.BLL.Services
+namespace Library.BusinessLogic.Services
 {
     public class AccountService : IAccountService
     {
@@ -39,7 +39,7 @@ namespace Library.BLL.Services
 			
 			if (!result.Succeeded){
 				var errors = result.Errors.ToString();
-				throw new BLLException(errors);
+				throw new BusinessLogicException(errors);
 			}
 			
 			await _confugurationManager.SignInManager.SignInAsync(user, false);
@@ -52,11 +52,11 @@ namespace Library.BLL.Services
 
 			if (!result.Succeeded)
 			{
-				throw new BLLException("Wrong login or password");
+				throw new BusinessLogicException("Wrong login or password");
 			}
 
 			ApplicationUser appUser = _confugurationManager.UserManager.Users.SingleOrDefault(r => r.Email == model.UserName);
-			var token = await GenerateJwtToken(model.UserName, appUser);
+			var token = GenerateJwtToken(model.UserName, appUser);
 
 			var roleToken = new RoleTokenViewModel()
 			{
@@ -66,7 +66,7 @@ namespace Library.BLL.Services
 			return roleToken;
 		}
 
-		private async Task<string> GenerateJwtToken(string email, ApplicationUser user)
+		private string GenerateJwtToken(string email, ApplicationUser user)
 		{
 			var claims = new List<Claim>
 			{

@@ -1,6 +1,6 @@
 ﻿using Library.Entities.Enteties;
 
-namespace Library.DAL.Interfaces
+namespace Library.DataAccess.Interfaces
 {
 	public interface IBookRepository : IGEnericRepository<Book>
     {

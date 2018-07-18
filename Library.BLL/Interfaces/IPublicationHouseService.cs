@@ -1,6 +1,6 @@
 ﻿using Library.ViewModels.PublicationHouseViewModels;
 
-namespace Library.BLL.Interfaces
+namespace Library.BusinessLogic.Interfaces
 {
 	public interface IPublicationHouseService
     {

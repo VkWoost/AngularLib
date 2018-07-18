@@ -1,20 +1,20 @@
 ﻿using Dapper;
-using Library.DAL.Interfaces;
+using Library.DataAccess.Interfaces;
 using Library.Entities.Enteties;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Library.DAL.Repositories
+namespace Library.DataAccess.Repositories
 {
 	public class PublicationHousesInBookRepository : IPublicationHousesInBookRepository
 	{
 		private string _connectionString;
 
-		public PublicationHousesInBookRepository(string conn)
+		public PublicationHousesInBookRepository(string connectionString)
 		{
-			_connectionString = conn;
+			_connectionString = connectionString;
 		}	
 
 		public IEnumerable<PublicationHousesInBook> GetAll()
@@ -51,7 +51,7 @@ namespace Library.DAL.Repositories
 
 		public void DeleteByBookId(long id)
 		{
-			string _sqlDelete = $"DELETE FROM {typeof(PublicationHousesInBook).Name}s WHERE BookId = { id }";
+			string _sqlDelete = $"DELETE FROM PublicationHouseBooks WHERE BookId = { id }";
 
 			using (var connection = new SqlConnection(_connectionString))
 			{

@@ -1,5 +1,4 @@
-using Library.BLL.Interfaces;
-using Library.BLL.Services;
+using Library.BusinessLogic.Services;
 using Library.ViewModels.MagazineViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ namespace Library.WebUI.Controllers
     [Route("api/[controller]")]
     public class MagazineController : Controller
     {
-        private IMagazineService _magazineService;
+        private MagazineService _magazineService;
 
         public MagazineController(MagazineService magazineService)
         {

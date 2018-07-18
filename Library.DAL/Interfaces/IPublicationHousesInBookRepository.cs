@@ -1,7 +1,7 @@
 ﻿using Library.Entities.Enteties;
 using System.Collections.Generic;
 
-namespace Library.DAL.Interfaces
+namespace Library.DataAccess.Interfaces
 {
 	public interface IPublicationHousesInBookRepository
     {

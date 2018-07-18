@@ -1,6 +1,6 @@
 ﻿using Library.ViewModels.AuthorViewModels;
 
-namespace Library.BLL.Interfaces
+namespace Library.BusinessLogic.Interfaces
 {
 	public interface IAuthorService
     {

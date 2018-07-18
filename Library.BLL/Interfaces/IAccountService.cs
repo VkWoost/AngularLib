@@ -2,7 +2,7 @@
 using Library.ViewModels.AccountViewModels;
 using System.Threading.Tasks;
 
-namespace Library.BLL.Interfaces
+namespace Library.BusinessLogic.Interfaces
 {
 	public interface IAccountService
     {

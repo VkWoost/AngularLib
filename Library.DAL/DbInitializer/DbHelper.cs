@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Linq;
 
-namespace Library.DAL.DbInitializer
+namespace Library.DataAccess.DbInitializer
 {
 	public static class DbHelper
     {

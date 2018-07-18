@@ -1,6 +1,6 @@
 ﻿using Library.ViewModels.MagazineViewModels;
 
-namespace Library.BLL.Interfaces
+namespace Library.BusinessLogic.Interfaces
 {
 	public interface IMagazineService
     {

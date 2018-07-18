@@ -1,6 +1,6 @@
 ﻿using Library.ViewModels.BookViewModels;
 
-namespace Library.BLL.Interfaces
+namespace Library.BusinessLogic.Interfaces
 {
 	public interface IBookService
     {

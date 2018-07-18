@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Entities", "Library.Entities\Library.Entities.csproj", "{A32FB56C-DE51-4B47-90AB-75F192B82651}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.DAL", "Library.DAL\Library.DAL.csproj", "{F3F8827B-B5A4-461B-98D9-0CEC9A17325E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.DataAccess", "Library.DAL\Library.DataAccess.csproj", "{F3F8827B-B5A4-461B-98D9-0CEC9A17325E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.BLL", "Library.BLL\Library.BLL.csproj", "{BB9317C9-32BC-40E8-A13D-12951A65980B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.BusinessLogic", "Library.BLL\Library.BusinessLogic.csproj", "{BB9317C9-32BC-40E8-A13D-12951A65980B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.ViewModels", "Library.ViewModels\Library.ViewModels.csproj", "{96F49372-B277-4B13-9AE2-3CDEF6447B63}"
 EndProject

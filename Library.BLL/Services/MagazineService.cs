@@ -1,19 +1,19 @@
-﻿using Library.BLL.Infrastructure;
-using Library.BLL.Interfaces;
-using Library.DAL.Interfaces;
-using Library.DAL.Repositories;
+﻿using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.Interfaces;
+using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.MagazineViewModels;
 
-namespace Library.BLL.Services
+namespace Library.BusinessLogic.Services
 {
     public class MagazineService : IMagazineService
     {
         private IGEnericRepository<Magazine> _magazineRepository;
 
-        public MagazineService(string conn)
+        public MagazineService(string connectionString)
         {
-            _magazineRepository = new GenericRepository<Magazine>(conn);
+            _magazineRepository = new GenericRepository<Magazine>(connectionString);
         }
 
         public void Create(CreateMagazineViewModel magazineViewModel)
@@ -34,7 +34,7 @@ namespace Library.BLL.Services
             var magazine = _magazineRepository.Get(id);
             if (magazine == null)
             {
-                throw new BLLException("Magazine not found");
+                throw new BusinessLogicException("Magazine not found");
             }
 
 			var result = new GetMagazineViewModel()
@@ -71,7 +71,7 @@ namespace Library.BLL.Services
 			var magazine = _magazineRepository.Get(id);
 			if (magazine == null)
             {
-                throw new BLLException("Magazine not found");
+                throw new BusinessLogicException("Magazine not found");
             }
 
 			var result = new GetMagazineViewModel()
@@ -90,7 +90,7 @@ namespace Library.BLL.Services
         {
             if (_magazineRepository.Get(magazineViewModel.Id) == null)
             {
-                throw new BLLException("Magazine not found");
+                throw new BusinessLogicException("Magazine not found");
             }
 
 			var magazine = new Magazine()

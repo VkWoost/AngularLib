@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.DAL
+namespace Library.DataAccess
 {
     public class LibraryContext : IdentityDbContext<ApplicationUser>
 	{

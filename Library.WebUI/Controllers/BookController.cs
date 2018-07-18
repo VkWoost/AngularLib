@@ -1,5 +1,4 @@
-using Library.BLL.Interfaces;
-using Library.BLL.Services;
+using Library.BusinessLogic.Services;
 using Library.ViewModels.BookViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ namespace Library.WebUI.Controllers
     [Route("api/[controller]")]
     public class BookController : Controller
     {
-        private IBookService _bookService;
+        private BookService _bookService;
 
         public BookController(BookService bookService)
         {

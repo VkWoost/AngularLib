@@ -1,7 +1,6 @@
-﻿using Library.BLL.Infrastructure;
-using Library.BLL.Interfaces;
-using Library.DAL.Interfaces;
-using Library.DAL.Repositories;
+﻿using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.AuthorViewModels;
 using Library.ViewModels.BookViewModels;
@@ -9,21 +8,21 @@ using Library.ViewModels.PublicationHouseViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Library.BLL.Services
+namespace Library.BusinessLogic.Services
 {
     public class BookService : IBookService
     {
-        private IBookRepository _bookRepository;
-		private IPublicationHousesInBookRepository _pHouseBookRepository;
-        private IAuthorService _authorService;
-		private IPublicationHouseService _publicationHouseService;
+        private BookRepository _bookRepository;
+		private PublicationHousesInBookRepository _pHouseBookRepository;
+        private AuthorService _authorService;
+		private PublicationHouseService _publicationHouseService;
 
-        public BookService(string conn)
+        public BookService(string connectionString)
         {
-            _bookRepository = new BookRepository(conn);
-			_pHouseBookRepository = new PublicationHousesInBookRepository(conn);
-            _authorService = new AuthorService(conn);
-			_publicationHouseService = new PublicationHouseService(conn);
+            _bookRepository = new BookRepository(connectionString);
+			_pHouseBookRepository = new PublicationHousesInBookRepository(connectionString);
+            _authorService = new AuthorService(connectionString);
+			_publicationHouseService = new PublicationHouseService(connectionString);
         }
 
         public void Create(CreateBookViewModel bookViewModel)
@@ -47,7 +46,7 @@ namespace Library.BLL.Services
             var book = _bookRepository.Get(id);
             if (book == null)
             {
-                throw new BLLException("Book not found");
+                throw new BusinessLogicException("Book not found");
             }
 
 			var result = new GetBookViewModel()
@@ -96,12 +95,13 @@ namespace Library.BLL.Services
 				var publicationHouses = pHouses.Where(x => currentPublicHouseBook.Contains(x.Id)).ToList();
 				
 				book.PublicationHouses = new List<GetPublicationHouseViewModel>();
-				foreach(var item in publicationHouses){
+				foreach (var publicationHouse in publicationHouses)
+				{
 					book.PublicationHouses.Add(new GetPublicationHouseViewModel()
 					{
-						Id = item.Id,
-						Name = item.Name,
-						Adress = item.Adress
+						Id = publicationHouse.Id,
+						Name = publicationHouse.Name,
+						Adress = publicationHouse.Adress
 					});
 				}
             }
@@ -113,7 +113,7 @@ namespace Library.BLL.Services
 			var book = _bookRepository.Get(id);
 			if (book == null)
             {
-                throw new BLLException("Book not found");
+                throw new BusinessLogicException("Book not found");
             }
             
 			DeletePublicationHouseBooks(id);
@@ -135,7 +135,7 @@ namespace Library.BLL.Services
         {
             if (_bookRepository.Get(bookViewModel.Id) == null)
             {
-                throw new BLLException("Book not found");
+                throw new BusinessLogicException("Book not found");
             }
 			
 			bookViewModel.AuthorId = bookViewModel.Author.Id;

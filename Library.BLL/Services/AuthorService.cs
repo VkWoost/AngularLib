@@ -1,21 +1,20 @@
-﻿using Library.BLL.Infrastructure;
-using Library.BLL.Interfaces;
-using Library.DAL.Interfaces;
-using Library.DAL.Repositories;
+﻿using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.AuthorViewModels;
 
-namespace Library.BLL.Services
+namespace Library.BusinessLogic.Services
 {
     public class AuthorService : IAuthorService
 	{
-        private IGEnericRepository<Author> _authorRepository;
-		private IBookRepository _bookRepository;
+        private AuthorRepository _authorRepository;
+		private BookRepository _bookRepository;
 
-        public AuthorService(string conn)
+        public AuthorService(string connectionString)
         {
-            _authorRepository = new GenericRepository<Author>(conn);
-			_bookRepository = new BookRepository(conn);
+            _authorRepository = new AuthorRepository(connectionString);
+			_bookRepository = new BookRepository(connectionString);
         }
 
         public void Create(CreateAuthorViewModel authorViewModel)
@@ -34,7 +33,7 @@ namespace Library.BLL.Services
             var author = _authorRepository.Get(id);
             if (author == null)
             {
-                throw new BLLException("Author not found");
+                throw new BusinessLogicException("Author not found");
             }
 
 			var result = new GetAuthorViewModel()
@@ -69,7 +68,7 @@ namespace Library.BLL.Services
 
 			if (author == null)
             {
-                throw new BLLException("Author not found");
+                throw new BusinessLogicException("Author not found");
             }
 
             _authorRepository.Delete(id);
@@ -88,7 +87,7 @@ namespace Library.BLL.Services
         {
             if (_authorRepository.Get(authorViewModel.Id) == null)
             {
-                throw new BLLException("Author not found");
+                throw new BusinessLogicException("Author not found");
             }
 			
 			var author = new Author()

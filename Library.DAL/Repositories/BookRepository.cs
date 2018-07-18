@@ -1,20 +1,20 @@
 ﻿using Dapper;
-using Library.DAL.Interfaces;
+using Library.DataAccess.Interfaces;
 using Library.Entities.Enteties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data.SqlClient;
 
-namespace Library.DAL.Repositories
+namespace Library.DataAccess.Repositories
 {
 	public class BookRepository : GenericRepository<Book>, IBookRepository
     {
 		private string _connectionString;
 		
-		public BookRepository(string conn)
-		:base(conn)
+		public BookRepository(string connectionString)
+		:base(connectionString)
 		{
-			_connectionString = conn;
+			_connectionString = connectionString;
 		}
 
 		public int CreateBook(Book item){
@@ -30,7 +30,7 @@ namespace Library.DAL.Repositories
 
 		public void DeleteRangeByAuthorId(long id)
 		{
-			string _sqlDelete = $"DELETE FROM {typeof(Book).Name}s WHERE AuthorId = { id }";
+			string _sqlDelete = $"DELETE FROM Books WHERE AuthorId = { id }";
 
 			using (var connection = new SqlConnection(_connectionString))
 			{

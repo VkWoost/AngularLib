@@ -1,4 +1,4 @@
-﻿using Library.DAL.Interfaces;
+﻿using Library.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,15 @@ using System.Reflection;
 using Library.Entities.Enteties;
 using Dapper;
 
-namespace Library.DAL.Repositories
+namespace Library.DataAccess.Repositories
 {
     public class GenericRepository<TEntity> : IGEnericRepository<TEntity> where TEntity : BaseEntity
     {
         private string _connectionString;
 
-        public GenericRepository(string conn)
+        public GenericRepository(string connectionString)
         {
-            _connectionString = conn;
+            _connectionString = connectionString;
         }
 
         public TEntity Get(long id)

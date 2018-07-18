@@ -1,19 +1,19 @@
-﻿using Library.BLL.Infrastructure;
-using Library.BLL.Interfaces;
-using Library.DAL.Interfaces;
-using Library.DAL.Repositories;
+﻿using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.Interfaces;
+using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.PublicationHouseViewModels;
 
-namespace Library.BLL.Services
+namespace Library.BusinessLogic.Services
 {
     public class PublicationHouseService : IPublicationHouseService
 	{
         private IGEnericRepository<PublicationHouse> _publicationHouseRepo;
 
-        public PublicationHouseService(string conn)
+        public PublicationHouseService(string connectionString)
         {
-            _publicationHouseRepo = new GenericRepository<PublicationHouse>(conn);
+            _publicationHouseRepo = new GenericRepository<PublicationHouse>(connectionString);
         }
 
         public void Create(CreatePublicationHouseViewModel publicationHouseViewModel)
@@ -34,7 +34,7 @@ namespace Library.BLL.Services
             var publicationHouse = _publicationHouseRepo.Get(id);
             if (publicationHouse == null)
             {
-                throw new BLLException("Publication House not found");
+                throw new BusinessLogicException("Publication House not found");
             }
 
 			var result = new GetPublicationHouseViewModel()
@@ -68,7 +68,7 @@ namespace Library.BLL.Services
 			var publicationHouse = _publicationHouseRepo.Get(id);
 			if (publicationHouse == null)
             {
-                throw new BLLException("Publication House not found");
+                throw new BusinessLogicException("Publication House not found");
             }
 
 			var result = new GetPublicationHouseViewModel()
@@ -86,7 +86,7 @@ namespace Library.BLL.Services
         {
             if (_publicationHouseRepo.Get(publicationHouseViewModel.Id) == null)
             {
-                throw new BLLException("Publication House not found");
+                throw new BusinessLogicException("Publication House not found");
             }
 
 			var publicationHouse = new PublicationHouse()

@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
-using Library.DAL;
+using Library.DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Library.Entities.Enteties;
-using Library.BLL.Services;
-using Library.BLL.Infrastructure;
+using Library.BusinessLogic.Services;
+using Library.BusinessLogic.Infrastructure;
 using Library.WebUI.Enums;
 
 namespace Library.WebUI
@@ -106,8 +106,6 @@ namespace Library.WebUI
             builder.AddEntityFrameworkStores<LibraryContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
-
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
