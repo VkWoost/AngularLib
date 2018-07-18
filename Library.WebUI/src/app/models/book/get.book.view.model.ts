@@ -1,5 +1,5 @@
-import { GetAuthorViewModel } from "../author/GetAuthorViewModel";
-import { GetPublicationHouseViewModel } from "../publicationHouse/GetPublicationHouseViewModel";
+import { GetAuthorViewModel } from "../author/get.author.view.model";
+import { GetPublicationHouseViewModel } from "../publicationHouse/get.publicationHouse.view.model";
 
 export class GetBookViewModel {
     constructor(

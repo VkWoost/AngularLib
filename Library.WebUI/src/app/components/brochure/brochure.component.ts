@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from '../../services/brochure.service';
-import { GetAllBrochuresViewModel } from '../../models/brochure/GetAllBrochuresViewModel';
-import { CreateBrochureViewModel } from '../../models/brochure/CreateBrochureViewModel';
-import { UpdateBrochureViewModel } from '../../models/brochure/UpdateBrochureViewModel';
+import { GetAllBrochuresViewModel } from '../../models/brochure/get.all-brochures.view.model';
+import { CreateBrochureViewModel } from '../../models/brochure/create.brochure.view.model';
+import { UpdateBrochureViewModel } from '../../models/brochure/update.brochure.view.model';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';

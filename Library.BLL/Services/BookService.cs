@@ -14,16 +14,16 @@ namespace Library.BusinessLogic.Services
     {
         private BookRepository _bookRepository;
 		private PublicationHousesInBookRepository _pHouseBookRepository;
-        private AuthorService _authorService;
-		private PublicationHouseService _publicationHouseService;
+		private AuthorRepository _authorRepository;
+		private PublicationHouseRepository _publicationHouseRepository;
 
         public BookService(string connectionString)
         {
             _bookRepository = new BookRepository(connectionString);
+			_authorRepository = new AuthorRepository(connectionString);
 			_pHouseBookRepository = new PublicationHousesInBookRepository(connectionString);
-            _authorService = new AuthorService(connectionString);
-			_publicationHouseService = new PublicationHouseService(connectionString);
-        }
+			_publicationHouseRepository = new PublicationHouseRepository(connectionString);
+		}
 
         public void Create(CreateBookViewModel bookViewModel)
         {
@@ -56,8 +56,13 @@ namespace Library.BusinessLogic.Services
 				AuthorId = book.AuthorId,
 				YearOfPublication = book.YearOfPublication
 			};
-            
-			result.Author = _authorService.Get(result.AuthorId.Value);
+
+			var author = _authorRepository.Get(result.AuthorId.Value);
+			result.Author = new GetAuthorViewModel()
+			{
+				Id = author.Id,
+				Name = author.Name
+			};
             return result;
         }
 
@@ -76,13 +81,13 @@ namespace Library.BusinessLogic.Services
 				});
 			}
 
-            var authors = _authorService.GetAll();
-			var pHouses = _publicationHouseService.GetAll().PublicationHouses;
+			var authors = _authorRepository.GetAll();
+			var pHouses = _publicationHouseRepository.GetAll();
 			var publicHouseBook = _pHouseBookRepository.GetAll();
 
 			foreach (var book in result.Books)
             {
-				var author = authors.Authors.FirstOrDefault(x => x.Id == book.AuthorId);
+				var author = authors.FirstOrDefault(x => x.Id == book.AuthorId);
 
 				book.Author = new GetAuthorViewModel()
 				{

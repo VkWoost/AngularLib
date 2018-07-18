@@ -7,14 +7,14 @@ namespace Library.DataAccess.DbInitializer
 {
 	public static class DbHelper
     {
-		public static async void DbInitialize(UserManager<ApplicationUser> userManager)
+		public static async void DbInitialize(UserManager<User> userManager)
 		{
 			if (userManager.Users.Any())
 			{
 				return;
 			}
 
-			var user = new ApplicationUser
+			var user = new User
 			{
 				UserName = "admin@gmail.com",
 				Email = "admin@gmail.com",

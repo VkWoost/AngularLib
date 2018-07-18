@@ -5,11 +5,11 @@ import { BookService } from '../../services/book.service';
 import { AuthorService } from '../../services/author.service';
 import { PublicationHouseService } from '../../services/publicationHouse.service';
 
-import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/GetAllPublicationHousesViewModel';
-import { GetAllAuthorsViewModel } from '../../models/author/GetAllAuthorsViewModel';
-import { CreateBookViewModel } from '../../models/book/CreateBookViewModel';
-import { UpdateBookViewModel } from '../../models/book/UpdateBookViewModel';
-import { GetAllBooksViewModel } from '../../models/book/GetAllBooksViewModel';
+import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/get.all-publicationHouses.view.model';
+import { GetAllAuthorsViewModel } from '../../models/author/get.all-authors.view.model';
+import { CreateBookViewModel } from '../../models/book/create.book.view.model';
+import { UpdateBookViewModel } from '../../models/book/update.book.view.model';
+import { GetAllBooksViewModel } from '../../models/book/get.all-books.view.model';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';

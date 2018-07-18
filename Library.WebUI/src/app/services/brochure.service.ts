@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { CreateBrochureViewModel } from '../models/brochure/CreateBrochureViewModel';
-import { UpdateBrochureViewModel } from '../models/brochure/UpdateBrochureViewModel';
-import { GetAllBrochuresViewModel } from '../models/brochure/GetAllBrochuresViewModel';
+import { CreateBrochureViewModel } from '../models/brochure/create.brochure.view.model';
+import { UpdateBrochureViewModel } from '../models/brochure/update.brochure.view.model';
+import { GetAllBrochuresViewModel } from '../models/brochure/get.all-brochures.view.model';
 
 @Injectable()
 export class DataService {

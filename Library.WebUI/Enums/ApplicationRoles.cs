@@ -1,6 +1,6 @@
 namespace Library.WebUI.Enums
 {
-    public enum IdentityRoles
+    public enum ApplicationRoles
     {
         admin = 0,
         user = 1

@@ -1,4 +1,4 @@
-import { GetMagazineViewModel } from "./GetMagazineViewModel";
+import { GetMagazineViewModel } from "./get.magazinemview.model";
 
 export class GetAllMagazinesViewModel {
     constructor() {

@@ -1,4 +1,4 @@
-import { GetBrochureViewModel } from "./GetBrochureViewModel";
+import { GetBrochureViewModel } from "./get.brochure.view.model";
 
 export class GetAllBrochuresViewModel {
     constructor() {

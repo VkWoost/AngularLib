@@ -1,6 +1,5 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Interfaces;
 using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.MagazineViewModels;
@@ -9,11 +8,11 @@ namespace Library.BusinessLogic.Services
 {
     public class MagazineService : IMagazineService
     {
-        private IGEnericRepository<Magazine> _magazineRepository;
+        private MagazineRepository _magazineRepository;
 
         public MagazineService(string connectionString)
         {
-            _magazineRepository = new GenericRepository<Magazine>(connectionString);
+            _magazineRepository = new MagazineRepository(connectionString);
         }
 
         public void Create(CreateMagazineViewModel magazineViewModel)

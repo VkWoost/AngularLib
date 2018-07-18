@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Library.Entities.Enteties;
 using Library.BusinessLogic.Services;
-using Library.BusinessLogic.Infrastructure;
 using Library.WebUI.Enums;
 
 namespace Library.WebUI
@@ -31,8 +30,8 @@ namespace Library.WebUI
             services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
             b => b.MigrationsAssembly("Library.DAL")));
 
-            services.AddTransient(typeof(UserManager<ApplicationUser>));
-            services.AddTransient(typeof(SignInManager<ApplicationUser>));
+            services.AddTransient(typeof(UserManager<User>));
+            services.AddTransient(typeof(SignInManager<User>));
 
             services.AddTransient<AuthorService>
                 (provider => new AuthorService(Configuration.GetConnectionString("DefaultConnection")));    
@@ -60,7 +59,7 @@ namespace Library.WebUI
             tokenValidationParameters.ValidateLifetime = true;
             tokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                       .AddEntityFrameworkStores<LibraryContext>()
                       .AddDefaultTokenProviders();
 
@@ -80,20 +79,12 @@ namespace Library.WebUI
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(nameof(IdentityRoles.admin), policy => policy.RequireRole(nameof(IdentityRoles.admin)));
+                options.AddPolicy(nameof(ApplicationRoles.admin), policy => policy.RequireRole(nameof(ApplicationRoles.admin)));
             });
             
-
             var serviceProvider = services.BuildServiceProvider();
-            services.AddTransient<ConfigurationManager>
-                (provider => new ConfigurationManager()
-                {
-                    Configuration = serviceProvider.GetService<IConfiguration>(),
-                    UserManager = serviceProvider.GetService<UserManager<ApplicationUser>>(),
-                    SignInManager = serviceProvider.GetService<SignInManager<ApplicationUser>>()
-                });
 
-            var builder = services.AddIdentityCore<ApplicationUser>(o =>
+            var builder = services.AddIdentityCore<User>(o =>
             {
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;

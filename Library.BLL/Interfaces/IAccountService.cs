@@ -6,7 +6,7 @@ namespace Library.BusinessLogic.Interfaces
 {
 	public interface IAccountService
     {
-		Task<ApplicationUser> Register(RegisterAccountViewModel model);
-		Task<RoleTokenViewModel> Login(LoginAccountViewModel model);
+		Task<User> Register(RegisterAccountViewModel model);
+		Task<TokenAccountViewModel> Login(LoginAccountViewModel model);
 	}
 }

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { User } from "../../models/identity/user";
 import { BaseService } from "./base.service";
-import { UserRegistration } from "../../models/identity/userRegistration";
+import { UserRegistration } from "../../models/identity/user.registration";
 import { Observable } from 'rxjs';
 import { UserService } from "./user.service";
 

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from '../../services/magazine.service';
-import { GetAllMagazinesViewModel } from '../../models/magazine/GetAllMagazinesViewModel';
-import { CreateMagazineViewModel } from '../../models/magazine/CreateMagazineViewModel';
-import { UpdateMagazineViewModel } from '../../models/magazine/UpdateMagazineViewModel';
+import { GetAllMagazinesViewModel } from '../../models/magazine/get.all-magazines.view.model';
+import { CreateMagazineViewModel } from '../../models/magazine/create.magazine.view.model';
+import { UpdateMagazineViewModel } from '../../models/magazine/update.magazine.view.model';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';

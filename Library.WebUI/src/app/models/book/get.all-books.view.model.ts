@@ -1,4 +1,4 @@
-import { GetBookViewModel } from "./GetBookViewModel";
+import { GetBookViewModel } from "./get.book.view.model";
 
 export class GetAllBooksViewModel {
     constructor() {

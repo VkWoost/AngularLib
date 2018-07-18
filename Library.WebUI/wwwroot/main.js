@@ -295,7 +295,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_author_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/author.service */ "./src/app/services/author.service.ts");
-/* harmony import */ var _models_author_GetAllAuthorsViewModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/author/GetAllAuthorsViewModel */ "./src/app/models/author/GetAllAuthorsViewModel.ts");
+/* harmony import */ var _models_author_get_all_authors_view_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/author/get.all-authors.view.model */ "./src/app/models/author/get.all-authors.view.model.ts");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -320,7 +320,7 @@ var AuthorComponent = /** @class */ (function () {
             skip: 0,
             take: 10
         };
-        this.authors = new _models_author_GetAllAuthorsViewModel__WEBPACK_IMPORTED_MODULE_3__["GetAllAuthorsViewModel"]();
+        this.authors = new _models_author_get_all_authors_view_model__WEBPACK_IMPORTED_MODULE_3__["GetAllAuthorsViewModel"]();
     }
     AuthorComponent.prototype.ngOnInit = function () {
         this.loadData();
@@ -421,9 +421,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_book_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/book.service */ "./src/app/services/book.service.ts");
 /* harmony import */ var _services_author_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/author.service */ "./src/app/services/author.service.ts");
 /* harmony import */ var _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/publicationHouse.service */ "./src/app/services/publicationHouse.service.ts");
-/* harmony import */ var _models_publicationHouse_GetAllPublicationHousesViewModel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/publicationHouse/GetAllPublicationHousesViewModel */ "./src/app/models/publicationHouse/GetAllPublicationHousesViewModel.ts");
-/* harmony import */ var _models_author_GetAllAuthorsViewModel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/author/GetAllAuthorsViewModel */ "./src/app/models/author/GetAllAuthorsViewModel.ts");
-/* harmony import */ var _models_book_GetAllBooksViewModel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../models/book/GetAllBooksViewModel */ "./src/app/models/book/GetAllBooksViewModel.ts");
+/* harmony import */ var _models_publicationHouse_get_all_publicationHouses_view_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/publicationHouse/get.all-publicationHouses.view.model */ "./src/app/models/publicationHouse/get.all-publicationHouses.view.model.ts");
+/* harmony import */ var _models_author_get_all_authors_view_model__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/author/get.all-authors.view.model */ "./src/app/models/author/get.all-authors.view.model.ts");
+/* harmony import */ var _models_book_get_all_books_view_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../models/book/get.all-books.view.model */ "./src/app/models/book/get.all-books.view.model.ts");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -454,9 +454,9 @@ var BookComponent = /** @class */ (function () {
             skip: 0,
             take: 10
         };
-        this.books = new _models_book_GetAllBooksViewModel__WEBPACK_IMPORTED_MODULE_7__["GetAllBooksViewModel"]();
-        this.authors = new _models_author_GetAllAuthorsViewModel__WEBPACK_IMPORTED_MODULE_6__["GetAllAuthorsViewModel"]();
-        this.publicationHouses = new _models_publicationHouse_GetAllPublicationHousesViewModel__WEBPACK_IMPORTED_MODULE_5__["GetAllPublicationHousesViewModel"]();
+        this.books = new _models_book_get_all_books_view_model__WEBPACK_IMPORTED_MODULE_7__["GetAllBooksViewModel"]();
+        this.authors = new _models_author_get_all_authors_view_model__WEBPACK_IMPORTED_MODULE_6__["GetAllAuthorsViewModel"]();
+        this.publicationHouses = new _models_publicationHouse_get_all_publicationHouses_view_model__WEBPACK_IMPORTED_MODULE_5__["GetAllPublicationHousesViewModel"]();
     }
     BookComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -575,7 +575,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_brochure_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/brochure.service */ "./src/app/services/brochure.service.ts");
-/* harmony import */ var _models_brochure_GetAllBrochuresViewModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/brochure/GetAllBrochuresViewModel */ "./src/app/models/brochure/GetAllBrochuresViewModel.ts");
+/* harmony import */ var _models_brochure_get_all_brochures_view_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/brochure/get.all-brochures.view.model */ "./src/app/models/brochure/get.all-brochures.view.model.ts");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -600,7 +600,7 @@ var BrochureComponent = /** @class */ (function () {
             skip: 0,
             take: 10
         };
-        this.brochures = new _models_brochure_GetAllBrochuresViewModel__WEBPACK_IMPORTED_MODULE_3__["GetAllBrochuresViewModel"]();
+        this.brochures = new _models_brochure_get_all_brochures_view_model__WEBPACK_IMPORTED_MODULE_3__["GetAllBrochuresViewModel"]();
     }
     BrochureComponent.prototype.ngOnInit = function () {
         this.loadData();
@@ -806,7 +806,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_magazine_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/magazine.service */ "./src/app/services/magazine.service.ts");
-/* harmony import */ var _models_magazine_GetAllMagazinesViewModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/magazine/GetAllMagazinesViewModel */ "./src/app/models/magazine/GetAllMagazinesViewModel.ts");
+/* harmony import */ var _models_magazine_get_all_magazines_view_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/magazine/get.all-magazines.view.model */ "./src/app/models/magazine/get.all-magazines.view.model.ts");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -831,7 +831,7 @@ var MagazineComponent = /** @class */ (function () {
             skip: 0,
             take: 10
         };
-        this.magazines = new _models_magazine_GetAllMagazinesViewModel__WEBPACK_IMPORTED_MODULE_3__["GetAllMagazinesViewModel"]();
+        this.magazines = new _models_magazine_get_all_magazines_view_model__WEBPACK_IMPORTED_MODULE_3__["GetAllMagazinesViewModel"]();
     }
     MagazineComponent.prototype.ngOnInit = function () {
         this.loadData();
@@ -991,7 +991,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_publicationHouse_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/publicationHouse.service */ "./src/app/services/publicationHouse.service.ts");
-/* harmony import */ var _models_publicationHouse_GetAllPublicationHousesViewModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/publicationHouse/GetAllPublicationHousesViewModel */ "./src/app/models/publicationHouse/GetAllPublicationHousesViewModel.ts");
+/* harmony import */ var _models_publicationHouse_get_all_publicationHouses_view_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/publicationHouse/get.all-publicationHouses.view.model */ "./src/app/models/publicationHouse/get.all-publicationHouses.view.model.ts");
 /* harmony import */ var _services_identity_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/identity/user.service */ "./src/app/services/identity/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1016,7 +1016,7 @@ var PublicationHouseComponent = /** @class */ (function () {
             skip: 0,
             take: 10
         };
-        this.publicationHouses = new _models_publicationHouse_GetAllPublicationHousesViewModel__WEBPACK_IMPORTED_MODULE_3__["GetAllPublicationHousesViewModel"]();
+        this.publicationHouses = new _models_publicationHouse_get_all_publicationHouses_view_model__WEBPACK_IMPORTED_MODULE_3__["GetAllPublicationHousesViewModel"]();
     }
     PublicationHouseComponent.prototype.ngOnInit = function () {
         this.loadData();
@@ -1233,10 +1233,10 @@ var UserComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/author/GetAllAuthorsViewModel.ts":
-/*!*********************************************************!*\
-  !*** ./src/app/models/author/GetAllAuthorsViewModel.ts ***!
-  \*********************************************************/
+/***/ "./src/app/models/author/get.all-authors.view.model.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/models/author/get.all-authors.view.model.ts ***!
+  \*************************************************************/
 /*! exports provided: GetAllAuthorsViewModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1254,10 +1254,10 @@ var GetAllAuthorsViewModel = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/book/GetAllBooksViewModel.ts":
-/*!*****************************************************!*\
-  !*** ./src/app/models/book/GetAllBooksViewModel.ts ***!
-  \*****************************************************/
+/***/ "./src/app/models/book/get.all-books.view.model.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/models/book/get.all-books.view.model.ts ***!
+  \*********************************************************/
 /*! exports provided: GetAllBooksViewModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1275,10 +1275,10 @@ var GetAllBooksViewModel = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/brochure/GetAllBrochuresViewModel.ts":
-/*!*************************************************************!*\
-  !*** ./src/app/models/brochure/GetAllBrochuresViewModel.ts ***!
-  \*************************************************************/
+/***/ "./src/app/models/brochure/get.all-brochures.view.model.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/models/brochure/get.all-brochures.view.model.ts ***!
+  \*****************************************************************/
 /*! exports provided: GetAllBrochuresViewModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1290,6 +1290,30 @@ var GetAllBrochuresViewModel = /** @class */ (function () {
         this.brochures = new Array();
     }
     return GetAllBrochuresViewModel;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/models/identity/user.registration.ts":
+/*!******************************************************!*\
+  !*** ./src/app/models/identity/user.registration.ts ***!
+  \******************************************************/
+/*! exports provided: UserRegistration */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserRegistration", function() { return UserRegistration; });
+var UserRegistration = /** @class */ (function () {
+    function UserRegistration(email, password, firstName, lastName) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    return UserRegistration;
 }());
 
 
@@ -1318,34 +1342,10 @@ var User = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/identity/userRegistration.ts":
-/*!*****************************************************!*\
-  !*** ./src/app/models/identity/userRegistration.ts ***!
-  \*****************************************************/
-/*! exports provided: UserRegistration */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserRegistration", function() { return UserRegistration; });
-var UserRegistration = /** @class */ (function () {
-    function UserRegistration(email, password, firstName, lastName) {
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-    return UserRegistration;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/models/magazine/GetAllMagazinesViewModel.ts":
-/*!*************************************************************!*\
-  !*** ./src/app/models/magazine/GetAllMagazinesViewModel.ts ***!
-  \*************************************************************/
+/***/ "./src/app/models/magazine/get.all-magazines.view.model.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/models/magazine/get.all-magazines.view.model.ts ***!
+  \*****************************************************************/
 /*! exports provided: GetAllMagazinesViewModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1363,10 +1363,10 @@ var GetAllMagazinesViewModel = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/publicationHouse/GetAllPublicationHousesViewModel.ts":
-/*!*****************************************************************************!*\
-  !*** ./src/app/models/publicationHouse/GetAllPublicationHousesViewModel.ts ***!
-  \*****************************************************************************/
+/***/ "./src/app/models/publicationHouse/get.all-publicationHouses.view.model.ts":
+/*!*********************************************************************************!*\
+  !*** ./src/app/models/publicationHouse/get.all-publicationHouses.view.model.ts ***!
+  \*********************************************************************************/
 /*! exports provided: GetAllPublicationHousesViewModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1590,7 +1590,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _models_identity_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/identity/user */ "./src/app/models/identity/user.ts");
 /* harmony import */ var _base_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./base.service */ "./src/app/services/identity/base.service.ts");
-/* harmony import */ var _models_identity_userRegistration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/identity/userRegistration */ "./src/app/models/identity/userRegistration.ts");
+/* harmony import */ var _models_identity_user_registration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/identity/user.registration */ "./src/app/models/identity/user.registration.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1623,7 +1623,7 @@ var LoginService = /** @class */ (function (_super) {
         return _this;
     }
     LoginService.prototype.register = function (email, password, firstName, lastName) {
-        var user = new _models_identity_userRegistration__WEBPACK_IMPORTED_MODULE_4__["UserRegistration"](email, password, firstName, lastName);
+        var user = new _models_identity_user_registration__WEBPACK_IMPORTED_MODULE_4__["UserRegistration"](email, password, firstName, lastName);
         return this.http.post('api/Account/Register', user)
             .map(function (res) { return true; })
             .catch(this.handleError);

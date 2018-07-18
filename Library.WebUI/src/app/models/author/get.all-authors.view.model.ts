@@ -1,4 +1,4 @@
-import { GetAuthorViewModel } from "./GetAuthorViewModel";
+import { GetAuthorViewModel } from "./get.author.view.model";
 
 export class GetAllAuthorsViewModel {
     constructor() {

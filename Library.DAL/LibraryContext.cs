@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.DataAccess
 {
-    public class LibraryContext : IdentityDbContext<ApplicationUser>
+    public class LibraryContext : IdentityDbContext<User>
 	{
         public DbSet<Author> Authors { get; set; }
         public DbSet<Magazine> Magazines { get; set; }

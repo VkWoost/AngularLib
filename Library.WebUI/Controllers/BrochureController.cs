@@ -3,6 +3,7 @@ using Library.ViewModels.BrochureViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Library.WebUI.Controllers
 {
@@ -19,36 +20,71 @@ namespace Library.WebUI.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var result = _brochureService.GetAll();
-            return Ok(result);
+            try
+            {
+                var result = _brochureService.GetAll();
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            var result = _brochureService.Get(id);
-            return Ok(result);
+            try
+            {
+                var result = _brochureService.Get(id);
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
-        [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]
+        [HttpPost, Authorize(Policy = nameof(ApplicationRoles.admin))]
         public IActionResult Create([FromBody] CreateBrochureViewModel brochure)
         {
-            _brochureService.Create(brochure);
-            return Ok(brochure);
+            try
+            {
+                _brochureService.Create(brochure);
+                return Ok(brochure);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
-        [HttpPut, Authorize(Policy = nameof(IdentityRoles.admin))]
+        [HttpPut, Authorize(Policy = nameof(ApplicationRoles.admin))]
         public IActionResult Update([FromBody] BrochureUpdateView brochure)
         {
-            _brochureService.Update(brochure);
-            return Ok(brochure);
+            try
+            {
+                _brochureService.Update(brochure);
+                return Ok(brochure);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = nameof(IdentityRoles.admin))]
+        [HttpDelete("{id}"), Authorize(Policy = nameof(ApplicationRoles.admin))]
         public IActionResult Delete(int id)
         {
-            var item = _brochureService.Delete(id);
-            return Ok(item);
+            try
+            {
+                var item = _brochureService.Delete(id);
+                return Ok(item);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
     }
 }

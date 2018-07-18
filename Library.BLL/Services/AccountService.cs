@@ -3,6 +3,8 @@ using Library.BusinessLogic.Interfaces;
 using Library.DataAccess.DbInitializer;
 using Library.Entities.Enteties;
 using Library.ViewModels.AccountViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -16,17 +18,23 @@ namespace Library.BusinessLogic.Services
 {
     public class AccountService : IAccountService
     {
-		private ConfigurationManager _confugurationManager;
+		private UserManager<User> _userManager { get; set; }
+		private SignInManager<User> _signInManager { get; set; }
+		private IConfiguration _configuration { get; set; }
 
-		public AccountService(ConfigurationManager confugurationManager)
+		public AccountService(UserManager<User> userManager,
+			SignInManager<User> signInManager,
+			IConfiguration configuration)
 		{
-			_confugurationManager = confugurationManager;
-			DbHelper.DbInitialize(_confugurationManager.UserManager);
+			_userManager = userManager;
+			_signInManager = signInManager;
+			_configuration = configuration;
+			DbHelper.DbInitialize(_userManager);
 		}
 
-		public async Task<ApplicationUser> Register(RegisterAccountViewModel model)
+		public async Task<User> Register(RegisterAccountViewModel model)
 		{
-			var user = new ApplicationUser
+			var user = new User
 			{
 				UserName = model.Email,
 				Email = model.Email,
@@ -35,30 +43,30 @@ namespace Library.BusinessLogic.Services
 				Role = "user"
 			};
 			
-			var result = await _confugurationManager.UserManager.CreateAsync(user, model.Password);
+			var result = await _userManager.CreateAsync(user, model.Password);
 			
 			if (!result.Succeeded){
 				var errors = result.Errors.ToString();
 				throw new BusinessLogicException(errors);
 			}
 			
-			await _confugurationManager.SignInManager.SignInAsync(user, false);
+			await _signInManager.SignInAsync(user, false);
 			return user;
 		}
 
-		public async Task<RoleTokenViewModel> Login(LoginAccountViewModel model)
+		public async Task<TokenAccountViewModel> Login(LoginAccountViewModel model)
 		{
-			var result = await _confugurationManager.SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+			var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
 			if (!result.Succeeded)
 			{
 				throw new BusinessLogicException("Wrong login or password");
 			}
 
-			ApplicationUser appUser = _confugurationManager.UserManager.Users.SingleOrDefault(r => r.Email == model.UserName);
+			User appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.UserName);
 			var token = GenerateJwtToken(model.UserName, appUser);
 
-			var roleToken = new RoleTokenViewModel()
+			var roleToken = new TokenAccountViewModel()
 			{
 				Role = appUser.Role,
 				Token = token
@@ -66,7 +74,7 @@ namespace Library.BusinessLogic.Services
 			return roleToken;
 		}
 
-		private string GenerateJwtToken(string email, ApplicationUser user)
+		private string GenerateJwtToken(string email, User user)
 		{
 			var claims = new List<Claim>
 			{
@@ -76,13 +84,13 @@ namespace Library.BusinessLogic.Services
 				new Claim(ClaimTypes.Role, user.Role)
 				 };
 
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_confugurationManager.GetJwtKey()));
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-			var expires = DateTime.Now.AddDays(Convert.ToDouble(_confugurationManager.GetJwtExpireDays()));
+			var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
 
 			var result = new JwtSecurityToken(
-				_confugurationManager.GetJwtIssuer(),
-				_confugurationManager.GetJwtIssuer(),
+				_configuration["JwtIssuer"],
+				_configuration["JwtIssuer"],
 				claims: claims,
 				expires: expires,
 				signingCredentials: creds

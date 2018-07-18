@@ -1,6 +1,5 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Interfaces;
 using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.BrochureViewModels;
@@ -9,11 +8,11 @@ namespace Library.BusinessLogic.Services
 {
     public class BrochureService : IBrochureService
     {
-        private IGEnericRepository<Brochure> _brochureRepository;
+        private BrochureRepository _brochureRepository;
 
         public BrochureService(string connectionString)
         {
-            _brochureRepository = new GenericRepository<Brochure>(connectionString);
+            _brochureRepository = new BrochureRepository(connectionString);
         }
 
         public void Create(CreateBrochureViewModel brochureViewModel)

@@ -1,4 +1,4 @@
-import { GetPublicationHouseViewModel } from "./GetPublicationHouseViewModel";
+import { GetPublicationHouseViewModel } from "./get.publicationHouse.view.model";
 
 export class GetAllPublicationHousesViewModel {
     constructor() {

@@ -3,6 +3,9 @@ using Library.BusinessLogic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Library.BusinessLogic.Infrastructure;
 using Library.ViewModels.AccountViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Library.Entities.Enteties;
 
 namespace Library.WebUI.Controllers
 {
@@ -11,9 +14,13 @@ namespace Library.WebUI.Controllers
     {
         private AccountService _accountServise;
 
-        public AccountController(ConfigurationManager applicationManager)
+        public AccountController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager, 
+            IConfiguration configuration
+        )
         {
-            _accountServise = new AccountService(applicationManager);
+            _accountServise = new AccountService(userManager,signInManager,configuration);
         }
 
         [HttpPost]

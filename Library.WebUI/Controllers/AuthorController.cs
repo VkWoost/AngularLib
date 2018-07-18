@@ -3,6 +3,7 @@ using Library.ViewModels.AuthorViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Library.WebUI.Controllers
 {
@@ -19,36 +20,71 @@ namespace Library.WebUI.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAll()
         {
-            var result = _authorService.GetAll();
-            return Ok(result);
+            try
+            {
+                var result = _authorService.GetAll();
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpGet("{id}"), Authorize]
         public IActionResult Get(int id)
         {
-            var result = _authorService.Get(id);
-            return Ok(result);
+            try
+            {
+                var result = _authorService.Get(id);
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
-        [HttpPost, Authorize(Policy = nameof(IdentityRoles.admin))]
+        [HttpPost, Authorize(Policy = nameof(ApplicationRoles.admin))]
         public IActionResult Create([FromBody] CreateAuthorViewModel author)
         {
-            _authorService.Create(author);
-            return Ok(author);
+            try
+            {
+                _authorService.Create(author);
+                return Ok(author);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
-        [HttpPut, Authorize(Policy = nameof(IdentityRoles.admin))]
+        [HttpPut, Authorize(Policy = nameof(ApplicationRoles.admin))]
         public IActionResult Update([FromBody] UpdateAuthorViewModel author)
         {
-            _authorService.Update(author);
-            return Ok(author);
+            try
+            {
+                _authorService.Update(author);
+                return Ok(author);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
-        [HttpDelete("{id}"), Authorize(Policy = nameof(IdentityRoles.admin))]
+        [HttpDelete("{id}"), Authorize(Policy = nameof(ApplicationRoles.admin))]
         public IActionResult Delete(int id)
         {
-            var item = _authorService.Delete(id);
-            return Ok(item);
+            try
+            {
+                var item = _authorService.Delete(id);
+                return Ok(item);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
     }
 }

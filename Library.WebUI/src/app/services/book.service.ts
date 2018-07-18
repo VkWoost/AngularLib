@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GetAllBooksViewModel } from '../models/book/GetAllBooksViewModel';
-import { CreateBookViewModel } from '../models/book/CreateBookViewModel';
-import { UpdateBookViewModel } from '../models/book/UpdateBookViewModel';
+import { GetAllBooksViewModel } from '../models/book/get.all-books.view.model';
+import { CreateBookViewModel } from '../models/book/create.book.view.model';
+import { UpdateBookViewModel } from '../models/book/update.book.view.model';
 
 @Injectable()
 export class BookService {

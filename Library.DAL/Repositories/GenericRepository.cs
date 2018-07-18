@@ -9,7 +9,7 @@ using Dapper;
 
 namespace Library.DataAccess.Repositories
 {
-    public class GenericRepository<TEntity> : IGEnericRepository<TEntity> where TEntity : BaseEntity
+    public abstract class GenericRepository<TEntity> : IGEnericRepository<TEntity> where TEntity : BaseEntity
     {
         private string _connectionString;
 

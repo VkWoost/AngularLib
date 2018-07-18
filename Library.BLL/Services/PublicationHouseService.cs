@@ -1,6 +1,5 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Interfaces;
 using Library.DataAccess.Repositories;
 using Library.Entities.Enteties;
 using Library.ViewModels.PublicationHouseViewModels;
@@ -9,11 +8,11 @@ namespace Library.BusinessLogic.Services
 {
     public class PublicationHouseService : IPublicationHouseService
 	{
-        private IGEnericRepository<PublicationHouse> _publicationHouseRepo;
+        private PublicationHouseRepository _publicationHouseRepo;
 
         public PublicationHouseService(string connectionString)
         {
-            _publicationHouseRepo = new GenericRepository<PublicationHouse>(connectionString);
+            _publicationHouseRepo = new PublicationHouseRepository(connectionString);
         }
 
         public void Create(CreatePublicationHouseViewModel publicationHouseViewModel)

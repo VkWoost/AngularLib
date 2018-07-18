@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { PublicationHouseService } from '../../services/publicationHouse.service';
-import { CreatePublicationHouseViewModel } from '../../models/publicationHouse/CreatePublicationHouseViewModel';
-import { UpdatePublicationHouseViewModel } from '../../models/publicationHouse/UpdatePublicationHouseViewModel';
-import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/GetAllPublicationHousesViewModel';
+import { CreatePublicationHouseViewModel } from '../../models/publicationHouse/create.publicationHouse.view.model';
+import { UpdatePublicationHouseViewModel } from '../../models/publicationHouse/update.publicationHouse.view.model';
+import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/get.all-publicationHouses.view.model';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';

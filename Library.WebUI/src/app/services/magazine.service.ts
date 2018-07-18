@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GetAllMagazinesViewModel } from '../models/magazine/GetAllMagazinesViewModel';
-import { CreateMagazineViewModel } from '../models/magazine/CreateMagazineViewModel';
-import { UpdateMagazineViewModel } from '../models/magazine/UpdateMagazineViewModel';
+import { GetAllMagazinesViewModel } from '../models/magazine/get.all-magazines.view.model';
+import { CreateMagazineViewModel } from '../models/magazine/create.magazine.view.model';
+import { UpdateMagazineViewModel } from '../models/magazine/update.magazine.view.model';
 
 @Injectable()
 export class DataService {
