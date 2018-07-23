@@ -1,6 +1,6 @@
 import { GetBookViewModel } from "./get.book.view.model";
 
-export class GetAllBooksViewModel {
+export class GetBookListViewModel {
     constructor() {
         this.books = new Array<GetBookViewModel>();
     }

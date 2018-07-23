@@ -5,11 +5,11 @@ import { BookService } from '../../services/book.service';
 import { AuthorService } from '../../services/author.service';
 import { PublicationHouseService } from '../../services/publicationHouse.service';
 
-import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/get.all-publicationHouses.view.model';
-import { GetAllAuthorsViewModel } from '../../models/author/get.all-authors.view.model';
+import { GetPublicationHouseListViewModel } from '../../models/publicationHouse/get.publicationHouse-list.view.model';
+import { GetAuthorListViewModel } from '../../models/author/get.author-list.view.model';
 import { CreateBookViewModel } from '../../models/book/create.book.view.model';
 import { UpdateBookViewModel } from '../../models/book/update.book.view.model';
-import { GetAllBooksViewModel } from '../../models/book/get.all-books.view.model';
+import { GetBookListViewModel } from '../../models/book/get.book-list.view.model';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
@@ -23,9 +23,9 @@ import { UserService } from '../../services/identity/user.service';
 })
 export class BookComponent implements OnInit {
 
-    public books: GetAllBooksViewModel;
-    public authors: GetAllAuthorsViewModel;
-    public publicationHouses: GetAllPublicationHousesViewModel;
+    public books: GetBookListViewModel;
+    public authors: GetAuthorListViewModel;
+    public publicationHouses: GetPublicationHouseListViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -42,9 +42,9 @@ export class BookComponent implements OnInit {
         private userService: UserService
     )
     {
-        this.books = new GetAllBooksViewModel();
-        this.authors = new GetAllAuthorsViewModel();
-        this.publicationHouses = new GetAllPublicationHousesViewModel();
+        this.books = new GetBookListViewModel();
+        this.authors = new GetAuthorListViewModel();
+        this.publicationHouses = new GetPublicationHouseListViewModel();
     }
 
     public ngOnInit(): void {

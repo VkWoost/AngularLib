@@ -14,7 +14,8 @@ namespace Library.WebUI.Controllers
     {
         private AccountService _accountServise;
 
-        public AccountController(
+        public AccountController
+        (
             UserManager<User> userManager,
             SignInManager<User> signInManager, 
             IConfiguration configuration

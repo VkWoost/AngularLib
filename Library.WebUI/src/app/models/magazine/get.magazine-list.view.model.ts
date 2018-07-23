@@ -1,6 +1,6 @@
 import { GetMagazineViewModel } from "./get.magazinemview.model";
 
-export class GetAllMagazinesViewModel {
+export class GetMagazineListViewModel {
     constructor() {
         this.magazines = new Array<GetMagazineViewModel>();
     }

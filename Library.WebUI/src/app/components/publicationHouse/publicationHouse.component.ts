@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PublicationHouseService } from '../../services/publicationHouse.service';
 import { CreatePublicationHouseViewModel } from '../../models/publicationHouse/create.publicationHouse.view.model';
 import { UpdatePublicationHouseViewModel } from '../../models/publicationHouse/update.publicationHouse.view.model';
-import { GetAllPublicationHousesViewModel } from '../../models/publicationHouse/get.all-publicationHouses.view.model';
+import { GetPublicationHouseListViewModel } from '../../models/publicationHouse/get.publicationHouse-list.view.model';
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
@@ -17,7 +17,7 @@ import { UserService } from '../../services/identity/user.service';
 })
 export class PublicationHouseComponent implements OnInit {
 
-    public publicationHouses: GetAllPublicationHousesViewModel;
+    public publicationHouses: GetPublicationHouseListViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -28,7 +28,7 @@ export class PublicationHouseComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: PublicationHouseService, private userService: UserService) {
-        this.publicationHouses = new GetAllPublicationHousesViewModel();
+        this.publicationHouses = new GetPublicationHouseListViewModel();
     }
 
     public ngOnInit(): void {

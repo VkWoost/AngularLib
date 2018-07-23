@@ -16,15 +16,18 @@ using System.Threading.Tasks;
 
 namespace Library.BusinessLogic.Services
 {
-    public class AccountService : IAccountService
-    {
+	public class AccountService : IAccountService
+	{
 		private UserManager<User> _userManager { get; set; }
 		private SignInManager<User> _signInManager { get; set; }
 		private IConfiguration _configuration { get; set; }
 
-		public AccountService(UserManager<User> userManager,
+		public AccountService
+		(
+			UserManager<User> userManager,
 			SignInManager<User> signInManager,
-			IConfiguration configuration)
+			IConfiguration configuration
+		)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
@@ -42,14 +45,15 @@ namespace Library.BusinessLogic.Services
 				LastName = model.LastName,
 				Role = "user"
 			};
-			
+
 			var result = await _userManager.CreateAsync(user, model.Password);
-			
-			if (!result.Succeeded){
+
+			if (!result.Succeeded)
+			{
 				var errors = result.Errors.ToString();
 				throw new BusinessLogicException(errors);
 			}
-			
+
 			await _signInManager.SignInAsync(user, false);
 			return user;
 		}
@@ -96,7 +100,7 @@ namespace Library.BusinessLogic.Services
 				signingCredentials: creds
 			);
 
-			var token =  new JwtSecurityTokenHandler().WriteToken(result);
+			var token = new JwtSecurityTokenHandler().WriteToken(result);
 			return token;
 		}
 	}

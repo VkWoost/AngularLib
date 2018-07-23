@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GetAllAuthorsViewModel } from '../models/author/get.all-authors.view.model'
+import { GetAuthorListViewModel } from '../models/author/get.author-list.view.model';
 import { CreateAuthorViewModel } from '../models/author/сreate.author.view.model';
 import { UpdateAuthorViewModel } from '../models/author/update.author.view.model';
 
@@ -13,7 +13,7 @@ export class AuthorService {
     constructor(private http: HttpClient) { }
 
     public get() {
-        return this.http.get<GetAllAuthorsViewModel>(this.url);
+        return this.http.get<GetAuthorListViewModel>(this.url);
     }
 
     public create(item: CreateAuthorViewModel) {

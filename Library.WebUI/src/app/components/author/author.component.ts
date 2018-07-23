@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthorService } from '../../services/author.service';
-import { GetAllAuthorsViewModel } from '../../models/author/get.all-authors.view.model';
+import { GetAuthorListViewModel } from '../../models/author/get.author-list.view.model';
 import { CreateAuthorViewModel } from '../../models/author/сreate.author.view.model';
 import { UpdateAuthorViewModel } from '../../models/author/update.author.view.model';
 
@@ -18,7 +18,7 @@ import { UserService } from '../../services/identity/user.service';
 
 export class AuthorComponent implements OnInit {
 
-    public authors: GetAllAuthorsViewModel;
+    public authors: GetAuthorListViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -29,7 +29,7 @@ export class AuthorComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: AuthorService, private userService: UserService) {
-        this.authors = new GetAllAuthorsViewModel();
+        this.authors = new GetAuthorListViewModel();
     }
 
     public ngOnInit(): void {

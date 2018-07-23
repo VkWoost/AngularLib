@@ -1,6 +1,6 @@
 import { GetPublicationHouseViewModel } from "./get.publicationHouse.view.model";
 
-export class GetAllPublicationHousesViewModel {
+export class GetPublicationHouseListViewModel {
     constructor() {
         this.publicationHouses = new Array<GetPublicationHouseViewModel>();
     }

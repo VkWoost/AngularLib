@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from '../../services/magazine.service';
-import { GetAllMagazinesViewModel } from '../../models/magazine/get.all-magazines.view.model';
+import { GetMagazineListViewModel } from '../../models/magazine/get.magazine-list.view.model';
 import { CreateMagazineViewModel } from '../../models/magazine/create.magazine.view.model';
 import { UpdateMagazineViewModel } from '../../models/magazine/update.magazine.view.model';
 
@@ -18,7 +18,7 @@ import { UserService } from '../../services/identity/user.service';
 
 export class MagazineComponent implements OnInit {
 
-    public magazines: GetAllMagazinesViewModel;
+    public magazines: GetMagazineListViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -29,7 +29,7 @@ export class MagazineComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: DataService, private userService: UserService) {
-        this.magazines = new GetAllMagazinesViewModel();
+        this.magazines = new GetMagazineListViewModel();
     }
 
     public ngOnInit(): void {

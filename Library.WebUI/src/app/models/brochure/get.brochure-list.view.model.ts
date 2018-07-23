@@ -1,6 +1,6 @@
 import { GetBrochureViewModel } from "./get.brochure.view.model";
 
-export class GetAllBrochuresViewModel {
+export class GetBrochureListViewModel {
     constructor() {
         this.brochures = new Array<GetBrochureViewModel>();
     }

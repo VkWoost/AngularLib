@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { CreateBrochureViewModel } from '../models/brochure/create.brochure.view.model';
 import { UpdateBrochureViewModel } from '../models/brochure/update.brochure.view.model';
-import { GetAllBrochuresViewModel } from '../models/brochure/get.all-brochures.view.model';
+import { GetBrochureListViewModel } from '../models/brochure/get.brochure-list.view.model';
 
 @Injectable()
 export class DataService {
@@ -13,7 +13,7 @@ export class DataService {
     constructor(private http: HttpClient) { }
 
     public get() {
-        return this.http.get<GetAllBrochuresViewModel>(this.url);
+        return this.http.get<GetBrochureListViewModel>(this.url);
     }
 
     public create(item: CreateBrochureViewModel) {

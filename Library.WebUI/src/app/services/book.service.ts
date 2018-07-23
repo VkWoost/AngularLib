@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GetAllBooksViewModel } from '../models/book/get.all-books.view.model';
+import { GetBookListViewModel } from '../models/book/get.book-list.view.model';
 import { CreateBookViewModel } from '../models/book/create.book.view.model';
 import { UpdateBookViewModel } from '../models/book/update.book.view.model';
 
@@ -13,7 +13,7 @@ export class BookService {
     constructor(private http: HttpClient) { }
 
     public get() {
-        return this.http.get<GetAllBooksViewModel>(this.url);
+        return this.http.get<GetBookListViewModel>(this.url);
     }
 
     public create(item: CreateBookViewModel) {

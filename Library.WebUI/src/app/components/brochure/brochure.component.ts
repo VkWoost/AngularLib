@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from '../../services/brochure.service';
-import { GetAllBrochuresViewModel } from '../../models/brochure/get.all-brochures.view.model';
+import { GetBrochureListViewModel } from '../../models/brochure/get.brochure-list.view.model';
 import { CreateBrochureViewModel } from '../../models/brochure/create.brochure.view.model';
 import { UpdateBrochureViewModel } from '../../models/brochure/update.brochure.view.model';
 
@@ -17,7 +17,7 @@ import { UserService } from '../../services/identity/user.service';
 })
 export class BrochureComponent implements OnInit {
 
-    public brochures: GetAllBrochuresViewModel;
+    public brochures: GetBrochureListViewModel;
     public gridState: State = {
         sort: [],
         skip: 0,
@@ -28,7 +28,7 @@ export class BrochureComponent implements OnInit {
     private admin: boolean;
 
     constructor(private dataService: DataService, private userService: UserService) {
-        this.brochures = new GetAllBrochuresViewModel();
+        this.brochures = new GetBrochureListViewModel();
     }
 
     public ngOnInit(): void {
