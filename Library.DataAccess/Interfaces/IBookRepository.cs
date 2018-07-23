@@ -2,7 +2,7 @@
 
 namespace Library.DataAccess.Interfaces
 {
-	public interface IBookRepository : IGEnericRepository<Book>
+	public interface IBookRepository
     {
 		int CreateBook(Book item);
 		void DeleteRangeByAuthorId(long id);

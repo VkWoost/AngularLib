@@ -1,5 +1,4 @@
-﻿using Library.DataAccess.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
@@ -9,7 +8,7 @@ using Dapper;
 
 namespace Library.DataAccess.Repositories
 {
-    public abstract class GenericRepository<TEntity> : IGEnericRepository<TEntity> where TEntity : BaseEntity
+    public abstract class GenericRepository<TEntity> where TEntity : BaseEntity
     {
         private string _connectionString;
 

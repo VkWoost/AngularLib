@@ -3,6 +3,7 @@ using Library.DataAccess.Interfaces;
 using Library.Entities.Enteties;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Library.DataAccess.Repositories
@@ -35,6 +36,24 @@ namespace Library.DataAccess.Repositories
 			using (var connection = new SqlConnection(_connectionString))
 			{
 				connection.Execute(_sqlDelete, new { id });
+			}
+		}
+
+		public override IEnumerable<Book> GetAll()
+		{
+			string _sqlGetAll = $"SELECT book.*, author.* FROM Books AS book INNER JOIN Authors AS author ON book.AuthorId = author.Id";
+
+			using (var connection = new SqlConnection(_connectionString))
+			{
+				var result = connection.Query<Book, Author, Book>(
+				_sqlGetAll, 
+				(book, author) =>
+				{
+					book.Author = author;
+					return book;
+				}
+				);
+				return result;
 			}
 		}
 	}

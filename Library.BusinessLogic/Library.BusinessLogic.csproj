@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library.DAL\Library.DataAccess.csproj" />
+    <ProjectReference Include="..\Library.DataAccess\Library.DataAccess.csproj" />
     <ProjectReference Include="..\Library.Entities\Library.Entities.csproj" />
     <ProjectReference Include="..\Library.ViewModels\Library.ViewModels.csproj" />
   </ItemGroup>

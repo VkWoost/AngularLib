@@ -4,6 +4,7 @@
     {
 		public string Name { get; set; }
 		public long AuthorId { get; set; }
+		public Author Author{ get; set; }
         public int YearOfPublication { get; set; }
     }
 }

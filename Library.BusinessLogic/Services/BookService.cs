@@ -10,23 +10,23 @@ using System.Linq;
 
 namespace Library.BusinessLogic.Services
 {
-    public class BookService : IBookService
-    {
-        private BookRepository _bookRepository;
+	public class BookService : IBookService
+	{
+		private BookRepository _bookRepository;
 		private PublicationHousesInBookRepository _pHouseBookRepository;
 		private AuthorRepository _authorRepository;
 		private PublicationHouseRepository _publicationHouseRepository;
 
-        public BookService(string connectionString)
-        {
-            _bookRepository = new BookRepository(connectionString);
+		public BookService(string connectionString)
+		{
+			_bookRepository = new BookRepository(connectionString);
 			_authorRepository = new AuthorRepository(connectionString);
 			_pHouseBookRepository = new PublicationHousesInBookRepository(connectionString);
 			_publicationHouseRepository = new PublicationHouseRepository(connectionString);
 		}
 
-        public void Create(CreateBookViewModel bookViewModel)
-        {
+		public void Create(CreateBookViewModel bookViewModel)
+		{
 			var book = new Book()
 			{
 				Id = bookViewModel.Id,
@@ -35,19 +35,19 @@ namespace Library.BusinessLogic.Services
 				YearOfPublication = bookViewModel.YearOfPublication
 			};
 			bookViewModel.AuthorId = bookViewModel.Author.Id;
-			
+
 			int bookId = _bookRepository.CreateBook(book);
-			
+
 			AddPublicationHouses(bookId, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
-        }
-        
-        public GetBookViewModel Get(long id)
-        {
-            var book = _bookRepository.Get(id);
-            if (book == null)
-            {
-                throw new BusinessLogicException("Book not found");
-            }
+		}
+
+		public GetBookViewModel Get(long id)
+		{
+			var book = _bookRepository.Get(id);
+			if (book == null)
+			{
+				throw new BusinessLogicException("Book not found");
+			}
 
 			var result = new GetBookViewModel()
 			{
@@ -63,42 +63,39 @@ namespace Library.BusinessLogic.Services
 				Id = author.Id,
 				Name = author.Name
 			};
-            return result;
-        }
+			return result;
+		}
 
-        public GetAllBookViewModel GetAll()
-        {
+		public GetAllBookViewModel GetAll()
+		{
 			var books = _bookRepository.GetAll();
 			var result = new GetAllBookViewModel();
 
-			foreach( var book in books){
-				result.Books.Add(new BookViewItem() 
+			foreach (var book in books)
+			{
+				result.Books.Add(new BookViewItem()
 				{
 					Id = book.Id,
 					Name = book.Name,
 					AuthorId = book.AuthorId,
-					YearOfPublication = book.YearOfPublication
+					YearOfPublication = book.YearOfPublication,
+					Author = new GetAuthorViewModel()
+					{
+						Id = book.Author.Id,
+						Name = book.Author.Name
+					}
 				});
 			}
 
-			var authors = _authorRepository.GetAll();
 			var pHouses = _publicationHouseRepository.GetAll();
 			var publicHouseBook = _pHouseBookRepository.GetAll();
 
 			foreach (var book in result.Books)
-            {
-				var author = authors.FirstOrDefault(x => x.Id == book.AuthorId);
+			{
+				var currentPublicHouseBook = publicHouseBook.Where(x => x.BookId == book.Id).Select(x => x.PublicationHouseId).ToList();
 
-				book.Author = new GetAuthorViewModel()
-				{
-					Id = author.Id,
-					Name = author.Name
-				};
-
-				var currentPublicHouseBook = publicHouseBook.Where(x => x.BookId == book.Id).Select(x=>x.PublicationHouseId).ToList();
-				
 				var publicationHouses = pHouses.Where(x => currentPublicHouseBook.Contains(x.Id)).ToList();
-				
+
 				book.PublicationHouses = new List<GetPublicationHouseViewModel>();
 				foreach (var publicationHouse in publicationHouses)
 				{
@@ -109,20 +106,20 @@ namespace Library.BusinessLogic.Services
 						Adress = publicationHouse.Adress
 					});
 				}
-            }
-            return result;
-        }
+			}
+			return result;
+		}
 
-        public GetBookViewModel Delete(long id)
-        {
+		public GetBookViewModel Delete(long id)
+		{
 			var book = _bookRepository.Get(id);
 			if (book == null)
-            {
-                throw new BusinessLogicException("Book not found");
-            }
-            
+			{
+				throw new BusinessLogicException("Book not found");
+			}
+
 			DeletePublicationHouseBooks(id);
-			
+
 			_bookRepository.Delete(id);
 
 			var result = new GetBookViewModel()
@@ -132,17 +129,17 @@ namespace Library.BusinessLogic.Services
 				AuthorId = book.AuthorId,
 				YearOfPublication = book.YearOfPublication
 			};
-			
+
 			return result;
 		}
 
-        public void Update(UpdateBookViewModel bookViewModel)
-        {
-            if (_bookRepository.Get(bookViewModel.Id) == null)
-            {
-                throw new BusinessLogicException("Book not found");
-            }
-			
+		public void Update(UpdateBookViewModel bookViewModel)
+		{
+			if (_bookRepository.Get(bookViewModel.Id) == null)
+			{
+				throw new BusinessLogicException("Book not found");
+			}
+
 			bookViewModel.AuthorId = bookViewModel.Author.Id;
 
 			var book = new Book()
@@ -152,23 +149,23 @@ namespace Library.BusinessLogic.Services
 				AuthorId = bookViewModel.Author.Id,
 				YearOfPublication = bookViewModel.YearOfPublication
 			};
-			
+
 			bookViewModel.AuthorId = bookViewModel.Author.Id;
 
 			_bookRepository.Update(book);
-			
+
 			UpdatePublicationHouses(bookViewModel.Id, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
-        }
+		}
 
 		private void AddPublicationHouses(long bookId, List<long> publicHouseIds)
 		{
 			var publicationHouses = new List<PublicationHousesInBook>();
-			
+
 			foreach (var publicHouse in publicHouseIds)
 			{
 				publicationHouses.Add(new PublicationHousesInBook(bookId, publicHouse));
 			}
-			
+
 			_pHouseBookRepository.Create(publicationHouses);
 		}
 
@@ -177,7 +174,7 @@ namespace Library.BusinessLogic.Services
 			_pHouseBookRepository.DeleteByBookId(bookId);
 		}
 
-		private void UpdatePublicationHouses(long bookId, List<long>publicHouseIds)
+		private void UpdatePublicationHouses(long bookId, List<long> publicHouseIds)
 		{
 			DeletePublicationHouseBooks(bookId);
 			AddPublicationHouses(bookId, publicHouseIds);
