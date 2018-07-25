@@ -1,7 +1,8 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
 using Library.DataAccess.DbInitializer;
-using Library.Entities.Enteties;
+using Library.Entities.Entities;
+using Library.ResponseModels;
 using Library.ViewModels.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +33,6 @@ namespace Library.BusinessLogic.Services
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_configuration = configuration;
-			DbHelper.DbInitialize(_userManager);
 		}
 
 		public async Task<User> Register(RegisterAccountViewModel model)
@@ -58,21 +58,21 @@ namespace Library.BusinessLogic.Services
 			return user;
 		}
 
-		public async Task<TokenAccountViewModel> Login(LoginAccountViewModel model)
+		public async Task<ResponseLoginAccount> Login(LoginAccountViewModel model)
 		{
-			var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+			var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
 			if (!result.Succeeded)
 			{
 				throw new BusinessLogicException("Wrong login or password");
 			}
 
-			User appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.UserName);
-			var token = GenerateJwtToken(model.UserName, appUser);
+			User user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+			var token = GenerateJwtToken(model.Email, user);
 
-			var roleToken = new TokenAccountViewModel()
+			var roleToken = new ResponseLoginAccount()
 			{
-				Role = appUser.Role,
+				Role = user.Role,
 				Token = token
 			};
 			return roleToken;

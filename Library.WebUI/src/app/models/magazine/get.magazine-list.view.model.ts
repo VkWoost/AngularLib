@@ -4,5 +4,5 @@ export class GetMagazineListViewModel {
     constructor() {
         this.magazines = new Array<GetMagazineViewModel>();
     }
-    public magazines: GetMagazineViewModel[];
+    public magazines: Array<GetMagazineViewModel>;
 }

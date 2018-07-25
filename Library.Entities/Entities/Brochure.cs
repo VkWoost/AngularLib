@@ -1,6 +1,6 @@
-﻿namespace Library.Entities.Enteties
+﻿namespace Library.Entities.Entities
 {
-    public class Brochure : BaseEntity
+	public class Brochure : BaseEntity
     {
 		public string Name { get; set; }
 		public string TypeOfCover { get; set; }

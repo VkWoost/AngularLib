@@ -6,7 +6,7 @@ namespace Library.BusinessLogic.Interfaces
     {
 		void Create(CreateBookViewModel bookViewModel);
 		GetBookViewModel Get(long id);
-		GetAllBookViewModel GetAll();
+		GetBookListViewModel GetAll();
 		GetBookViewModel Delete(long id);
 		void Update(UpdateBookViewModel bookViewModel);
 	}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.Entities.Enteties
+namespace Library.Entities.Entities
 {
 	public class BaseEntity
 	{

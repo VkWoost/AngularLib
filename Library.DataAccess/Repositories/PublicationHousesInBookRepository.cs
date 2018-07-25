@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Library.DataAccess.Interfaces;
-using Library.Entities.Enteties;
+using Library.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
@@ -11,51 +11,41 @@ namespace Library.DataAccess.Repositories
 	public class PublicationHousesInBookRepository : IPublicationHousesInBookRepository
 	{
 		private string _connectionString;
+		private string _tableName = "PublicationHouseBooks";
 
 		public PublicationHousesInBookRepository(string connectionString)
 		{
 			_connectionString = connectionString;
-		}	
+		}
 
 		public IEnumerable<PublicationHousesInBook> GetAll()
 		{
-			string _sqlGetAll = "SELECT * FROM PublicationHouseBooks";
+			string sqlGetAll = $"SELECT * FROM {_tableName}";
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				var result = connection.Query<PublicationHousesInBook>(_sqlGetAll);
+				var result = connection.Query<PublicationHousesInBook>(sqlGetAll);
 				return result;
 			}
 		}
 
 		public void Create(List<PublicationHousesInBook> items)
 		{
-			DataTable data = new DataTable();
-			
-			data.Columns.Add("BookId");
-			data.Columns.Add("PublicationHouseId");
+			string sqlInsert = $"INSERT INTO {_tableName} (BookId, PublicationHouseId) VALUES (@BookId, @PublicationHouseId)";
 
-			foreach(var i in items){
-				DataRow dr = data.NewRow();
-				dr["BookId"] = i.BookId.ToString();
-				dr["PublicationHouseId"] = i.PublicationHouseId.ToString();
-				data.Rows.Add(dr);	
-			}
-
-			using (var connection = new SqlBulkCopy(_connectionString))
+			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.DestinationTableName = "PublicationHouseBooks";
-				connection.WriteToServer(data);
+				connection.Execute(sqlInsert, items);
 			}
 		}
 
 		public void DeleteByBookId(long id)
 		{
-			string _sqlDelete = $"DELETE FROM PublicationHouseBooks WHERE BookId = { id }";
+			string sqlDelete = $"DELETE FROM {_tableName} WHERE BookId = { id }";
 
 			using (var connection = new SqlConnection(_connectionString))
 			{
-				connection.Execute(_sqlDelete, new { id });
+				connection.Execute(sqlDelete, new { id });
 			}
 		}
 	}

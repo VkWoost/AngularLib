@@ -1,23 +1,29 @@
-using Library.BusinessLogic.Services;
+using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
 using Library.ViewModels.MagazineViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 
 namespace Library.WebUI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class MagazineController : Controller
     {
-        private MagazineService _magazineService;
+        private IMagazineService _magazineService;
+        private readonly ILogger<MagazineController> _logger;
 
-        public MagazineController(MagazineService magazineService)
+
+        public MagazineController(IMagazineService magazineService, ILogger<MagazineController> logger)
         {
             _magazineService = magazineService;
+            _logger = logger;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAll()
         {
             try
@@ -25,13 +31,18 @@ namespace Library.WebUI.Controllers
                 var result = _magazineService.GetAll();
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
             try
@@ -39,9 +50,14 @@ namespace Library.WebUI.Controllers
                 var result = _magazineService.Get(id);
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -53,9 +69,14 @@ namespace Library.WebUI.Controllers
                 _magazineService.Create(magazine);
                 return Ok(magazine);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -67,9 +88,14 @@ namespace Library.WebUI.Controllers
                 _magazineService.Update(magazine);
                 return Ok(magazine);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -78,12 +104,17 @@ namespace Library.WebUI.Controllers
         {
             try
             {
-                var item = _magazineService.Delete(id);
-                return Ok(item);
+                var result = _magazineService.Delete(id);
+                return Ok(result);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
     }

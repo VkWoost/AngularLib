@@ -1,20 +1,20 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Repositories;
-using Library.Entities.Enteties;
+using Library.DataAccess.Interfaces;
+using Library.Entities.Entities;
 using Library.ViewModels.AuthorViewModels;
 
 namespace Library.BusinessLogic.Services
 {
     public class AuthorService : IAuthorService
 	{
-        private AuthorRepository _authorRepository;
-		private BookRepository _bookRepository;
+        private IAuthorRepository _authorRepository;
+		private IBookRepository _bookRepository;
 
-        public AuthorService(string connectionString)
+        public AuthorService(IAuthorRepository authorRepository, IBookRepository bookRepository)
         {
-            _authorRepository = new AuthorRepository(connectionString);
-			_bookRepository = new BookRepository(connectionString);
+            _authorRepository = authorRepository;
+			_bookRepository = bookRepository;
         }
 
         public void Create(CreateAuthorViewModel authorViewModel)
@@ -45,14 +45,14 @@ namespace Library.BusinessLogic.Services
 			return result;
         }
 
-        public GetAllAuthorViewModel GetAll()
+        public GetAuthorListViewModel GetAll()
         {
 			var authors = _authorRepository.GetAll();
-			var result = new GetAllAuthorViewModel();
+			var result = new GetAuthorListViewModel();
 
 			foreach (var author in authors)
 			{
-				result.Authors.Add(new AuthorViewItem()
+				result.Authors.Add(new AuthorGetAuthorListViewModelItem()
 				{
 					Id = author.Id,
 					Name = author.Name
@@ -72,7 +72,7 @@ namespace Library.BusinessLogic.Services
             }
 
             _authorRepository.Delete(id);
-			DeleteBooksByAuthorId(id);
+			_bookRepository.DeleteRangeByAuthorId(id);
 
 			var result = new GetAuthorViewModel()
 			{
@@ -98,10 +98,5 @@ namespace Library.BusinessLogic.Services
 			
 			_authorRepository.Update(author);
         }
-
-		private void DeleteBooksByAuthorId(long id)
-		{
-			_bookRepository.DeleteRangeByAuthorId(id);
-		}
     }
 }

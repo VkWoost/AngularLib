@@ -1,18 +1,18 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Repositories;
-using Library.Entities.Enteties;
+using Library.DataAccess.Interfaces;
+using Library.Entities.Entities;
 using Library.ViewModels.BrochureViewModels;
 
 namespace Library.BusinessLogic.Services
 {
     public class BrochureService : IBrochureService
     {
-        private BrochureRepository _brochureRepository;
+        private IBrochureRepository _brochureRepository;
 
-        public BrochureService(string connectionString)
+        public BrochureService(IBrochureRepository brochureRepository)
         {
-            _brochureRepository = new BrochureRepository(connectionString);
+            _brochureRepository = brochureRepository;
         }
 
         public void Create(CreateBrochureViewModel brochureViewModel)
@@ -47,13 +47,13 @@ namespace Library.BusinessLogic.Services
 			return result;
         }
 
-        public GetAllBrochureViewModel GetAll()
+        public GetBrochureListViewModel GetAll()
         {
 			var brochures = _brochureRepository.GetAll();
-			var result = new GetAllBrochureViewModel();
+			var result = new GetBrochureListViewModel();
 
 			foreach(var brochure in brochures){
-				result.Brochures.Add(new BrochureViewItem()
+				result.Brochures.Add(new BrochureGetBrochureListViewModelItem()
 				{
 					Id = brochure.Id,
 					Name = brochure.Name,

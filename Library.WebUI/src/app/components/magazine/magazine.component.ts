@@ -8,7 +8,7 @@ import { UpdateMagazineViewModel } from '../../models/magazine/update.magazine.v
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
-import { UserService } from '../../services/identity/user.service';
+import { UserService } from '../../services/authentication/user.service';
 
 @Component({
     selector: 'magazine',

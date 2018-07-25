@@ -1,4 +1,4 @@
-﻿namespace Library.Entities.Enteties
+﻿namespace Library.Entities.Entities
 {
     public class Author : BaseEntity
     {

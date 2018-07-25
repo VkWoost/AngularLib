@@ -18,11 +18,11 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
-import { UserService } from './services/identity/user.service';
+import { UserService } from './services/authentication/user.service';
 import { LoginFormComponent } from "./components/login-form/login-form.component";
 import { UserComponent } from "./components/user/user.component";
-import { AppHttpInterceptor } from "./AppHttpInterceptor";
-import { LoginService } from "./services/identity/login.service";
+import { AppHttpInterceptor } from "./app.http.interceptor";
+import { LoginService } from "./services/authentication/login.service";
 
 @NgModule({
     declarations: [

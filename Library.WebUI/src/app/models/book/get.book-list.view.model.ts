@@ -4,5 +4,5 @@ export class GetBookListViewModel {
     constructor() {
         this.books = new Array<GetBookViewModel>();
     }
-    public books: GetBookViewModel[];
+    public books: Array<GetBookViewModel>;
 }

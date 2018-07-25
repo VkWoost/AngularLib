@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="src\app\AppHttpInterceptor.ts" />
+    <None Remove="src\app\app.http.interceptor.ts" />
     <None Remove="src\app\components\login-form\login-form.component.spec.ts" />
     <None Remove="src\app\components\login-form\login-form.component.ts" />
     <None Remove="src\app\components\registration-form\registration-form.component.spec.ts" />
@@ -27,19 +27,17 @@
     <None Remove="src\app\models\brochure\create.brochure.view.model.ts" />
     <None Remove="src\app\models\brochure\get.brochure.view.model.ts" />
     <None Remove="src\app\models\brochure\update.brochure.view.model.ts" />
-    <None Remove="src\app\models\identity\interfaces\credentials.interface.ts" />
-    <None Remove="src\app\models\identity\interfaces\user.registration.interface.ts" />
-    <None Remove="src\app\models\identity\user.registration.ts" />
-    <None Remove="src\app\models\identity\user.ts" />
+    <None Remove="src\app\models\authentication\user.registration.ts" />
+    <None Remove="src\app\models\authentication\user.ts" />
     <None Remove="src\app\models\magazine\create.magazine.view.model.ts" />
     <None Remove="src\app\models\magazine\get.magazinemview.model.ts" />
     <None Remove="src\app\models\magazine\update.magazine.view.model.ts" />
     <None Remove="src\app\models\publicationHouse\create.publicationHouse.view.model.ts" />
     <None Remove="src\app\models\publicationHouse\get.publicationHouse.view.model.ts" />
     <None Remove="src\app\models\publicationHouse\update.publicationHouse.view.model.ts" />
-    <None Remove="src\app\services\identity\base.service.ts" />
-    <None Remove="src\app\services\identity\login.service.ts" />
-    <None Remove="src\app\services\identity\user.service.ts" />
+    <None Remove="src\app\services\authentication\base.service.ts" />
+    <None Remove="src\app\services\authentication\login.service.ts" />
+    <None Remove="src\app\services\authentication\user.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,16 +52,18 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Library.BusinessLogic\Library.BusinessLogic.csproj" />
     <ProjectReference Include="..\Library.DataAccess\Library.DataAccess.csproj" />
+    <ProjectReference Include="..\Library.ResponseModels\Library.ResponseModels.csproj" />
     <ProjectReference Include="..\Library.ViewModels\Library.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="src\app\AppHttpInterceptor.ts" />
+    <TypeScriptCompile Include="src\app\app.http.interceptor.ts" />
     <TypeScriptCompile Include="src\app\components\login-form\login-form.component.spec.ts" />
     <TypeScriptCompile Include="src\app\components\login-form\login-form.component.ts" />
     <TypeScriptCompile Include="src\app\components\registration-form\registration-form.component.spec.ts" />
@@ -78,19 +78,17 @@
     <TypeScriptCompile Include="src\app\models\brochure\create.brochure.view.model.ts" />
     <TypeScriptCompile Include="src\app\models\brochure\get.brochure.view.model.ts" />
     <TypeScriptCompile Include="src\app\models\brochure\update.brochure.view.model.ts" />
-    <TypeScriptCompile Include="src\app\models\identity\interfaces\credentials.interface.ts" />
-    <TypeScriptCompile Include="src\app\models\identity\interfaces\user.registration.interface.ts" />
-    <TypeScriptCompile Include="src\app\models\identity\user.ts" />
-    <TypeScriptCompile Include="src\app\models\identity\user.registration.ts" />
+    <TypeScriptCompile Include="src\app\models\authentication\user.ts" />
+    <TypeScriptCompile Include="src\app\models\authentication\user.registration.ts" />
     <TypeScriptCompile Include="src\app\models\magazine\create.magazine.view.model.ts" />
     <TypeScriptCompile Include="src\app\models\magazine\get.magazinemview.model.ts" />
     <TypeScriptCompile Include="src\app\models\magazine\update.magazine.view.model.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\create.publicationHouse.view.model.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\get.publicationHouse.view.model.ts" />
     <TypeScriptCompile Include="src\app\models\publicationHouse\update.publicationHouse.view.model.ts" />
-    <TypeScriptCompile Include="src\app\services\identity\base.service.ts" />
-    <TypeScriptCompile Include="src\app\services\identity\login.service.ts" />
-    <TypeScriptCompile Include="src\app\services\identity\user.service.ts" />
+    <TypeScriptCompile Include="src\app\services\authentication\base.service.ts" />
+    <TypeScriptCompile Include="src\app\services\authentication\login.service.ts" />
+    <TypeScriptCompile Include="src\app\services\authentication\user.service.ts" />
   </ItemGroup>
 
 </Project>

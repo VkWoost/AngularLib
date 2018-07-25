@@ -4,17 +4,18 @@ using System.Collections.Generic;
 
 namespace Library.ViewModels.BookViewModels
 {
-	public class GetAllBookViewModel
+	public class GetBookListViewModel
     {
-        public List<BookViewItem> Books { get; set; }
+        public List<BookGetBookListViewModelItem> Books { get; set; }
 
-        public GetAllBookViewModel()
+        public GetBookListViewModel()
         {
-            Books = new List<BookViewItem>();
+            Books = new List<BookGetBookListViewModelItem>();
         }
     }
 
-	public class BookViewItem{
+	public class BookGetBookListViewModelItem
+	{
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public int YearOfPublication { get; set; }

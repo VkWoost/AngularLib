@@ -4,5 +4,5 @@ export class GetBrochureListViewModel {
     constructor() {
         this.brochures = new Array<GetBrochureViewModel>();
     }
-    public brochures: GetBrochureViewModel[]
+    public brochures: Array<GetBrochureViewModel>;
 }

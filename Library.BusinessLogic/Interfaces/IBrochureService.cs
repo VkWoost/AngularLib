@@ -6,7 +6,7 @@ namespace Library.BusinessLogic.Interfaces
     {
 		void Create(CreateBrochureViewModel brochureViewModel);
 		GetBrochureViewModel Get(long id);
-		GetAllBrochureViewModel GetAll();
+		GetBrochureListViewModel GetAll();
 		GetBrochureViewModel Delete(long id);
 		void Update(BrochureUpdateView brochureViewModel);
 	}

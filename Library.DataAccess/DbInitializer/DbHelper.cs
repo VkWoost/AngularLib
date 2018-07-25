@@ -1,6 +1,5 @@
-using Library.Entities.Enteties;
+using Library.Entities.Entities;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Linq;
 
 namespace Library.DataAccess.DbInitializer

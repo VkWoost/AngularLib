@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.BusinessLogic", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.DataAccess", "Library.DataAccess\Library.DataAccess.csproj", "{573A0083-2B81-452F-95F0-FA0BDBDADE4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.ResponseModels", "Library.ResponseModels\Library.ResponseModels.csproj", "{029FE7E4-3DAC-49A9-9678-9F850734CD9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{573A0083-2B81-452F-95F0-FA0BDBDADE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{573A0083-2B81-452F-95F0-FA0BDBDADE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{573A0083-2B81-452F-95F0-FA0BDBDADE4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029FE7E4-3DAC-49A9-9678-9F850734CD9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029FE7E4-3DAC-49A9-9678-9F850734CD9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029FE7E4-3DAC-49A9-9678-9F850734CD9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029FE7E4-3DAC-49A9-9678-9F850734CD9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

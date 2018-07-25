@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserRegistration } from '../../models/identity/interfaces/user.registration.interface';
-import { UserService } from '../../services/identity/user.service';
-import { LoginService } from '../../services/identity/login.service';
+import { UserRegistration } from '../../models/authentication/user.registration';
+import { UserService } from '../../services/authentication/user.service';
+import { LoginService } from '../../services/authentication/login.service';
 
 @Component({
     selector: 'app-registration-form',
@@ -20,7 +20,7 @@ export class RegistrationFormComponent implements OnInit {
     ngOnInit() {
     }
 
-    public registerUser({ value, valid }: { value: UserRegistration, valid: boolean }) {
+    public registerUser({ value, valid }) {
         if (!valid) {
             return;
         }
@@ -38,6 +38,5 @@ export class RegistrationFormComponent implements OnInit {
                     }
                 },
                 errors => this.errors = errors);
-        
     }
 }

@@ -1,18 +1,18 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Repositories;
-using Library.Entities.Enteties;
+using Library.DataAccess.Interfaces;
+using Library.Entities.Entities;
 using Library.ViewModels.PublicationHouseViewModels;
 
 namespace Library.BusinessLogic.Services
 {
     public class PublicationHouseService : IPublicationHouseService
 	{
-        private PublicationHouseRepository _publicationHouseRepo;
+        private IPublicationHouseRepository _publicationHouseRepo;
 
-        public PublicationHouseService(string connectionString)
+        public PublicationHouseService(IPublicationHouseRepository publicationHouseRepository)
         {
-            _publicationHouseRepo = new PublicationHouseRepository(connectionString);
+            _publicationHouseRepo = publicationHouseRepository;
         }
 
         public void Create(CreatePublicationHouseViewModel publicationHouseViewModel)
@@ -45,13 +45,13 @@ namespace Library.BusinessLogic.Services
 			return result;
         }
 
-        public GetAllPublicationHouseViewModel GetAll()
+        public GetPublicationHouseListViewModel GetAll()
         {
 			var publicationHouses = _publicationHouseRepo.GetAll();
-			var result = new GetAllPublicationHouseViewModel();
+			var result = new GetPublicationHouseListViewModel();
 
 			foreach(var publicationHouse in publicationHouses){
-				result.PublicationHouses.Add(new PublicationHouseViewItem()
+				result.PublicationHouses.Add(new PublicationHouseGetPublicationHouseListViewModelItem()
 				{
 					Id = publicationHouse.Id,
 					Name = publicationHouse.Name,

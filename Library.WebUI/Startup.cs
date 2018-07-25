@@ -10,9 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Library.Entities.Enteties;
+using Library.Entities.Entities;
 using Library.BusinessLogic.Services;
 using Library.WebUI.Enums;
+using Library.DataAccess.Repositories;
+using Library.BusinessLogic.Interfaces;
+using Library.DataAccess.Interfaces;
+using Microsoft.Extensions.Logging;
+using Library.DataAccess.DbInitializer;
 
 namespace Library.WebUI
 {
@@ -27,22 +32,31 @@ namespace Library.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-            b => b.MigrationsAssembly("Library.DAL")));
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<LibraryContext>(options => options.UseSqlServer(connectionString,
+            b => b.MigrationsAssembly("Library.DataAccess")));
 
             services.AddTransient(typeof(UserManager<User>));
             services.AddTransient(typeof(SignInManager<User>));
 
-            services.AddTransient<AuthorService>
-                (provider => new AuthorService(Configuration.GetConnectionString("DefaultConnection")));    
-            services.AddTransient<BookService>
-                (provider => new BookService(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<BrochureService>
-                (provider => new BrochureService(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<MagazineService>
-                (provider => new MagazineService(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<PublicationHouseService>
-                (provider => new PublicationHouseService(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IAuthorRepository>
+                (provider => new AuthorRepository(connectionString));
+            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IBookRepository>
+                (provider => new BookRepository(connectionString));
+            services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IBrochureRepository>
+                (provider => new BrochureRepository(connectionString));
+            services.AddTransient<IBrochureService, BrochureService>(); 
+            services.AddTransient<IMagazineRepository>
+                (provider => new MagazineRepository(connectionString));
+            services.AddTransient<IMagazineService, MagazineService>();
+            services.AddTransient<IPublicationHouseRepository>
+                (provider => new PublicationHouseRepository(connectionString));
+            services.AddTransient<IPublicationHouseService, PublicationHouseService>();
+            services.AddTransient<IPublicationHousesInBookRepository>
+                (provider => new PublicationHousesInBookRepository(connectionString));
 
             var tokenValidationParameters = new TokenValidationParameters();
 
@@ -81,8 +95,6 @@ namespace Library.WebUI
             {
                 options.AddPolicy(nameof(ApplicationRoles.admin), policy => policy.RequireRole(nameof(ApplicationRoles.admin)));
             });
-            
-            var serviceProvider = services.BuildServiceProvider();
 
             var builder = services.AddIdentityCore<User>(o =>
             {
@@ -97,9 +109,13 @@ namespace Library.WebUI
             builder.AddEntityFrameworkStores<LibraryContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            var serviceProvider = services.BuildServiceProvider();
+            DbHelper.DbInitialize(serviceProvider.GetService<UserManager<User>>());
+
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -114,8 +130,8 @@ namespace Library.WebUI
             {
                 await next();
                 if (context.Response.StatusCode == 404 &&
-              !Path.HasExtension(context.Request.Path.Value) &&
-              !context.Request.Path.Value.StartsWith("/api/"))
+                !Path.HasExtension(context.Request.Path.Value) &&
+                !context.Request.Path.Value.StartsWith("/api/"))
                 {
                     context.Request.Path = "/index.html";
                     await next();
@@ -126,6 +142,9 @@ namespace Library.WebUI
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
+
+            loggerFactory.AddDebug();
+            loggerFactory.AddFile("Logs/ts-{Date}.txt");
         }
     }
 }

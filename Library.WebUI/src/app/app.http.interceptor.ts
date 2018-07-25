@@ -16,7 +16,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (this.token) {
             req = req.clone({ setHeaders: { 'Authorization': 'Bearer ' + this.token } });
         }
-        console.log(req);
+   
         return next.handle(req)
             .map(resp => {
                 if (resp instanceof HttpResponse) {

@@ -1,23 +1,28 @@
-using Library.BusinessLogic.Services;
+using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
 using Library.ViewModels.BookViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 
 namespace Library.WebUI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class BookController : Controller
     {
-        private BookService _bookService;
+        private IBookService _bookService;
+        private readonly ILogger<BookController> _logger;
 
-        public BookController(BookService bookService)
+        public BookController(IBookService bookService, ILogger<BookController> logger)
         {
             _bookService = bookService;
+            _logger = logger;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAll()
         {
             try
@@ -25,13 +30,18 @@ namespace Library.WebUI.Controllers
                 var result = _bookService.GetAll();
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             try
@@ -39,9 +49,14 @@ namespace Library.WebUI.Controllers
                 var result = _bookService.Get(id);
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -53,9 +68,14 @@ namespace Library.WebUI.Controllers
                 _bookService.Create(book);
                 return Ok(book);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -67,9 +87,14 @@ namespace Library.WebUI.Controllers
                 _bookService.Update(book);
                 return Ok(book);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -78,12 +103,17 @@ namespace Library.WebUI.Controllers
         {
             try
             {
-                var item = _bookService.Delete(id);
-                return Ok(item);
+                var result = _bookService.Delete(id);
+                return Ok(result);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
     }

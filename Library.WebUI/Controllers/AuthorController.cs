@@ -1,23 +1,28 @@
-using Library.BusinessLogic.Services;
+using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
 using Library.ViewModels.AuthorViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 
 namespace Library.WebUI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class AuthorController : Controller
     {
-        private AuthorService _authorService;
+        private IAuthorService _authorService;
+        private readonly ILogger<AuthorController> _logger;
 
-        public AuthorController(AuthorService authorService)
+        public AuthorController(IAuthorService authorService, ILogger<AuthorController> logger)
         {
             _authorService = authorService;
+            _logger = logger;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAll()
         {
             try
@@ -25,13 +30,18 @@ namespace Library.WebUI.Controllers
                 var result = _authorService.GetAll();
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             try
@@ -39,9 +49,14 @@ namespace Library.WebUI.Controllers
                 var result = _authorService.Get(id);
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -53,9 +68,14 @@ namespace Library.WebUI.Controllers
                 _authorService.Create(author);
                 return Ok(author);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -67,9 +87,14 @@ namespace Library.WebUI.Controllers
                 _authorService.Update(author);
                 return Ok(author);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -78,8 +103,8 @@ namespace Library.WebUI.Controllers
         {
             try
             {
-                var item = _authorService.Delete(id);
-                return Ok(item);
+                var result = _authorService.Delete(id);
+                return Ok(result);
             }
             catch (Exception exception)
             {

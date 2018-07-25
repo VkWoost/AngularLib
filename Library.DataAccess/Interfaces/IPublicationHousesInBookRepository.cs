@@ -1,4 +1,4 @@
-﻿using Library.Entities.Enteties;
+﻿using Library.Entities.Entities;
 using System.Collections.Generic;
 
 namespace Library.DataAccess.Interfaces

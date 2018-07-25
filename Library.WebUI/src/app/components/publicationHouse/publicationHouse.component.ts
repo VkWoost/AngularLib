@@ -8,7 +8,7 @@ import { GetPublicationHouseListViewModel } from '../../models/publicationHouse/
 
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
-import { UserService } from '../../services/identity/user.service';
+import { UserService } from '../../services/authentication/user.service';
 
 @Component({
     selector: 'publicationHouse',

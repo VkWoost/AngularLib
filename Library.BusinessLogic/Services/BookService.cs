@@ -1,7 +1,7 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Repositories;
-using Library.Entities.Enteties;
+using Library.DataAccess.Interfaces;
+using Library.Entities.Entities;
 using Library.ViewModels.AuthorViewModels;
 using Library.ViewModels.BookViewModels;
 using Library.ViewModels.PublicationHouseViewModels;
@@ -12,17 +12,23 @@ namespace Library.BusinessLogic.Services
 {
 	public class BookService : IBookService
 	{
-		private BookRepository _bookRepository;
-		private PublicationHousesInBookRepository _pHouseBookRepository;
-		private AuthorRepository _authorRepository;
-		private PublicationHouseRepository _publicationHouseRepository;
+		private IBookRepository _bookRepository;
+		private IPublicationHousesInBookRepository _publicationHouseInBookRepository;
+		private IAuthorRepository _authorRepository;
+		private IPublicationHouseRepository _publicationHouseRepository;
 
-		public BookService(string connectionString)
+		public BookService
+		(
+			IBookRepository bookRepository,
+			IPublicationHousesInBookRepository publicationHousesInBookRepository,
+			IAuthorRepository authorRepository,
+			IPublicationHouseRepository publicationHouseRepository
+		)
 		{
-			_bookRepository = new BookRepository(connectionString);
-			_authorRepository = new AuthorRepository(connectionString);
-			_pHouseBookRepository = new PublicationHousesInBookRepository(connectionString);
-			_publicationHouseRepository = new PublicationHouseRepository(connectionString);
+			_bookRepository = bookRepository;
+			_authorRepository = authorRepository;
+			_publicationHouseInBookRepository = publicationHousesInBookRepository;
+			_publicationHouseRepository = publicationHouseRepository;
 		}
 
 		public void Create(CreateBookViewModel bookViewModel)
@@ -66,14 +72,14 @@ namespace Library.BusinessLogic.Services
 			return result;
 		}
 
-		public GetAllBookViewModel GetAll()
+		public GetBookListViewModel GetAll()
 		{
 			var books = _bookRepository.GetAll();
-			var result = new GetAllBookViewModel();
+			var result = new GetBookListViewModel();
 
 			foreach (var book in books)
 			{
-				result.Books.Add(new BookViewItem()
+				result.Books.Add(new BookGetBookListViewModelItem()
 				{
 					Id = book.Id,
 					Name = book.Name,
@@ -88,7 +94,7 @@ namespace Library.BusinessLogic.Services
 			}
 
 			var pHouses = _publicationHouseRepository.GetAll();
-			var publicHouseBook = _pHouseBookRepository.GetAll();
+			var publicHouseBook = _publicationHouseInBookRepository.GetAll();
 
 			foreach (var book in result.Books)
 			{
@@ -118,7 +124,7 @@ namespace Library.BusinessLogic.Services
 				throw new BusinessLogicException("Book not found");
 			}
 
-			DeletePublicationHouseBooks(id);
+			_publicationHouseInBookRepository.DeleteByBookId(id);
 
 			_bookRepository.Delete(id);
 
@@ -157,26 +163,21 @@ namespace Library.BusinessLogic.Services
 			UpdatePublicationHouses(bookViewModel.Id, bookViewModel.PublicationHouses.Select(x => x.Id).ToList());
 		}
 
-		private void AddPublicationHouses(long bookId, List<long> publicHouseIds)
+		private void AddPublicationHouses(long bookId, List<long> publicationHouseIds)
 		{
 			var publicationHouses = new List<PublicationHousesInBook>();
 
-			foreach (var publicHouse in publicHouseIds)
+			foreach (var publicationHouse in publicationHouseIds)
 			{
-				publicationHouses.Add(new PublicationHousesInBook(bookId, publicHouse));
+				publicationHouses.Add(new PublicationHousesInBook(bookId, publicationHouse));
 			}
 
-			_pHouseBookRepository.Create(publicationHouses);
-		}
-
-		private void DeletePublicationHouseBooks(long bookId)
-		{
-			_pHouseBookRepository.DeleteByBookId(bookId);
+			_publicationHouseInBookRepository.Create(publicationHouses);
 		}
 
 		private void UpdatePublicationHouses(long bookId, List<long> publicHouseIds)
 		{
-			DeletePublicationHouseBooks(bookId);
+			_publicationHouseInBookRepository.DeleteByBookId(bookId);
 			AddPublicationHouses(bookId, publicHouseIds);
 		}
 	}

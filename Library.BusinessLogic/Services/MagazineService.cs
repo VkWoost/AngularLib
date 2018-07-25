@@ -1,18 +1,18 @@
 ﻿using Library.BusinessLogic.Infrastructure;
 using Library.BusinessLogic.Interfaces;
-using Library.DataAccess.Repositories;
-using Library.Entities.Enteties;
+using Library.DataAccess.Interfaces;
+using Library.Entities.Entities;
 using Library.ViewModels.MagazineViewModels;
 
 namespace Library.BusinessLogic.Services
 {
     public class MagazineService : IMagazineService
     {
-        private MagazineRepository _magazineRepository;
+        private IMagazineRepository _magazineRepository;
 
-        public MagazineService(string connectionString)
+        public MagazineService(IMagazineRepository magazineRepository)
         {
-            _magazineRepository = new MagazineRepository(connectionString);
+            _magazineRepository = magazineRepository;
         }
 
         public void Create(CreateMagazineViewModel magazineViewModel)
@@ -47,13 +47,13 @@ namespace Library.BusinessLogic.Services
 			return result;
         }
 
-        public GetAllMagazineViewModel GetAll()
+        public GetMagazineListViewModel GetAll()
         {
 			var magazines = _magazineRepository.GetAll();
-			var result = new GetAllMagazineViewModel();
+			var result = new GetMagazineListViewModel();
 
 			foreach(var magazine in magazines){
-				result.Magazines.Add(new MagazineViewItem() 
+				result.Magazines.Add(new MagazineGetMagazineListViewModelItem() 
 				{ 
 					Id = magazine.Id,
 					Name = magazine.Name,

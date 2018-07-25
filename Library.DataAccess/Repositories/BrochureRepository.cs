@@ -1,9 +1,10 @@
-﻿using Library.Entities.Enteties;
+﻿using Library.DataAccess.Interfaces;
+using Library.Entities.Entities;
 
 namespace Library.DataAccess.Repositories
 {
-	public class BrochureRepository : GenericRepository<Brochure>
-    {
+	public class BrochureRepository : GenericRepository<Brochure>, IBrochureRepository
+	{
 		public BrochureRepository(string connectionString)
 		: base(connectionString) { }
     }

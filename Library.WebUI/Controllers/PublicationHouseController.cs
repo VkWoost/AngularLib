@@ -1,23 +1,28 @@
-using Library.BusinessLogic.Services;
+using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
 using Library.ViewModels.PublicationHouseViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 
 namespace Library.WebUI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Authorize]
     public class PublicationHouseController : Controller
     {
-        private PublicationHouseService _publicationHouseService;
+        private IPublicationHouseService _publicationHouseService;
+        private readonly ILogger<PublicationHouseController> _logger;
 
-        public PublicationHouseController(PublicationHouseService publicationHouseService)
+        public PublicationHouseController(IPublicationHouseService publicationHouseService, ILogger<PublicationHouseController> logger)
         {
             _publicationHouseService = publicationHouseService;
+            _logger = logger;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAll()
         {
             try
@@ -25,13 +30,18 @@ namespace Library.WebUI.Controllers
                 var result = _publicationHouseService.GetAll();
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
             try
@@ -39,9 +49,14 @@ namespace Library.WebUI.Controllers
                 var result = _publicationHouseService.Get(id);
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -53,9 +68,14 @@ namespace Library.WebUI.Controllers
                 _publicationHouseService.Create(publicationHouse);
                 return Ok(publicationHouse);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -67,9 +87,14 @@ namespace Library.WebUI.Controllers
                 _publicationHouseService.Update(publicationHouse);
                 return Ok(publicationHouse);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -78,12 +103,17 @@ namespace Library.WebUI.Controllers
         {
             try
             {
-                var item = _publicationHouseService.Delete(id);
-                return Ok(item);
+                var result = _publicationHouseService.Delete(id);
+                return Ok(result);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
     }

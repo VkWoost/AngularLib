@@ -1,23 +1,28 @@
-using Library.BusinessLogic.Services;
+using Library.BusinessLogic.Infrastructure;
+using Library.BusinessLogic.Interfaces;
 using Library.ViewModels.BrochureViewModels;
 using Library.WebUI.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 
 namespace Library.WebUI.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/[controller]"), Authorize]
     public class BrochureController : Controller
     {
-        private BrochureService _brochureService;
+        private IBrochureService _brochureService;
+        private readonly ILogger<BrochureController> _logger;
 
-        public BrochureController( BrochureService brochureService)
+        public BrochureController( IBrochureService brochureService, ILogger<BrochureController> logger)
         {
             _brochureService = brochureService;
+            _logger = logger;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public IActionResult GetAll()
         {
             try
@@ -25,13 +30,18 @@ namespace Library.WebUI.Controllers
                 var result = _brochureService.GetAll();
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             try
@@ -39,9 +49,14 @@ namespace Library.WebUI.Controllers
                 var result = _brochureService.Get(id);
                 return Ok(result);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -53,9 +68,14 @@ namespace Library.WebUI.Controllers
                 _brochureService.Create(brochure);
                 return Ok(brochure);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -67,9 +87,14 @@ namespace Library.WebUI.Controllers
                 _brochureService.Update(brochure);
                 return Ok(brochure);
             }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -78,12 +103,17 @@ namespace Library.WebUI.Controllers
         {
             try
             {
-                var item = _brochureService.Delete(id);
-                return Ok(item);
+                var result = _brochureService.Delete(id);
+                return Ok(result);
+            }
+            catch (BusinessLogicException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                _logger.LogInformation(exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
     }
